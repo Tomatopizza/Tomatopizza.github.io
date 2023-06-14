@@ -1,5 +1,7 @@
 /* article_detail.js 가 나오면 병합하고 삭제 */
 
+let articleId = 2 // 임시
+
 async function loadComments() {
   
   const urlParams = new URLSearchParams(window.location.search);
@@ -21,6 +23,12 @@ async function loadComments() {
     </div>
   </li>`
   });
+}
+
+async function submitComment() {
+  const newComment = document.getElementById("new_comment").value
+  const response = await postComment(articleId, newComment)
+  console.log(response)
 }
 
 window.onload = async function() {
