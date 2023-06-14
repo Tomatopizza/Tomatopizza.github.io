@@ -3,7 +3,7 @@
 let articleId = 2 // 임시
 
 async function loadComments() {
-  
+
   const urlParams = new URLSearchParams(window.location.search);
   const articleId = urlParams.get('article_id');
   // article_detail.js 내에서 window.onload에 넣고 상속하여 사용. loadArticles도 마찬가지
@@ -11,7 +11,7 @@ async function loadComments() {
   const response = await getComments(articleId); // 해당 아티클의 댓글
   console.log(response)
 
-  const commentList =document.getElementById("comment_list")
+  const commentList = document.getElementById("comment_list")
 
   response.forEach(comment => {
     commentList.innerHTML += `
@@ -31,6 +31,6 @@ async function submitComment() {
   console.log(response)
 }
 
-window.onload = async function() {
+window.onload = async function () {
   await loadComments(); // 병합이후 article_id 상속
 }

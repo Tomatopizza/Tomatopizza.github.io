@@ -11,13 +11,16 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe"
         crossorigin="anonymous"></script>
-    <title>signup</title>
+    <title>signin</title>
+    <style>
+
+    </style>
 </head>
 
 <body style="background-color: black;">
 </body>
 <div class="mx-auto p-2"
-    style="width: 30%; align-items: center; color: white; margin-top: 5%; background-color:#252323ee; height: 750px; border: 30px; justify-content: center;">
+    style="width: 30%;color: white; margin-top: 5%; background-color:#252323ee; height: 750px; border: 30px;">
     <div style="text-align: center;">
         <a href="home.html">
             <img src="/static/ooo.png" alt="Logo" width="70" height="70" style=margin-top:5%;
@@ -26,28 +29,24 @@
     </div>
     <div style="margin: 10%;">
         <form>
-            <legend style="font-weight: bold; text-align: center; margin-bottom: 10%;">회원 가입</legend>
+            <legend style="font-weight: bold; text-align: center; margin-bottom: 10%;">로그인</legend>
             <div class="mb-3">
-                <input type="text" id="username" class="form-control" placeholder="아이디를 입력해 주세요">
+                <input type="text" id="email" class="form-control" placeholder="이메일을 입력해주세요.">
             </div>
             <div class="mb-3">
-                <input type="text" id="email" class="form-control" placeholder="이메일을 입력해 주세요">
-            </div>
-            <div class="mb-3">
-                <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력해 주세요">
-            </div>
-            <div class="mb-3">
-                <label for="disabledSelect" class="form-label">가입 유형을 선택하세요</label>
-                <select id="is_seller" class="form-select">
-                    <option>일반 회원</option>
-                    <option>판매 회원</option>
-                </select>
+                <input type="password" id="password" class="form-control" placeholder="비밀번호를 입력해 주세요.">
             </div>
             <button type="button" style="width: 100%; margin-top: 13%;" class="btn btn-primary"
-                onclick="handleSignup()">회원가입</button>
+                onclick="handelLogin()">로그인</button>
         </form>
-        <a href="signin.html">
-            <button style="width: 100%; margin-top: 3%;" class="btn btn-success">로그인</button>
+        <div class="p">
+            <p style="margin-top: 5%">
+                아직 계정이 없나요?
+                <a href="/templates/signup.html">가입</a>
+
+        </div>
+        <a href="http://127.0.0.1:8000/accounts/google/login/">
+            <button style="width: 100%; margin-top: 30%;" class="btn btn-outline-info">미정 : 구글 계정으로 로그인</button>
         </a>
     </div>
 </div>
@@ -55,6 +54,6 @@
 
 
 
-<script src="/js/signup.js"></script>
+<script src="/js/signin.js"></script>
 
 </html>
