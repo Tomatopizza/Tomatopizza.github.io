@@ -4,6 +4,7 @@ window.onload = async function() {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
+
   await loadArticles(articleId);
   await loadComments(articleId);
 }
@@ -38,20 +39,34 @@ async function loadArticles(articleId) {
 
 async function loadComments(articleId) {
   const response = await getComments(articleId); // 해당 아티클의 댓글
-  console.log(response)
 
   const commentList =document.getElementById("comment_list")
   commentList.innerHTML="" // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
 
   response.forEach(comment => {
-    commentList.innerHTML += `
-    <li class="media d-flex mb-3">
-    <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
-    <div class="media-body">
-      <h5 class="mt-0 mb-1">${comment.user}</h5>
-      <p>${comment.content}</p>
-    </div>
-  </li>`
+    // 프로필 이미지 가져오기
+    const User = comment.user
+    const UserAvatar = User.avatar
+    // 유저 프로필 이미지로 분할
+    if(UserAvatar) {
+      commentList.innerHTML +=
+      `<li class="media d-flex mb-3">
+      <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">${comment.user}</h5>
+        <p>${comment.content}</p>
+      </div>
+    </li>`
+    } else {
+      commentList.innerHTML +=
+      `<li class="media d-flex mb-3">
+      <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
+      <div class="media-body">
+        <h5 class="mt-0 mb-1">${comment.user}</h5>
+        <p>${comment.content}</p>
+      </div>
+    </li>`
+    }
   });
 }
 
