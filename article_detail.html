@@ -16,12 +16,29 @@
 </head>
 
 <body>
-  <div class="container" style="margin-top: 80px;">
-    <h2 style="float: left; width: 20%;" id="article_title">게시글 제목</h2>
-    <h3>작성자</h3>
-    <div class="row-cols-1 row-cols-md-2" id="article" style="margin-top: 30px;">
-      <div class="col" id="article_image"></div>
-      <div class="col" id="article_content">게시글 내용</div>
+  <div class="container" style="margin-top: 60px;">
+    <div>
+      <h2 id="article_title" style="float: left; margin-left: 25%;">게시글 제목</h2>
+      <h3 style="float: right; margin-right: 25%;">작성자</h3>
+    </div>
+    <div class="row-cols-1 row-cols-md-2" id="article" style="margin-top: 30px; clear: both;">
+      <div class="col" id="article_image" style="margin: auto; display: block;"></div>
+      <div class="col" id="article_content" style="margin: auto; display: block; margin-top: 10PX;">게시글 내용</div>
+    </div>
+  </div>
+  <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%;">
+    <ul class="list-unstyled" id="comment_list">
+
+    </ul>
+  </div>
+  <div class="container" style="margin: auto; display: block; width: 50%;">
+    <div class="row g-3">
+      <div class="col-sm-10">
+        <input type="text" class="form-control" id="new_comment" placeholder="댓글을 작성해주세요." aria-label="comment">
+      </div>
+      <div class="col-sm">
+        <button type="button" class="btn btn-primary" onclick="submitComment()">등록</button>
+      </div>
     </div>
   </div>
 </body>
