@@ -13,15 +13,18 @@ window.onload = async function() {
 
 async function loadArticles(articleId) {
   const response = await getArticle(articleId)
+  console.log(response)
+  const articleUsername = response.user
 
   const articleTitle = document.getElementById("article_title")
+  const articleUser = document.getElementById("article_user")
   const articleContent = document.getElementById("article_content")
   const articleImage = document.getElementById("article_image")
 
   articleTitle.innerText = response.title
+  articleUser.innerText = articleUsername.username
   articleContent.innerText = response.content
   const newImage = document.createElement("img")
-  console.log(`${response.image}`)
 
   if(response.image) {
   newImage.setAttribute("width","100%")
@@ -77,5 +80,34 @@ async function submitComment() {
   commentElement.value = "" // 댓글 작성 후 작성칸 초기화
 
   loadComments(articleId)
+}
 
+// 버튼
+async function loadFeed() {
+  window.location.href = "feed.html"
+}
+
+async function articleLike() {
+  
+  let token = localStorage.getItem("access")
+
+  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
+    method: 'POST',
+    headers: {
+      'content-type':'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+
+  })
+  response_json = await response.json()
+  console.log(response_json)
+
+  if (response.status == 200) {
+    const likeButton = document.getElementById("likes")
+    likeButton.innerText = response_json.message
+    
+    return response_json
+  } else {
+    alert(response.status)
+  }
 }

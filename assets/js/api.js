@@ -21,7 +21,7 @@ async function postComment(articleId, newComment) {
     method: 'POST',
     headers: {
       'content-type':'application/json',
-      'Authorization': `bearer ${token}`
+      'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
       'content': newComment,
