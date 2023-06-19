@@ -1,5 +1,6 @@
 let articleId
-let articleLikeCount = 0
+let articleLikeCount = parseInt(localStorage.getItem("articleLikeCount")) || 0;
+
 
 
 window.onload = async function() {
@@ -11,12 +12,14 @@ window.onload = async function() {
 
 }
 
-// 게시글
+// 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
   const response = await getArticle(articleId)
   console.log(response)
   const articleUsername = response.user
+  const articleUserPk = articleUsername["pk"] // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
+  console.log(articleUserPk)
 
   const articleTitle = document.getElementById("article_title")
   const articleUser = document.getElementById("article_user")
@@ -37,6 +40,28 @@ async function loadArticles(articleId) {
   }
   articleImage.appendChild(newImage)
 
+  // 게시글 수정·삭제 기능
+  let token = localStorage.getItem("access")
+
+  const currentUser = await fetch (`${backend_base_url}/users/dj-rest-auth/user`, {
+    method: 'GET',
+    headers: {
+      'content-type':'application/json',
+      'Authorization': `Bearer ${token}`,
+    },
+  }) // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
+
+  const currentUserData = await currentUser.json()
+  const currentUserPk = await currentUserData["pk"]
+  console.log(currentUserPk)
+
+  // 작성자에게만 기능 노출
+  const articleEdit = document.getElementById("article_edit")
+  if (currentUserPk == articleUserPk) {
+    articleEdit.style.display = "block"
+  } else {
+    articleEdit.style.display = "none"
+  }
 }
 
 
@@ -111,12 +136,15 @@ async function articleLike() {
   if (response.status == 200) {
     const likeButton = document.getElementById("likes")
     likeButton.innerText = response_json.message
-    if (likeButton.innerText == "🧡") {
-      articleLikeCount += 1
-    } else if (likeButton.innerText == "🤍" && articleLikeCount > 0) {
-      articleLikeCount -= 1
+
+    if (likeButton.innerText === "🧡") {
+      articleLikeCount = parseInt(articleLikeCount) + 1;
+    } else if (likeButton.innerText === "🤍" && articleLikeCount > 0) {
+      articleLikeCount = parseInt(articleLikeCount) - 1;
     }
+
     likeCount.innerText = articleLikeCount
+    localStorage.setItem("articleLikeCount", String(articleLikeCount));
     return {response_json, articleLikeCount}
   } else {
     alert(response.status)
