@@ -151,26 +151,30 @@ async function articleLike() {
   }
 }
 
-// 수정·삭제 버튼
+// 게시글 수정
 
-async function postComment(articleId, newComment) {
+async function articlePut() {
+  // 수정
+}
 
+// 게시글 삭제
+async function articleDelete() {
   let token = localStorage.getItem("access")
+  
+  const confirmDelete = confirm("정말 삭제하시겠습니까?");
+  if (confirmDelete) {
+    const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      method: 'DELETE',
+    });
 
-  const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`, {
-    method: 'POST',
-    headers: {
-      'content-type':'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-    body: JSON.stringify({
-      'content': newComment,
-    })
-  })
-  if (response.status == 200) {
-    response_json = await response.json()
-    return response_json
-  } else {
-    alert(response.status)
+    if (response.status === 204) {
+      alert("게시글이 삭제되었습니다.");
+      window.location.href = `${frontend_base_url}/feed.html`;
+    } else {
+      alert("게시글 삭제에 실패했습니다.");
+    }
   }
 }
