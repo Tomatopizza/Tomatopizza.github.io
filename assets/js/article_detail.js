@@ -1,12 +1,14 @@
 let articleId
+let articleLikeCount = 0
+
 
 window.onload = async function() {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
-
   await loadArticles(articleId);
   await loadComments(articleId);
+
 }
 
 // 게시글
@@ -34,7 +36,7 @@ async function loadArticles(articleId) {
     newImage.setAttribute("src", "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg")
   }
   articleImage.appendChild(newImage)
-  
+
 }
 
 
@@ -82,10 +84,11 @@ async function submitComment() {
   loadComments(articleId)
 }
 
-// 버튼
 async function loadFeed() {
   window.location.href = "feed.html"
 }
+
+// 좋아요 버튼
 
 async function articleLike() {
   
@@ -102,10 +105,42 @@ async function articleLike() {
   response_json = await response.json()
   console.log(response_json)
 
+  const likeCount = document.getElementById("like_count")
+  
+
   if (response.status == 200) {
     const likeButton = document.getElementById("likes")
     likeButton.innerText = response_json.message
-    
+    if (likeButton.innerText == "🧡") {
+      articleLikeCount += 1
+    } else if (likeButton.innerText == "🤍" && articleLikeCount > 0) {
+      articleLikeCount -= 1
+    }
+    likeCount.innerText = articleLikeCount
+    return {response_json, articleLikeCount}
+  } else {
+    alert(response.status)
+  }
+}
+
+// 수정·삭제 버튼
+
+async function postComment(articleId, newComment) {
+
+  let token = localStorage.getItem("access")
+
+  const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`, {
+    method: 'POST',
+    headers: {
+      'content-type':'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+    body: JSON.stringify({
+      'content': newComment,
+    })
+  })
+  if (response.status == 200) {
+    response_json = await response.json()
     return response_json
   } else {
     alert(response.status)
