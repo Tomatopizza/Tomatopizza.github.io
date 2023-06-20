@@ -1,0 +1,23 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.signup-form {
+    background-color: rgb(220, 214, 214);
+    margin-top: 10%;
+    margin-left: 25%;
+    margin-right: 25%;
+    padding: 30px;
+    border-radius: 10px;
+}
+
+.signup {
+    margin-left: 20%;
+    ;
+}
+
+.h1 {
+    text-align: center;
+}

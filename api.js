@@ -57,7 +57,7 @@ async function handleLogin() {
 
     localStorage.setItem("payload", jsonPayload);
 }
-
+// 정보 불러오기
 async function handleMock() {
     const response = await fetch("http://127.0.0.1:8000/users/mock/", {
         headers: {
