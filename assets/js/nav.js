@@ -1,7 +1,6 @@
 // const backend_base_url = "http://127.0.0.1:8000"
 // const frontend_base_url = "http://127.0.0.1:5500"
 
-
 $(document).ready(function () {
     // 상단 네비 html을 붙여주는 함수
     $("#navbar-container").load("nav.html", function () {
@@ -16,10 +15,9 @@ $(document).ready(function () {
         if (intro) {
             const payload = localStorage.getItem("payload");
             const payload_parse = JSON.parse(payload);
-            console.log(payload_parse.user_id, "네비 id값 출력되는지 확인용");
             intro.innerText = `${payload_parse.username}님 안녕하세요`;
-            intro.setAttribute('style', 'color: wheat;')
-            intro.href = `${FRONT_BASE_URL}/profile2.html`
+            intro.setAttribute('style', 'color: black;')
+            intro.href = `${frontend_base_url}/profile2.html`
             // fetch(`${BACK_BASE_URL}/user/` + payload_parse.user_id)
 
 
@@ -35,10 +33,26 @@ $(document).ready(function () {
                 location.reload()
             }
 
+            const modal = document.getElementById('modal');
+            const open = document.getElementById('nav-create')
+            const close = document.getElementById('close');
+
             //글쓰기 함수
             async function handlecreatearticle() {
-                location.href = `${FRONT_BASE_URL}/temp_post.html`
+
+                function onClick() {
+                    document.querySelector('.modal_wrap').style.display = 'block';
+                    document.querySelector('.black_bg').style.display = 'block';
+                }
+                function offClick() {
+                    document.querySelector('.modal_wrap').style.display = 'none';
+                    document.querySelector('.black_bg').style.display = 'none';
+                }
+
+                document.getElementById('modal_btn').addEventListener('click', onClick);
+                document.querySelector('.modal_close').addEventListener('click', offClick);
             }
+
 
             // 로그인시 보이는 로그아웃
             let logoutBtn = document.createElement("button");
@@ -46,18 +60,18 @@ $(document).ready(function () {
             logoutBtn.setAttribute("id", "nav-loginout");
             logoutBtn.innerText = "로그아웃";
             logoutBtn.setAttribute("type", "button");
-            logoutBtn.setAttribute('style', 'background-color: rgb(145, 104, 74);')
+            logoutBtn.setAttribute('style', 'background-color: black; color:white')
 
             logoutBtn.addEventListener("click", handleLogout);
 
-
+            // <!-- <button type='button' id="modal_btn">글쓰기</button>
             // 로그인시 보이는 글쓰기
             let createarticle = document.getElementById("create-article");
             createarticle.innerText = "글쓰기";
             createarticle.setAttribute("class", "nav-link btn")
-            createarticle.setAttribute("id", "nav-create")
+            createarticle.setAttribute("id", "modal_btn")
             createarticle.setAttribute("type", "button");
-            createarticle.setAttribute('style', 'background-color: rgb(73, 51, 35)')
+            createarticle.setAttribute('style', 'background-color: black; color:white')
 
             createarticle.addEventListener("click", handlecreatearticle);
 
@@ -84,3 +98,4 @@ $(document).ready(function () {
 
 
 });
+
