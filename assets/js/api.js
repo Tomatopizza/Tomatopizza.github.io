@@ -35,6 +35,32 @@ async function postComment(articleId, newComment) {
     }
 }
 
+async function commentPut() {
+  
+}
+
+async function commentDelete() {
+  let token = localStorage.getItem("access");
+  
+  const confirmDelete = confirm("댓글을 삭제하시겠습니까?");
+  if (confirmDelete) {
+    const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/${commentId}/`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      method: 'DELETE',
+    });
+
+    if (response.status === 204) {
+      alert("댓글이 삭제되었습니다.");
+      window.location.href = `${frontend_base_url}/article_detail.html?article_id=${articleId}`;
+    } else {
+      alert("댓글 삭제에 실패했습니다.");
+    }
+  }
+
+}
+
 // 피드페이지
 
 async function getArticles() {
