@@ -12,18 +12,18 @@ document.addEventListener("DOMContentLoaded", async () => { // 페이지 로드 
   articleId = urlParams.get("article_id");
 
   const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-    method:"POST",
+    method: "POST",
   });
   const data = await updateLikeCount.json();
   console.log(data)
   const articleLikeCount = data.articleLikeCount || 0;
   likeCount.innerText = articleLikeCount;
-  
+
   let token = localStorage.getItem("access");
   const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
     method: 'POST',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
   });
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", async () => { // 페이지 로드 
   // await loadArticleLikeStatus();
 });
 
-window.onload = async function() {
+window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
@@ -59,11 +59,11 @@ async function loadArticles(articleId) {
   const newImage = document.createElement("img");
 
 
-  if(response.image) {
-  newImage.setAttribute("width","100%");
-  newImage.setAttribute("src", `${backend_base_url}${response.image}`);
+  if (response.image) {
+    newImage.setAttribute("width", "100%");
+    newImage.setAttribute("src", `${backend_base_url}${response.image}`);
   } else {
-    newImage.setAttribute("width","100%");
+    newImage.setAttribute("width", "100%");
     newImage.setAttribute("src", "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg");
   }
   articleImage.appendChild(newImage);
@@ -71,10 +71,10 @@ async function loadArticles(articleId) {
   // 게시글 수정·삭제 기능
   let token = localStorage.getItem("access");
 
-  const currentUser = await fetch (`${backend_base_url}/users/dj-rest-auth/user`, {
+  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
     method: 'GET',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
@@ -100,10 +100,10 @@ async function loadComments(articleId) {
   // 댓글 edit기능을 위한 유저 식별
   let token = localStorage.getItem("access");
 
-  const currentUser = await fetch (`${backend_base_url}/users/dj-rest-auth/user`, {
+  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
     method: 'GET',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   });
@@ -111,10 +111,10 @@ async function loadComments(articleId) {
   const currentUserData = await currentUser.json();
   const currentUserPk = await currentUserData["pk"];
 
-  const commentList =document.getElementById("comment_list");
-  commentList.innerHTML=""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
+  const commentList = document.getElementById("comment_list");
+  commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
 
-  
+
   response.forEach(comment => {
     commentId = comment["id"]
 
@@ -122,10 +122,10 @@ async function loadComments(articleId) {
     const User = comment.user;
     const UserAvatar = User.avatar;
     // 유저 프로필 이미지로 분할
-    if(UserAvatar) {
-      if(comment.user === currentUserPk) {
+    if (UserAvatar) {
+      if (comment.user === currentUserPk) {
         commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+          `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -135,9 +135,11 @@ async function loadComments(articleId) {
             <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
             <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
           </div>
-        </li>`;}
-      else {commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+        </li>`;
+      }
+      else {
+        commentList.innerHTML +=
+          `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -145,9 +147,9 @@ async function loadComments(articleId) {
           </div>
         </li>`}
     } else {
-      if(comment.user === currentUserPk) {
+      if (comment.user === currentUserPk) {
         commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+          `<li class="media d-flex mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -158,8 +160,9 @@ async function loadComments(articleId) {
             <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
-      } else {commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+      } else {
+        commentList.innerHTML +=
+          `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -189,7 +192,7 @@ async function articleLike() {
   const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
     method: 'POST',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
   });
@@ -249,7 +252,7 @@ async function articlePut() {
 // 게시글 삭제
 async function articleDelete() {
   let token = localStorage.getItem("access");
-  
+
   const confirmDelete = confirm("정말 삭제하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
