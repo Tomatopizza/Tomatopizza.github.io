@@ -1,35 +1,23 @@
 let articleId
 let commentId
-let articleLikeCount = parseInt(localStorage.getItem("articleLikeCount")) || 0; // 좋아요 기록 가져오기
-console.log(articleLikeCount)
 
-// 좋아요 기록 저장
-document.addEventListener("DOMContentLoaded", async () => { // 페이지 로드 이후 발생
-  const likeCount = document.getElementById("like_count");
-  const likeButton = document.getElementById("likes");
-  articleLikeCount = parseInt(localStorage.getItem("articleLikeCount")) || 0;
 
-  likeCount.innerText = articleLikeCount;
-  // await loadArticleLikeStatus();
-});
 
-window.onload = async function() {
+
+window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
   await loadArticles(articleId);
   await loadComments(articleId);
-
 }
 
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
   const response = await getArticle(articleId);
-  console.log(response);
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
-  console.log(articleUserPk)
 
   const articleTitle = document.getElementById("article_title");
   const articleUser = document.getElementById("article_user");
@@ -41,29 +29,51 @@ async function loadArticles(articleId) {
   articleContent.innerText = response.content;
   const newImage = document.createElement("img");
 
-  if(response.image) {
-  newImage.setAttribute("width","100%");
-  newImage.setAttribute("src", `${backend_base_url}${response.image}`);
+
+  if (response.image) {
+    newImage.setAttribute("width", "100%");
+    newImage.setAttribute("src", `${backend_base_url}${response.image}`);
   } else {
-    newImage.setAttribute("width","100%");
+    newImage.setAttribute("width", "100%");
     newImage.setAttribute("src", "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg");
   }
   articleImage.appendChild(newImage);
 
-  // 게시글 수정·삭제 기능
-  let token = localStorage.getItem("access");
+  // 좋아요 상태 불러오기
 
-  const currentUser = await fetch (`${backend_base_url}/users/dj-rest-auth/user`, {
+  let token = localStorage.getItem("access");
+  const likeButton = document.getElementById("likes");
+  const likeCount = document.getElementById("like_count");
+  
+  const likeResponse = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요 상태와 좋아요 수 가져오기
     method: 'GET',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  
+  const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
+  console.log(likeResponse_json.message)
+  console.log(likeResponse_json.fluctuation)
+
+  likeButton.innerText = likeResponse_json.message
+  likeCount.innerText = likeResponse_json.fluctuation
+
+  // 게시글 수정·삭제 기능
+
+  // let token = localStorage.getItem("access");
+
+  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
 
   const currentUserData = await currentUser.json();
   const currentUserPk = await currentUserData["pk"];
-  console.log(currentUserPk)
 
   // 작성자에게만 기능 노출
   const articleEdit = document.getElementById("article_edit");
@@ -74,7 +84,6 @@ async function loadArticles(articleId) {
   }
 }
 
-
 // 댓글
 
 async function loadComments(articleId) {
@@ -83,35 +92,32 @@ async function loadComments(articleId) {
   // 댓글 edit기능을 위한 유저 식별
   let token = localStorage.getItem("access");
 
-  const currentUser = await fetch (`${backend_base_url}/users/dj-rest-auth/user`, {
+  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
     method: 'GET',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`,
     },
   });
 
   const currentUserData = await currentUser.json();
   const currentUserPk = await currentUserData["pk"];
-  console.log(currentUserPk)
 
-  const commentList =document.getElementById("comment_list");
-  commentList.innerHTML=""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
+  const commentList = document.getElementById("comment_list");
+  commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
 
-  
+
   response.forEach(comment => {
     commentId = comment["id"]
-    console.log(comment)
-    console.log(commentId)
 
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
     // 유저 프로필 이미지로 분할
-    if(UserAvatar) {
-      if(comment.user === currentUserPk) {
+    if (UserAvatar) {
+      if (comment.user === currentUserPk) {
         commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+          `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -121,9 +127,11 @@ async function loadComments(articleId) {
             <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
             <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
           </div>
-        </li>`;}
-      else {commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+        </li>`;
+      }
+      else {
+        commentList.innerHTML +=
+          `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -131,9 +139,9 @@ async function loadComments(articleId) {
           </div>
         </li>`}
     } else {
-      if(comment.user === currentUserPk) {
+      if (comment.user === currentUserPk) {
         commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+          `<li class="media d-flex mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -144,8 +152,9 @@ async function loadComments(articleId) {
             <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
-      } else {commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+      } else {
+        commentList.innerHTML +=
+          `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.user}</h5>
@@ -171,45 +180,36 @@ async function loadFeed() {
 // 좋아요 버튼
 
 async function articleLike() {
-  
   let token = localStorage.getItem("access");
-
-  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
+  const likeButton = document.getElementById("likes");
+  const likeCount = document.getElementById("like_count");
+  
+  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요/좋아요취소 요청
     method: 'POST',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
   });
 
-  console.log(response)
-
   const response_json = await response.json();
   console.log(response_json)
 
-  const likeCount = document.getElementById("like_count");
-  const likeButton = document.getElementById("likes");
-  
 
   if (response.status == 200) {
-    likeButton.innerText = response_json.message;
-    // likeCount.innerText = 
-
     if (likeButton.innerText === "🧡") {
-      articleLikeCount = parseInt(articleLikeCount) + 1;
-      localStorage.setItem("articleLikeCount", String(articleLikeCount));
-    } else if (likeButton.innerText === "🤍" && articleLikeCount > 0) {
-      articleLikeCount = parseInt(articleLikeCount) - 1;
-      localStorage.setItem("articleLikeCount", String(articleLikeCount));
-    }
+      likeButton.innerText ="🤍";
+      likeCount.innerText = response_json.fluctuation;
 
-    likeCount.innerText = articleLikeCount;
-    localStorage.setItem("articleLikeCount", String(articleLikeCount));
-    return {response_json, articleLikeCount};
-  } else {
-    alert(response.status);
+    } else if (likeButton.innerText === "🤍") {
+      likeButton.innerText ="🧡";
+      likeCount.innerText = response_json.fluctuation;
+
+    }
+    
   }
 }
+
 
 // 게시글 수정
 
@@ -220,7 +220,7 @@ async function articlePut() {
 // 게시글 삭제
 async function articleDelete() {
   let token = localStorage.getItem("access");
-  
+
   const confirmDelete = confirm("정말 삭제하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {

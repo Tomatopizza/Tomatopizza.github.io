@@ -1,5 +1,5 @@
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "http://127.0.0.1:8000"
+// const frontend_base_url = "http://127.0.0.1:5500"
 
 // 댓글
 async function getComments(articleId) {
@@ -77,7 +77,7 @@ async function getArticles() {
 // 상세페이지
 
 async function getArticle(articleId) {
-    const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,)
+    const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,) // 각 게시글 상세보기
 
     if (response.status == 200) {
         response_json = await response.json()
