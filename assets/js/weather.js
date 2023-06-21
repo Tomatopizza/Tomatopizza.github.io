@@ -1,5 +1,23 @@
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
+// const backend_base_url = "http://127.0.0.1:8000"
+// const frontend_base_url = "http://127.0.0.1:5500"
+
+function success(obj, { coords, timestamp }) {
+  const latitude = coords.latitude.toString();   // 위도
+  const longitude = coords.longitude.toString(); // 경도
+  obj = {'latitude': latitude, 'longitude' : longitude};
+  
+  
+  
+
+  return obj
+}
+
+function getPosition() {
+  // Simple wrapper
+  return new Promise((res, rej) => {
+      navigator.geolocation.getCurrentPosition(res, rej);
+  });
+}
 
 function forecast(value) {
   let forecast_dict = { 
@@ -46,44 +64,137 @@ function weatherIcon(value) {
   return "./assets/images/weather_icon/" + icon_dict[value] + ".svg";
 }
 
+function card(template,id) {
+  for ( var i = 0; i < 6 ; i++){
+          template[i] = `
+              <div class="col">
+                <div class="card h-100">
+                    <img class="myimg" src=${id["icon"][i]} class="card-img-top">
+                    <div class="card-body">
+                      <p>측정 시각: <strong>${id["time_measure"][i]}시</strong></p>
+                      <p>날씨: <strong>${id["rain"][i]}</strong></p>
+                      <p>1시간 강수량: <strong>"${id["rain_amount"][i]}"</strong> 입니다!</p>
+                      <p>기온: <strong>"${id["temperature"][i]}도"</strong> 입니다!</p>
+                      <p>추천 운동은 <strong>"${id["recommendation"][i]}"</strong> 입니다!</p>
+                    </div>
+                </div>     
+              </div>
+            `
+  }
+  
+}
+
+function showSpinner() {
+  document.getElementById("spinner").style.display = "block";
+}
+
+
+function hideSpinner() {
+  document.getElementById("spinner").style.display = "none";
+}
+
+async function sendingData() {
+
+  var position = await getPosition()
+    console.log("position",position)
+    showSpinner()
+    var latitude = position.coords['latitude']
+    var longitude = position.coords['longitude']
+    const data = await fetch('http://localhost:8080/articles/weather/',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'lat': "hello"
+      })
+    });
+
+    
+}
+
 window.onload = async function loadMainPage() {
+    
+    var position = await getPosition()
+    showSpinner()
+    var latitude = position.coords['latitude']
+    var longitude = position.coords['longitude']
+    const data = await fetch('http://localhost:8000/articles/weather/',{
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'lat': "hello"
+      })
+    });
+    console.log("data",data)
+
+
+
+    // sendingData()
     
     const response = await fetch('http://127.0.0.1:8000/articles/weather/', {
         method:"GET"
     })
-    // console.log("hello")
+    console.log("hello")
     response_json = await response.json();
     // console.log("hello")
     console.log(response_json);
     // response_json.forEach(rain => {
     //     const rain = document.createElement("li")
     // })
-    // const rain_cookie = document.getElementById("rain");
+    const rain_cookie = response_json[0]
+    const recommendation_cookie = response_json[1]
+    const temperature_cookie = response_json[2]
+    const rain_amount_cookie = response_json[3]
     var icon = [];
     var rain = [];
     var time_measure = [];
+    var recommendation = [];
+    var id = {};
+    id["rain"] = [];
+    id["time_measure"] = [];
+    id["icon"] = [];
+    id["recommendation"] = []  ;
+    id["temperature"] = []
+    id["rain_amount"] = []
+
+    var template = []
+    var result = ""
+
     for (var i = 0; i < 6; i++) {
-      time_measure[i] = Object.keys(response_json[i]).toString();
-      console.log(time_measure[i])
-      rain[i] = forecast(response_json[i][time_measure[i]])
-      icon[i] = weatherIcon(response_json[i][time_measure[i]]);
-      document.getElementById('time_measure_'+i.toString()).innerHTML=time_measure[i];
-      document.getElementById('rain_'+i.toString()).innerHTML=rain[i];
-      document.getElementById('icon_'+i.toString()).src=icon[i];
+      time_measure[i] = Object.keys(rain_cookie[i]).toString();
+      id["time_measure"][i] = time_measure[i].slice(0,2);
+      id["recommendation"][i] = recommendation_cookie[i];
+      id["rain"][i]=forecast(rain_cookie[i][time_measure[i]])
+      id["icon"][i]=weatherIcon(rain_cookie[i][time_measure[i]]);
+      id["rain_amount"][i]=rain_amount_cookie[i];
+      console.log(rain_amount_cookie[i])
+      id["temperature"][i]=temperature_cookie[i];
+      
     }
+    card(template,id)
+     '<div class="row row-cols-1 row-cols-md-6 g-6">'
 
-    console.log(icon[0])
-    // var icon_0 = weather(response_json[0][time_0])
+
+    for (var i = 0; i < 6; i++) {
+      result = result.concat(" ", template[i]);
+      
+    }
+    result = result.concat(" ","</div>");
+    document.getElementById('param1').innerHTML=result;
+    hideSpinner()
     
-    // icon_0.innerText = weatherIcon(response_json[0][time_0]);
-    // icon_1.innerText = weatherIcon(response_json[1][time_1]);
-    // icon_2.innerText = weatherIcon(response_json[2][time_2]);
-    // icon_3.innerText = weatherIcon(response_json[3][time_3]);
-    // icon_4.innerText = weatherIcon(response_json[4][time_4]);
-    // icon_5.innerText = weatherIcon(response_json[5][time_5]);
-    // rain.innerText = response_json[0]['0600']
+    console.log(result)
+    
 
-    // setCookie('rain', response_json, 10)
-    // var a = getCookie('rain')
-    // console.log(Object.values(getCookie('rain')))
+
+
 }
+
+
+      // document.getElementById('time_measure_'+i.toString()).innerHTML=time_measure[i];
+      // document.getElementById('rain_'+i.toString()).innerHTML=rain[i];
+      // document.getElementById('recommendation_'+i.toString()).innerHTML=recommendation_cookie[i];
+      // document.getElementById('icon_'+i.toString()).src=icon[i];
