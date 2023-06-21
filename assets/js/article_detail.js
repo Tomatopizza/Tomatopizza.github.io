@@ -2,35 +2,7 @@ let articleId
 let commentId
 
 
-// 좋아요 기록 저장
-document.addEventListener("DOMContentLoaded", async () => { // 페이지 로드 이후 발생
-  const likeCount = document.getElementById("like_count");
-  const likeButton = document.getElementById("likes");
 
-  // 서버에서 articleLikeCount 값을 가져와서 설정
-  const urlParams = new URLSearchParams(window.location.search);
-  articleId = urlParams.get("article_id");
-
-  const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-    method: "POST",
-  });
-  const data = await updateLikeCount.json();
-  console.log(data)
-  const articleLikeCount = data.articleLikeCount || 0;
-  likeCount.innerText = articleLikeCount;
-
-  let token = localStorage.getItem("access");
-  const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  });
-  console.log(likeImage)
-  // likeButton.innerText = likeImage
-  // await loadArticleLikeStatus();
-});
 
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
@@ -38,7 +10,6 @@ window.onload = async function () {
 
   await loadArticles(articleId);
   await loadComments(articleId);
-
 }
 
 // 공유 게시글 불러오기
@@ -68,8 +39,30 @@ async function loadArticles(articleId) {
   }
   articleImage.appendChild(newImage);
 
-  // 게시글 수정·삭제 기능
+  // 좋아요 상태 불러오기
+
   let token = localStorage.getItem("access");
+  const likeButton = document.getElementById("likes");
+  const likeCount = document.getElementById("like_count");
+  
+  const likeResponse = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요 상태와 좋아요 수 가져오기
+    method: 'GET',
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${token}`
+    },
+  });
+  
+  const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
+  console.log(likeResponse_json.message)
+  console.log(likeResponse_json.fluctuation)
+
+  likeButton.innerText = likeResponse_json.message
+  likeCount.innerText = likeResponse_json.fluctuation
+
+  // 게시글 수정·삭제 기능
+
+  // let token = localStorage.getItem("access");
 
   const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
     method: 'GET',
@@ -90,7 +83,6 @@ async function loadArticles(articleId) {
     articleEdit.style.display = "none";
   }
 }
-
 
 // 댓글
 
@@ -189,7 +181,10 @@ async function loadFeed() {
 
 async function articleLike() {
   let token = localStorage.getItem("access");
-  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
+  const likeButton = document.getElementById("likes");
+  const likeCount = document.getElementById("like_count");
+  
+  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요/좋아요취소 요청
     method: 'POST',
     headers: {
       'content-type': 'application/json',
@@ -197,51 +192,24 @@ async function articleLike() {
     },
   });
 
-  console.log(response)
-
   const response_json = await response.json();
   console.log(response_json)
 
-  const likeCount = document.getElementById("like_count");
-  const likeButton = document.getElementById("likes");
-  likeButton.innerText = response_json.message
 
   if (response.status == 200) {
-    likeButton.innerText = response_json.message;
-    let increment = 0;
+    if (likeButton.innerText === "🧡") {
+      likeButton.innerText ="🤍";
+      likeCount.innerText = response_json.fluctuation;
 
-    if (likeButton.innerText === "🧡" && !likeButton.classList.contains("liked")) {
-      increment = 1;
-      likeButton.classList.add("liked");
-    } else if (likeButton.innerText === "🤍" && likeButton.classList.contains("liked")) {
-      increment = -1;
-      likeButton.classList.remove("liked");
+    } else if (likeButton.innerText === "🤍") {
+      likeButton.innerText ="🧡";
+      likeCount.innerText = response_json.fluctuation;
+
     }
-
-    // 서버에 좋아요 수 업데이트 요청
-    const updateResponse = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-      method: 'POST',
-      headers: {
-        'content-type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-      body: JSON.stringify({ increment })
-    });
-
-    if (updateResponse.status == 200) {
-      const data = await updateResponse.json();
-      const articleLikeCount = data.articleLikeCount || 0;
-
-      likeCount.innerText = articleLikeCount;
-    } else {
-      alert(updateResponse.status);
-    }
-
-    return { response_json };
-  } else {
-    alert(response.status);
+    
   }
 }
+
 
 // 게시글 수정
 
