@@ -1,12 +1,10 @@
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
 
 // 댓글
 async function getComments(articleId) {
   const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`,)
 
   if (response.status == 200) {
-    response_json =await response.json()
+    response_json = await response.json()
     return response_json
   } else {
     alert(response.status)
@@ -20,7 +18,7 @@ async function postComment(articleId, newComment) {
   const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`, {
     method: 'POST',
     headers: {
-      'content-type':'application/json',
+      'content-type': 'application/json',
       'Authorization': `Bearer ${token}`
     },
     body: JSON.stringify({
@@ -36,12 +34,12 @@ async function postComment(articleId, newComment) {
 }
 
 async function commentPut() {
-  
+
 }
 
 async function commentDelete() {
   let token = localStorage.getItem("access");
-  
+
   const confirmDelete = confirm("댓글을 삭제하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/${commentId}/`, {

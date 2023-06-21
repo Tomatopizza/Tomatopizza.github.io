@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", async () => { // 페이지 로드 
 
   // 서버에서 articleLikeCount 값을 가져와서 설정
   const urlParams = new URLSearchParams(window.location.search);
+  console.log(urlParams)
   articleId = urlParams.get("article_id");
 
   const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
