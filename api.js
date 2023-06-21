@@ -1,76 +1,81 @@
-window.onload = () => {
-    console.log("api.js 로딩되었음");
-};
+const backend_base_url = "http://127.0.0.1:8000";
+const frontend_base_url = "http://127.0.0.1:5500";
 
-async function handleSignup() {
-    //비동기 함수지만 await을 사용하여 signup api응답이 끝날 때까지 기다린다.
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    console.log(email, password);
+async function handleRegister() {
+    const registerData = {
+        // 등록에 필요한 정보입니다
+        username: document.getElementById("floatingInput").value,
+        password: document.getElementById("floatingPassword").value,
+        email: document.getElementById("floatingInputEmail").value
+        // fullname: document.getElementById("floatingInputFullname").value,
+    };
 
-    const response = await fetch("http://127.0.0.1:8000/users/signup/", {
+    const response = await fetch(`${backend_base_url}/users/`, {
         headers: {
-            "content-type": "application/json",
+            Accept: "application/json",
+            "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
+        body: JSON.stringify(registerData)
     });
 
-    console.log(response);
+    response_json = await response.json();
+
+    if (response.status == 200) {
+        window.location.replace(`${frontend_base_url}/A8ooo_front/login.html`); // 로그인 페이지
+    } else {
+        alert(response.status); // "회원정보가 일치하지 않습니다."
+    }
 }
 
 async function handleLogin() {
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
+    const loginData = {
+        username: document.getElementById("floatingInput").value,
+        password: document.getElementById("floatingPassword").value
+    };
 
-    const response = await fetch("http://127.0.0.1:8000/users/api/token/", {
+    // fetch post 통신이 완료될때까지 기다리고, api에서 토큰을 반환합니다.
+    const response = await fetch(`${backend_base_url}/users/api/token/`, {
         headers: {
-            "content-type": "application/json",
+            Accept: "application/json",
+            "Content-Type": "application/json"
         },
         method: "POST",
-        body: JSON.stringify({
-            email: email,
-            password: password,
-        }),
+        body: JSON.stringify(loginData)
     });
 
-    const response_json = await response.json();
+    response_json = await response.json();
 
-    console.log(response_json);
+    if (response.status == 200) {
+        // access,refresh 토큰 저장
+        localStorage.setItem("access", response_json.access);
+        localStorage.setItem("refresh", response_json.refresh);
 
-    localStorage.setItem("access", response_json.access);
-    localStorage.setItem("refresh", response_json.refresh);
+        const base64Url = response_json.access.split(".")[1];
+        const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+        const jsonPayload = decodeURIComponent(
+            atob(base64)
+                .split("")
+                .map(function (c) {
+                    return (
+                        "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2)
+                    );
+                })
+                .join("")
+        );
 
-    const base64Url = response_json.access.split(".")[1];
-    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
-    const jsonPayload = decodeURIComponent(
-        atob(base64)
-            .split("")
-            .map(function (c) {
-                return "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2);
-            })
-            .join("")
-    );
-
-    localStorage.setItem("payload", jsonPayload);
-}
-
-async function handleMock() {
-    const response = await fetch("http://127.0.0.1:8000/users/mock/", {
-        headers: {
-            Authorization: "Bearer " + localStorage.getItem("access"),
-        },
-        method: "GET",
-    });
-
-    console.log(response);
+        // payload 저장
+        localStorage.setItem("payload", jsonPayload);
+        window.location.replace(`${frontend_base_url}/`);
+    } else {
+        alert(response.status); // "회원정보가 일치하지 않습니다."
+    }
 }
 
 async function handleLogout() {
     localStorage.removeItem("access");
     localStorage.removeItem("refresh");
     localStorage.removeItem("payload");
+    alert("로그아웃완료");
+    location.reload();
 }
