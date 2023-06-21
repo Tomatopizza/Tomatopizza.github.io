@@ -27,11 +27,75 @@ async function loadArticle() {
     if (response.status == 200) {
         const response_json = await response.json()
         console.log(response_json)
-        return response_json
-    } else {
-        alert('로그인을 해주세요!')
-    }
 
+
+        if (response_json.length > 0) {
+            const checkCount1 = response_json[0].check_status_count;
+            console.log(checkCount1);
+            if (checkCount1 == 3) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `작심삼일도 100번하면 습관이 되죠 :)`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창을 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+            if (checkCount1 == 7) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `벌써 7번째 운동 완료!!`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+            if (checkCount1 >= 10) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `벌써 ${checkCount1}번 운동했어요 대단해요!!`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창을 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+
+            // 나머지 코드를 여기에 작성합니다.
+        } else { console.log("data없음") }
+
+        return response_json;
+
+    } else {
+        alert('로그인을 해주세요!');
+    }
 
 }
 
@@ -87,6 +151,7 @@ async function buildCalendar() {
 
 
         // ========= 날짜열=backdata의 selected_day 일 경우/ 상태의 따라서 색깔이 다르게 나타냄 ========
+
         if (nowDayStr in selectedArticles) {
             if (selectedArticles[nowDayStr].check_status == true) {
                 newDIV.style.backgroundColor = 'rgb(235, 179, 106)';
@@ -94,6 +159,8 @@ async function buildCalendar() {
                 newDIV.style.backgroundColor = 'skyblue';
             }
         }
+
+
         // if (nowDay = response_json)
         if (nowDay.getDay() == 6) {                 // 토요일인 경우
             nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
@@ -114,6 +181,8 @@ async function buildCalendar() {
             const selected_date_str = event.target.getAttribute("data-date");
             choiceDate(newDIV, selected_date_str);
         });
+
+
 
 
 
@@ -327,3 +396,6 @@ function setThumbnail(event) {
 
     reader.readAsDataURL(event.target.files[0]);
 }
+
+
+

@@ -4,6 +4,32 @@ let commentId
 
 
 
+// 서버에서 articleLikeCount 값을 가져와서 설정
+const urlParams = new URLSearchParams(window.location.search);
+console.log(urlParams)
+articleId = urlParams.get("article_id");
+
+const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
+  method: "POST",
+});
+const data = await updateLikeCount.json();
+console.log(data)
+const articleLikeCount = data.articleLikeCount || 0;
+likeCount.innerText = articleLikeCount;
+
+let token = localStorage.getItem("access");
+const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
+  method: 'POST',
+  headers: {
+    'content-type': 'application/json',
+    'Authorization': `Bearer ${token}`
+  },
+});
+console.log(likeImage)
+// likeButton.innerText = likeImage
+// await loadArticleLikeStatus();
+
+
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
@@ -44,7 +70,7 @@ async function loadArticles(articleId) {
   let token = localStorage.getItem("access");
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
-  
+
   const likeResponse = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요 상태와 좋아요 수 가져오기
     method: 'GET',
     headers: {
@@ -52,7 +78,7 @@ async function loadArticles(articleId) {
       'Authorization': `Bearer ${token}`
     },
   });
-  
+
   const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
   console.log(likeResponse_json.message)
   console.log(likeResponse_json.fluctuation)
@@ -183,7 +209,7 @@ async function articleLike() {
   let token = localStorage.getItem("access");
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
-  
+
   const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, { // 게시글 좋아요/좋아요취소 요청
     method: 'POST',
     headers: {
@@ -198,15 +224,15 @@ async function articleLike() {
 
   if (response.status == 200) {
     if (likeButton.innerText === "🧡") {
-      likeButton.innerText ="🤍";
+      likeButton.innerText = "🤍";
       likeCount.innerText = response_json.fluctuation;
 
     } else if (likeButton.innerText === "🤍") {
-      likeButton.innerText ="🧡";
+      likeButton.innerText = "🧡";
       likeCount.innerText = response_json.fluctuation;
 
     }
-    
+
   }
 }
 
