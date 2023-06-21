@@ -1,6 +1,29 @@
 // const backend_base_url = "http://127.0.0.1:8000"
 // const frontend_base_url = "http://127.0.0.1:5500"
 
+function setCookie(cookie_name, value, days) {
+  var exdate = new Date();
+  exdate.setDate(exdate.getDate() + days);
+  // 설정 일수만큼 현재시간에 만료값으로 지정
+
+  var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+  document.cookie = cookie_name + '=' + cookie_value;
+}
+
+function getCookie(cookie_name) {
+  var x, y;
+  var val = document.cookie.split(';');
+
+  for (var i = 0; i < val.length; i++) {
+    x = val[i].substr(0, val[i].indexOf('='));
+    y = val[i].substr(val[i].indexOf('=') + 1);
+    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
+    if (x == cookie_name) {
+      return unescape(y); // unescape로 디코딩 후 값 리턴
+    }
+  }
+}
+
 function success(obj, { coords, timestamp }) {
   const latitude = coords.latitude.toString();   // 위도
   const longitude = coords.longitude.toString(); // 경도
@@ -69,13 +92,13 @@ function card(template,id) {
           template[i] = `
               <div class="col">
                 <div class="card h-100">
-                    <img class="myimg" src=${id["icon"][i]} class="card-img-top">
+                    <img class="myimg" src=${icon_list[i]} class="card-img-top">
                     <div class="card-body">
-                      <p>측정 시각: <strong>${id["time_measure"][i]}시</strong></p>
-                      <p>날씨: <strong>${id["rain"][i]}</strong></p>
-                      <p>1시간 강수량: <strong>"${id["rain_amount"][i]}"</strong> 입니다!</p>
-                      <p>기온: <strong>"${id["temperature"][i]}도"</strong> 입니다!</p>
-                      <p>추천 운동은 <strong>"${id["recommendation"][i]}"</strong> 입니다!</p>
+                      <p>측정 시각: <strong>${time_list[i]}시</strong></p>
+                      <p>날씨: <strong>${rain_list[i]}</strong></p>
+                      <p>1시간 강수량: <strong>"${rain_amount_list[i]}"</strong> 입니다!</p>
+                      <p>기온: <strong>"${temperature_list[i]}도"</strong> 입니다!</p>
+                      <p>추천 운동은 <strong>"${recommendation_list[i]}"</strong> 입니다!</p>
                     </div>
                 </div>     
               </div>
@@ -95,94 +118,90 @@ function hideSpinner() {
 
 async function sendingData() {
 
-  var position = await getPosition()
-    console.log("position",position)
-    showSpinner()
-    var latitude = position.coords['latitude']
-    var longitude = position.coords['longitude']
-    const data = await fetch('http://localhost:8080/articles/weather/',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'lat': "hello"
-      })
-    });
+    
 
     
 }
 
 window.onload = async function loadMainPage() {
-    
-    var position = await getPosition()
     showSpinner()
-    var latitude = position.coords['latitude']
-    var longitude = position.coords['longitude']
-    const data = await fetch('http://localhost:8000/articles/weather/',{
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        'lat': "hello"
-      })
-    });
-    console.log("data",data)
+    if ((getCookie('time') == null)) {
+      var position = await getPosition()
+      var latitude = position.coords['latitude']
+      var longitude = position.coords['longitude']
+      const response = await fetch('http://localhost:8000/articles/weather/',{
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          'lat': latitude,
+          'lon' : longitude
+        })
+      });
+      var response_json = await response.json();
 
 
+      var time_measure = []
+      var recommendation = [];
+      var rain = [];
+      const rain_cookie = response_json[0]
+      const recommendation_cookie = response_json[1]
+      console.log(response_json[0])
+      const temperature_cookie = response_json[2]
+      const rain_amount_cookie = response_json[3]
+      var icon = [];
+      var id = {};
+      id["rain"] = [];
+      id["time_measure"] = [];
+      id["icon"] = [];
+      id["recommendation"] = [] 
+      id["temperature"] = []
+      id["rain_amount"] = []
+      for (var i = 0; i < 6; i++) {
+        time_measure[i] = Object.keys(response_json[0][i]);
+        console.log(time_measure[i])
+        id["recommendation"][i] = recommendation_cookie[i];
+        id["rain"][i]=forecast(rain_cookie[i][time_measure[i]])
+        id["icon"][i]=weatherIcon(rain_cookie[i][time_measure[i]]);
+        id["rain_amount"][i]=rain_amount_cookie[i];
+        console.log(rain_amount_cookie[i])
+        id["temperature"][i]=temperature_cookie[i];
+        
+      }
+      setCookie('time', time_measure, 1)
+      setCookie('rain', id['rain'], 1)
+      setCookie('rain_amount', id['rain_amount'], 1)
+      setCookie('temperature', id['temperature'], 1)
+      setCookie('recommendation', id['recommendation'], 1)
+      setCookie('icon', id['icon'], 1)
+  }
 
-    // sendingData()
-    
-    const response = await fetch('http://127.0.0.1:8000/articles/weather/', {
-        method:"GET"
-    })
-    console.log("hello")
-    response_json = await response.json();
-    // console.log("hello")
-    console.log(response_json);
-    // response_json.forEach(rain => {
-    //     const rain = document.createElement("li")
-    // })
-    const rain_cookie = response_json[0]
-    const recommendation_cookie = response_json[1]
-    const temperature_cookie = response_json[2]
-    const rain_amount_cookie = response_json[3]
-    var icon = [];
-    var rain = [];
-    var time_measure = [];
-    var recommendation = [];
-    var id = {};
-    id["rain"] = [];
-    id["time_measure"] = [];
-    id["icon"] = [];
-    id["recommendation"] = []  ;
-    id["temperature"] = []
-    id["rain_amount"] = []
+    time_list = getCookie('time').split(',');
+    rain_list = getCookie('rain').split(',');
+    rain_amount_list = getCookie('rain_amount').split(',');
+    temperature_list = getCookie('temperature').split(',');
+    recommendation_list = getCookie('recommendation').split(',');
+    icon_list = getCookie('icon').split(',');
+    console.log('time',time_list)
+    console.log('rain',getCookie('rain'))
+    console.log('rain',getCookie('rain_amount'))
+    console.log('rain',getCookie('recommendation'))
+    console.log('rain',getCookie('temperature'))
+    console.log('rain',icon)
 
     var template = []
     var result = ""
-
-    for (var i = 0; i < 6; i++) {
-      time_measure[i] = Object.keys(rain_cookie[i]).toString();
-      id["time_measure"][i] = time_measure[i].slice(0,2);
-      id["recommendation"][i] = recommendation_cookie[i];
-      id["rain"][i]=forecast(rain_cookie[i][time_measure[i]])
-      id["icon"][i]=weatherIcon(rain_cookie[i][time_measure[i]]);
-      id["rain_amount"][i]=rain_amount_cookie[i];
-      console.log(rain_amount_cookie[i])
-      id["temperature"][i]=temperature_cookie[i];
-      
-    }
     card(template,id)
-     '<div class="row row-cols-1 row-cols-md-6 g-6">'
+    
+    console.log(template)
 
 
     for (var i = 0; i < 6; i++) {
       result = result.concat(" ", template[i]);
       
     }
-    result = result.concat(" ","</div>");
+    // result = result.concat(" ","</div>");
     document.getElementById('param1').innerHTML=result;
     hideSpinner()
     
