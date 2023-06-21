@@ -1,12 +1,10 @@
 // const backend_base_url = "http://127.0.0.1:8000"
 // const frontend_base_url = "http://127.0.0.1:5500"
 
-function setCookie(cookie_name, value, days) {
-  var exdate = new Date();
-  exdate.setDate(exdate.getDate() + days);
-  // 설정 일수만큼 현재시간에 만료값으로 지정
-
-  var cookie_value = escape(value) + ((days == null) ? '' : '; expires=' + exdate.toUTCString());
+function setCookie(cookie_name, value, minutes) {
+  const exdate = new Date();
+  exdate.setMinutes(exdate.getMinutes() + minutes);
+  const cookie_value = escape(value) + ((minutes == null) ? '' : '; expires=' + exdate.toUTCString());
   document.cookie = cookie_name + '=' + cookie_value;
 }
 
@@ -91,18 +89,25 @@ function card(template,id) {
   for ( var i = 0; i < 6 ; i++){
           template[i] = `
               <div class="col">
-                <div class="card h-100">
-                    <img class="myimg" src=${icon_list[i]} class="card-img-top">
+                <div class="card h-100" >
+                    <img class="myimg" src=${icon_list[i]} class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
                     <div class="card-body">
-                      <p>측정 시각: <strong>${time_list[i]}시</strong></p>
-                      <p>날씨: <strong>${rain_list[i]}</strong></p>
-                      <p>1시간 강수량: <strong>"${rain_amount_list[i]}"</strong> 입니다!</p>
-                      <p>기온: <strong>"${temperature_list[i]}도"</strong> 입니다!</p>
-                      <p>추천 운동은 <strong>"${recommendation_list[i]}"</strong> 입니다!</p>
+                      <div class="fontContainer">
+                        
+                        시각: <strong>${time_list[i]}시</strong><br>
+                        기온: <strong>"${temperature_list[i]}도"</strong><br>
+                        추천 운동:<strong>"${recommendation_list[i]}"</strong><br>
+                        
+                      </div>
                     </div>
                 </div>     
               </div>
             `
+            // <h6>시각: <strong>${time_list[i]}시</strong></h6>
+            // <h6>강수량: <strong>"${rain_amount_list[i]}"</strong></h6>
+            // <h6>기온: <strong>"${temperature_list[i]}도"</strong></h6>
+            // <h6>추천 운동:<strong>"${recommendation_list[i]}"</strong></h6>
+            // <p>날씨: <strong>${rain_list[i]}</strong></p>
   }
   
 }
@@ -116,15 +121,9 @@ function hideSpinner() {
   document.getElementById("spinner").style.display = "none";
 }
 
-async function sendingData() {
-
-    
-
-    
-}
 
 window.onload = async function loadMainPage() {
-    showSpinner()
+    // showSpinner()
     if ((getCookie('time') == null)) {
       var position = await getPosition()
       var latitude = position.coords['latitude']
@@ -169,12 +168,12 @@ window.onload = async function loadMainPage() {
         id["temperature"][i]=temperature_cookie[i];
         
       }
-      setCookie('time', time_measure, 1)
-      setCookie('rain', id['rain'], 1)
-      setCookie('rain_amount', id['rain_amount'], 1)
-      setCookie('temperature', id['temperature'], 1)
-      setCookie('recommendation', id['recommendation'], 1)
-      setCookie('icon', id['icon'], 1)
+      setCookie('time', time_measure, 5)
+      setCookie('rain', id['rain'], 5)
+      setCookie('rain_amount', id['rain_amount'], 5)
+      setCookie('temperature', id['temperature'], 5)
+      setCookie('recommendation', id['recommendation'], 5)
+      setCookie('icon', id['icon'], 5)
   }
 
     time_list = getCookie('time').split(',');
@@ -203,7 +202,7 @@ window.onload = async function loadMainPage() {
     }
     // result = result.concat(" ","</div>");
     document.getElementById('param1').innerHTML=result;
-    hideSpinner()
+    // hideSpinner()
     
     console.log(result)
     

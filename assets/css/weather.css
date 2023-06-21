@@ -1,7 +1,22 @@
-.myimg {
-  display: block;
-  margin: 0 auto; 
-  height: 150px;
+.calenderWeather {
 
+
+}
+
+.cardContainer {
+  width: 25%;
+  background-size: contain;
+  padding: 10;
+  float:right;
+  display:inline-block;
+  margin-right: 10px;
+  font-size: 50%;
+  
+
+  }
+.fontContainer {
+  font-size: 1vw;
+
+  
 
   }
