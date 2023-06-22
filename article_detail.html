@@ -36,13 +36,14 @@
       <div class="col" id="article_content" style="margin: auto; display: block; margin-top: 10PX;">게시글 내용</div>
     </div>
   </div>
-  <button onclick="loadFeed()" style="margin: auto; display: block;">목록</button>
-  <button id="likes" onclick="articleLike()" style="margin: auto; display: block;">🤍</button>
+  <button onclick="loadFeed()" class="btn btn-primary" style="margin: auto; display: block;">목록</button>
+  <button id="likes" onclick="articleLike()" class="btn btn-primary" style="margin: auto; display: block;">🤍</button>
   <div id="like_count"
     style="background-color: pink; width: fit-content; text-align: center; margin: auto; display: block;">0</div>
   <div id="article_edit">
-    <button id="put" onclick="articlePut()" style="margin: auto; display: block;">수정</button>
-    <button id="delete" onclick="articleDelete()" style="margin: auto; display: block;">삭제</button>
+    <button id="put" onclick="articlePut()" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
+    <button id="delete" onclick="articleDelete()" class="btn btn-primary"
+      style="margin: auto; display: block;">삭제</button>
   </div>
   <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%;">
     <ul class="list-style" id="comment_list">
