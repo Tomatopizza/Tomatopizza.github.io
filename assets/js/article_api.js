@@ -2,6 +2,7 @@
 // const frontend_base_url = "http://127.0.0.1:5500"
 
 console.log("article.api js")
+
 // =====  추후 article.index.js로 옮길것임 ============
 window.onload = async function () {
     // await loadArticles();
@@ -184,11 +185,9 @@ async function buildCalendar() {
 
 
 
-
-
         // ======================= 날짜선택시 운동내역 보기 =============================
         async function choiceDate(newDIV, selected_date_str) {
-            const response = await fetch(`http://127.0.0.1:8000/articles/my000/?date=${selected_date_str}`, {
+            const response = await fetch(`${backend_base_url}/articles/my000/?date=${selected_date_str}`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem("access"),
                     'Content-Type': 'application/json',
@@ -208,6 +207,7 @@ async function buildCalendar() {
                     const check_status = data.check_status;
                     const select_day = data.select_day;
                     const category = data.category;
+                    const articleId = data.id;
 
                     const categoryName = category === 1 ? '실내운동' : category === 2 ? '실외운동' : '기타';
                     const checkStatus = check_status === true ? '운동완료 !' : check_status === false ? '아직 운동 전이에요' : '기타';
@@ -219,7 +219,7 @@ async function buildCalendar() {
                           <h5 class="card-title">${categoryName}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${select_day}</h6>
                           <p class="card-text">${checkStatus}</p>
-                          <a href="./article_detail.html" class="card-link">상세보기</a>
+                          <button type="button" onclick="location.href='${frontend_base_url}/article_detail.html?article_id=${articleId}'">상세보기</button>
                         </div>
                       </div>`;
 
@@ -249,7 +249,6 @@ async function buildCalendar() {
 }
 
 //=============여기까지 buildCalendar() ================
-
 
 
 
@@ -321,7 +320,7 @@ async function save_article() {
     const exerciseTime = document.getElementById("exercise_time").value;
     const content = document.getElementById("content").value;
     const selectDay = document.getElementById("select_day").value;
-    const img = document.getElementById("img").files[0];
+    const image = document.getElementById("image").files[0];
     const checkStatus = document.getElementById("check_status").checked;
     const isPrivate = document.getElementById("is_private").checked;
     const token = localStorage.getItem("access");
@@ -341,7 +340,7 @@ async function save_article() {
     }
     formData.append("select_day", selectDay);
     formData.append("content", content);
-    formData.append("img", img);
+    formData.append("image", image);
     formData.append("check_status", checkStatus);
     formData.append("is_private", isPrivate);
     formData.append("exercise_time", exerciseTime);

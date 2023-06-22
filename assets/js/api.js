@@ -75,7 +75,8 @@ async function getArticles() {
 // 상세페이지
 
 async function getArticle(articleId) {
-  const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,) // 각 게시글 상세보기
+  const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,)
+  // const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,) // 각 게시글 상세보기
 
   if (response.status == 200) {
     response_json = await response.json()
