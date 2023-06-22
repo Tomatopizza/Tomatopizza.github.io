@@ -1,9 +1,8 @@
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
 
 // 댓글
 async function getComments(articleId) {
     const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`,)
+
 
     if (response.status == 200) {
         response_json = await response.json()
@@ -11,11 +10,13 @@ async function getComments(articleId) {
     } else {
         alert(response.status)
     }
+
 }
 
 async function postComment(articleId, newComment) {
 
     let token = localStorage.getItem("access")
+
 
     const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`, {
         method: 'POST',
@@ -26,6 +27,7 @@ async function postComment(articleId, newComment) {
         body: JSON.stringify({
             'content': newComment,
         })
+
     })
     if (response.status == 200) {
         response_json = await response.json()
@@ -36,12 +38,12 @@ async function postComment(articleId, newComment) {
 }
 
 async function commentPut() {
-  
+
 }
 
 async function commentDelete() {
   let token = localStorage.getItem("access");
-  
+
   const confirmDelete = confirm("댓글을 삭제하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/${commentId}/`, {
@@ -77,7 +79,9 @@ async function getArticles() {
 // 상세페이지
 
 async function getArticle(articleId) {
+
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail`,) // 각 게시글 상세보기
+
 
     if (response.status == 200) {
         response_json = await response.json()

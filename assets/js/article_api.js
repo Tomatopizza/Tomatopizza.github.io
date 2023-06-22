@@ -2,6 +2,7 @@
 // const frontend_base_url = "http://127.0.0.1:5500"
 
 console.log("article.api js")
+
 // =====  추후 article.index.js로 옮길것임 ============
 window.onload = async function () {
     // await loadArticles();
@@ -27,11 +28,75 @@ async function loadArticle() {
     if (response.status == 200) {
         const response_json = await response.json()
         console.log(response_json)
-        return response_json
-    } else {
-        alert('로그인을 해주세요!')
-    }
 
+
+        if (response_json.length > 0) {
+            const checkCount1 = response_json[0].check_status_count;
+            console.log(checkCount1);
+            if (checkCount1 == 3) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `작심삼일도 100번하면 습관이 되죠 :)`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창을 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+            if (checkCount1 == 7) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `벌써 7번째 운동 완료!!`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+            if (checkCount1 >= 10) {
+                let modal = document.getElementById("modal");
+                let checkArticle = document.getElementById("check-article");
+
+                checkArticle.innerText = `벌써 ${checkCount1}번 운동했어요 대단해요!!`;
+                checkArticle.setAttribute("class", "modal_check");
+                checkArticle.setAttribute("style", "color:black;");
+
+                modal.style.display = "block";
+
+                // 모달 외부를 클릭하여 모달 창을 닫기
+                window.addEventListener("click", (event) => {
+                    if (event.target == modal) {
+                        modal.style.display = "none";
+                    }
+                });
+            }
+
+
+            // 나머지 코드를 여기에 작성합니다.
+        } else { console.log("data없음") }
+
+        return response_json;
+
+    } else {
+        alert('로그인을 해주세요!');
+    }
 
 }
 
@@ -87,6 +152,7 @@ async function buildCalendar() {
 
 
         // ========= 날짜열=backdata의 selected_day 일 경우/ 상태의 따라서 색깔이 다르게 나타냄 ========
+
         if (nowDayStr in selectedArticles) {
             if (selectedArticles[nowDayStr].check_status == true) {
                 newDIV.style.backgroundColor = 'rgb(235, 179, 106)';
@@ -94,6 +160,8 @@ async function buildCalendar() {
                 newDIV.style.backgroundColor = 'skyblue';
             }
         }
+
+
         // if (nowDay = response_json)
         if (nowDay.getDay() == 6) {                 // 토요일인 경우
             nowRow = tbody_Calendar.insertRow();    // 새로운 행 추가
@@ -119,7 +187,7 @@ async function buildCalendar() {
 
         // ======================= 날짜선택시 운동내역 보기 =============================
         async function choiceDate(newDIV, selected_date_str) {
-            const response = await fetch(`http://127.0.0.1:8000/articles/my000/?date=${selected_date_str}`, {
+            const response = await fetch(`${backend_base_url}/articles/my000/?date=${selected_date_str}`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem("access"),
                     'Content-Type': 'application/json',
@@ -139,6 +207,7 @@ async function buildCalendar() {
                     const check_status = data.check_status;
                     const select_day = data.select_day;
                     const category = data.category;
+                    const articleId = data.id;
 
                     const categoryName = category === 1 ? '실내운동' : category === 2 ? '실외운동' : '기타';
                     const checkStatus = check_status === true ? '운동완료 !' : check_status === false ? '아직 운동 전이에요' : '기타';
@@ -150,7 +219,7 @@ async function buildCalendar() {
                           <h5 class="card-title">${categoryName}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${select_day}</h6>
                           <p class="card-text">${checkStatus}</p>
-                          <a href="./article_detail.html" class="card-link">상세보기</a>
+                          <button type="button" onclick="location.href='${frontend_base_url}/article_detail.html?article_id=${articleId}'">상세보기</button>
                         </div>
                       </div>`;
 
@@ -180,7 +249,6 @@ async function buildCalendar() {
 }
 
 //=============여기까지 buildCalendar() ================
-
 
 
 
@@ -252,7 +320,7 @@ async function save_article() {
     const exerciseTime = document.getElementById("exercise_time").value;
     const content = document.getElementById("content").value;
     const selectDay = document.getElementById("select_day").value;
-    const img = document.getElementById("img").files[0];
+    const image = document.getElementById("image").files[0];
     const checkStatus = document.getElementById("check_status").checked;
     const isPrivate = document.getElementById("is_private").checked;
     const token = localStorage.getItem("access");
@@ -272,7 +340,7 @@ async function save_article() {
     }
     formData.append("select_day", selectDay);
     formData.append("content", content);
-    formData.append("img", img);
+    formData.append("image", image);
     formData.append("check_status", checkStatus);
     formData.append("is_private", isPrivate);
     formData.append("exercise_time", exerciseTime);
@@ -327,3 +395,6 @@ function setThumbnail(event) {
 
     reader.readAsDataURL(event.target.files[0]);
 }
+
+
+
