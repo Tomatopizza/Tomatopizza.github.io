@@ -176,16 +176,16 @@ async function loadComments(articleId) {
 
     const commentEditComplete = document.createElement("button")
     commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`)
-    commentEditComplete.setAttribute("data-id", `${commentId}`)
+    commentEditComplete.setAttribute("data-id", `${commentId}`) // commentId를 넘기기 위함.
     commentEditComplete.innerText = "수정완료"
     commentEditComplete.setAttribute("class", "btn btn-primary comment_edit_complete")
     commentEditForm.appendChild(commentEditComplete)
 
-    const commentEditCancel = document.createElement("button")
-    commentEditCancel.innerText = "취소"
-    commentEditCancel.setAttribute("class", "btn btn-primary")
-    commentEditCancel.addEventListener("click", () => cancelNewComment(commentId))
-    commentEditForm.appendChild(commentEditCancel)
+    // const commentEditCancel = document.createElement("button")
+    // commentEditCancel.innerText = "취소"
+    // commentEditCancel.setAttribute("class", "btn btn-primary")
+    // commentEditCancel.addEventListener("click", () => cancelNewComment(commentId))
+    // commentEditForm.appendChild(commentEditCancel)
 
     commentList.appendChild(commentEditForm)
   });
