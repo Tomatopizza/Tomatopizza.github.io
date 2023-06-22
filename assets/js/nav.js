@@ -1,6 +1,7 @@
 const backend_base_url = "http://127.0.0.1:8000"
 const frontend_base_url = "http://127.0.0.1:5500"
 
+
 $(document).ready(function () {
     // 상단 네비 html을 붙여주는 함수
     $("#navbar-container").load("nav.html", function () {
@@ -18,7 +19,6 @@ $(document).ready(function () {
             intro.innerText = `${payload_parse.username}님 안녕하세요`;
             intro.setAttribute('style', 'color: black;')
             intro.href = `${frontend_base_url}/profile2.html`
-            // fetch(`${BACK_BASE_URL}/user/` + payload_parse.user_id)
 
 
             let navbarRight = document.getElementById("navbar-right");
@@ -31,7 +31,8 @@ $(document).ready(function () {
                 localStorage.removeItem("refresh")
                 localStorage.removeItem("payload")
                 location.reload()
-            }
+            };
+
 
             const modal = document.getElementById('modal');
             const open = document.getElementById('nav-create')
@@ -60,9 +61,11 @@ $(document).ready(function () {
             logoutBtn.setAttribute("id", "nav-loginout");
             logoutBtn.innerText = "로그아웃";
             logoutBtn.setAttribute("type", "button");
-            logoutBtn.setAttribute('style', 'background-color: black; color:white')
+            logoutBtn.setAttribute('style', 'background-color: black; color:white;')
 
             logoutBtn.addEventListener("click", handleLogout);
+
+
 
             // <!-- <button type='button' id="modal_btn">글쓰기</button>
             // 로그인시 보이는 글쓰기
