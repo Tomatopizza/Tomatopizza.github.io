@@ -132,13 +132,14 @@ async function loadComments(articleId) {
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
 
-
+  // 댓글 작성하기
   response.forEach(comment => {
     commentId = comment["id"]
 
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
+
     // 유저 프로필 이미지로 분할
     if (UserAvatar) {
       if (comment.user === currentUserPk) {
@@ -147,11 +148,11 @@ async function loadComments(articleId) {
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
-          <div id="comment_edit">
-            <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
-            <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
+          <div id="comment_edit${commentId}" data-value="${commentId}">
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
       }
@@ -161,7 +162,7 @@ async function loadComments(articleId) {
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
         </li>`}
     } else {
@@ -171,11 +172,11 @@ async function loadComments(articleId) {
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
-          <div id="comment_edit">
-            <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
-            <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
+          <div id="comment_edit${commentId}">
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
       } else {
@@ -184,12 +185,41 @@ async function loadComments(articleId) {
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.user}</h5>
-          <p>${comment.content}</p>
+          <p id="comment_content${commentId}">${comment.content}</p>
         </div>`}
     }
+    
+    // 댓글 수정창
+    const commentEditForm = document.createElement("div")
+    commentEditForm.setAttribute("id", `comment_edit_${commentId}`)
+    commentEditForm.setAttribute("class", "comment_edit_form")
+    commentEditForm.style.display = "none"
+
+    const commentEditInput = document.createElement("input")
+    commentEditInput.setAttribute("id", `comment_edit_input${commentId}`)
+    commentEditInput.setAttribute("type", "text")
+    commentEditForm.appendChild(commentEditInput)
+
+    const commentEditComplete = document.createElement("button")
+    commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`)
+    commentEditComplete.setAttribute("data-id", `${commentId}`)
+    commentEditComplete.innerText = "수정완료"
+    commentEditComplete.setAttribute("class", "btn btn-primary comment_edit_complete")
+    commentEditForm.appendChild(commentEditComplete)
+
+    const commentEditCancel = document.createElement("button")
+    commentEditCancel.innerText = "취소"
+    commentEditCancel.setAttribute("class", "btn btn-primary")
+    commentEditCancel.addEventListener("click", () => cancelNewComment(commentId))
+    commentEditForm.appendChild(commentEditCancel)
+
+    commentList.appendChild(commentEditForm)
   });
+  
 }
 
+
+// 댓글 작성하기 버튼
 async function submitComment() {
   const commentElement = document.getElementById("new_comment");
   const newComment = commentElement.value;
@@ -203,7 +233,8 @@ async function loadFeed() {
   window.location.href = "feed.html"
 }
 
-// 좋아요 버튼
+
+// 게시글 좋아요 버튼
 
 async function articleLike() {
   let token = localStorage.getItem("access");
@@ -240,14 +271,13 @@ async function articleLike() {
 // 게시글 수정
 
 async function articlePut() {
-  // 수정
 };
 
 // 게시글 삭제
 async function articleDelete() {
   let token = localStorage.getItem("access");
 
-  const confirmDelete = confirm("정말 삭제하시겠습니까?");
+  const confirmDelete = confirm("댓글을 삭제 하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
       headers: {
@@ -264,3 +294,4 @@ async function articleDelete() {
     }
   }
 }
+
