@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+    </script>
+    <script src="../assets/js/urls.js"></script>
+    <script src="../assets/js/api.js"></script>
+    <script src="../assets/js/article_update.js"></script>
+</head>
+
+<body>
+    <!-- 상단 네비게이션바 -->
+    <div id="navbar-container"></div>
+    <!-- 상단 네비게이션 끝-->
+
+
+    <!-- 게시글 Post modal -->
+    <div class="modal_body">
+        <div class="article_post">
+            <h3>운동 기록하기</h3>
+            <label for="select_day">운동 날짜를 선택하세요:
+                <input type="date" id="select_day" max="2055-06-20" min="2023-06-16" value="2023-06-16">
+            </label>
+            <br>
+            <label for="category1">운동선택</label>
+            <select class="form-select" id="category" onchange="toggleCategoryFields(this.value)">
+                <option selected>--선택--</option>
+                <option name="category" value="in">실내 운동</option>
+                <option name="category" value="out">실외 운동</option>
+            </select>
+
+            <div class="in_category">
+                <label class="input-group-text1" for="in_category">실내 운동 카테고리</label>
+                <select class="form-select in" id="in_category">
+                    <option selected>--선택--</option>
+                    <option name="in_category" value="걷기">실내 걷기</option>
+                    <option name="in_category" value="뛰기">트레드밀</option>
+                    <option name="in_category" value="자전거">실내 싸이클</option>
+                    <option name="in_category" value="상체">상체 웨이트</option>
+                    <option name="in_category" value="하체">하체 웨이트</option>
+                    <option name="in_category" value="수영">수영</option>
+                    <option name="in_category" value="코어">실내 코어운동</option>
+                </select>
+            </div>
+            <div class="out_category">
+                <label class="input-group-text2" for="out_category">실외 운동 카테고리</label>
+                <select class="form-select out" id="out_category">
+                    <option selected>--선택--</option>
+                    <option name="out_category" value="걷기">실외 걷기</option>
+                    <option name="out_category" value="뛰기">야외 런닝</option>
+                    <option name="out_category" value="자전거">야외 싸이클</option>
+                    <option name="out_category" value="구기">구기종목</option>
+                </select>
+            </div>
+            <p>운동시간</p>
+            <input id="exercise_time1" type="text" placeholder="숫자로만 적어주세요">
+            <div class="input-group">
+                <form id="imgForm">
+                    <p>내용</p>
+                    <input type="text" id="content2" rows="3" placeholder="운동 내용을 기록해주세요">
+                    <br>
+                    <label><input type="checkbox" value="01" id="check_status1">완료하셨다면 체크박스!</label>
+                    <br>
+                    <label><input type="checkbox" value="02" id="is_private1">나만보기</label>
+                    <p>체크하지 않을 경우 자동으로 피드로 공유됩니다.</p>
+                    <div class="input-group mb-3">
+                        <form id="imgForm">
+                            <input type="file" value="none" id="image" onchange="setThumbnail(event);">
+                        </form>
+                        <div id="imgthumbnail2"></div>
+                        <button type="button" id="save-article" onclick="articleUpdate()">수정완료</button>
+                        <button type="button" id="save-article" onclick="articleNoUpdate()">취소하기</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+
+</body>
+
+</html>
