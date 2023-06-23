@@ -29,6 +29,7 @@ async function handleRegister() {
 }
 
 async function handleLogin() {
+    console.log("로그인 신호")
     const loginData = {
         username: document.getElementById("floatingInput").value,
         password: document.getElementById("floatingPassword").value
