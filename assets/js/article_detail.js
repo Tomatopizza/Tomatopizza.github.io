@@ -1,39 +1,6 @@
 let articleId
 let commentId
 
-
-
-
-// 서버에서 articleLikeCount 값을 가져와서 설정
-const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams)
-articleId = urlParams.get("article_id");
-console.log(articleId)
-
-
-
-
-// const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-//   method: "POST",
-// });
-// const data = await updateLikeCount.json();
-// console.log(data)
-// const articleLikeCount = data.articleLikeCount || 0;
-// likeCount.innerText = articleLikeCount;
-
-// let token = localStorage.getItem("access");
-// const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
-//   method: 'POST',
-//   headers: {
-//     'content-type': 'application/json',
-//     'Authorization': `Bearer ${token}`
-//   },
-// });
-// console.log(likeImage)
-// likeButton.innerText = likeImage
-// await loadArticleLikeStatus();
-
-
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
@@ -50,10 +17,12 @@ async function loadArticles(articleId) {
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
 
+
   const articleTitle = document.getElementById("article_content");
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
+
 
   articleTitle.innerText = response.content;
   articleUser.innerText = articleUsername.username;
@@ -85,8 +54,7 @@ async function loadArticles(articleId) {
   });
 
   const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
-  console.log(likeResponse_json.message)
-  console.log(likeResponse_json.fluctuation)
+  console.log(likeResponse_json.fluctuation) // 좋아요 갯수
 
   likeButton.innerText = likeResponse_json.message
   likeCount.innerText = likeResponse_json.fluctuation
@@ -120,6 +88,8 @@ async function loadArticles(articleId) {
 async function loadComments(articleId) {
   const response = await getComments(articleId); // 해당 아티클의 댓글
 
+  console.log(response["length"])
+
   // 댓글 edit기능을 위한 유저 식별
   let token = localStorage.getItem("access");
 
@@ -137,13 +107,14 @@ async function loadComments(articleId) {
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
 
-
+  // 댓글 작성하기
   response.forEach(comment => {
     commentId = comment["id"]
 
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
+
     // 유저 프로필 이미지로 분할
     if (UserAvatar) {
       if (comment.user === currentUserPk) {
@@ -152,11 +123,11 @@ async function loadComments(articleId) {
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
-          <div id="comment_edit">
-            <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
-            <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
+          <div id="comment_edit${commentId}" data-value="${commentId}">
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
       }
@@ -166,7 +137,7 @@ async function loadComments(articleId) {
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
         </li>`}
     } else {
@@ -176,11 +147,11 @@ async function loadComments(articleId) {
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.user}</h5>
-            <p>${comment.content}</p>
+            <p id="comment_content${commentId}">${comment.content}</p>
           </div>
-          <div id="comment_edit">
-            <button id="c_put" onclick="commentPut()" style="margin: auto; display: block;">수정</button>
-            <button id="c_delete" onclick="commentDelete()" style="margin: auto; display: block;">삭제</button>
+          <div id="comment_edit${commentId}">
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
           </div>
         </li>`;
       } else {
@@ -189,12 +160,41 @@ async function loadComments(articleId) {
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.user}</h5>
-          <p>${comment.content}</p>
+          <p id="comment_content${commentId}">${comment.content}</p>
         </div>`}
     }
+
+    // 댓글 수정창
+    const commentEditForm = document.createElement("div")
+    commentEditForm.setAttribute("id", `comment_edit_${commentId}`)
+    commentEditForm.setAttribute("class", "comment_edit_form")
+    commentEditForm.style.display = "none"
+
+    const commentEditInput = document.createElement("input")
+    commentEditInput.setAttribute("id", `comment_edit_input${commentId}`)
+    commentEditInput.setAttribute("type", "text")
+    commentEditForm.appendChild(commentEditInput)
+
+    const commentEditComplete = document.createElement("button")
+    commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`)
+    commentEditComplete.setAttribute("data-id", `${commentId}`) // commentId를 넘기기 위함.
+    commentEditComplete.innerText = "수정완료"
+    commentEditComplete.setAttribute("class", "btn btn-primary comment_edit_complete")
+    commentEditForm.appendChild(commentEditComplete)
+
+    // const commentEditCancel = document.createElement("button")
+    // commentEditCancel.innerText = "취소"
+    // commentEditCancel.setAttribute("class", "btn btn-primary")
+    // commentEditCancel.addEventListener("click", () => cancelNewComment(commentId))
+    // commentEditForm.appendChild(commentEditCancel)
+
+    commentList.appendChild(commentEditForm)
   });
+
 }
 
+
+// 댓글 작성하기 버튼
 async function submitComment() {
   const commentElement = document.getElementById("new_comment");
   const newComment = commentElement.value;
@@ -208,7 +208,8 @@ async function loadFeed() {
   window.location.href = "feed.html"
 }
 
-// 좋아요 버튼
+
+// 게시글 좋아요 버튼
 
 async function articleLike() {
   let token = localStorage.getItem("access");
@@ -243,9 +244,8 @@ async function articleLike() {
 
 
 // 게시글 수정
-
 function articleLoadPut() {
-  window.location.href = `${frontend_base_url}/article_update.html?article_id=${articleId}`;
+  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
 }
 // const toggleCategoryFields = (category) => {
 //   const inCategoryFields = document.querySelectorAll(".in_category1");
@@ -320,11 +320,13 @@ function articleLoadPut() {
 
 
 
+
+
 // 게시글 삭제
 async function articleDelete() {
   let token = localStorage.getItem("access");
 
-  const confirmDelete = confirm("정말 삭제하시겠습니까?");
+  const confirmDelete = confirm("댓글을 삭제 하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
       headers: {
@@ -341,3 +343,4 @@ async function articleDelete() {
     }
   }
 }
+
