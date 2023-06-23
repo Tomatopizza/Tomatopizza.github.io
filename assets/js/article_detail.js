@@ -1,35 +1,6 @@
 let articleId
 let commentId
 
-
-
-
-// 서버에서 articleLikeCount 값을 가져와서 설정
-const urlParams = new URLSearchParams(window.location.search);
-console.log(urlParams)
-articleId = urlParams.get("article_id");
-
-const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-  method: "POST",
-});
-const data = await updateLikeCount.json();
-console.log(data)
-const articleLikeCount = data.articleLikeCount || 0;
-likeCount.innerText = articleLikeCount;
-
-let token = localStorage.getItem("access");
-const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
-  method: 'POST',
-  headers: {
-    'content-type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  },
-});
-console.log(likeImage)
-// likeButton.innerText = likeImage
-// await loadArticleLikeStatus();
-
-
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
@@ -45,12 +16,10 @@ async function loadArticles(articleId) {
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
 
-  const articleTitle = document.getElementById("article_title");
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
 
-  articleTitle.innerText = response.title;
   articleUser.innerText = articleUsername.username;
   articleContent.innerText = response.content;
   const newImage = document.createElement("img");
@@ -80,8 +49,7 @@ async function loadArticles(articleId) {
   });
 
   const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
-  console.log(likeResponse_json.message)
-  console.log(likeResponse_json.fluctuation)
+  console.log(likeResponse_json.fluctuation) // 좋아요 갯수
 
   likeButton.innerText = likeResponse_json.message
   likeCount.innerText = likeResponse_json.fluctuation
@@ -114,6 +82,8 @@ async function loadArticles(articleId) {
 
 async function loadComments(articleId) {
   const response = await getComments(articleId); // 해당 아티클의 댓글
+
+  console.log(response["length"])
 
   // 댓글 edit기능을 위한 유저 식별
   let token = localStorage.getItem("access");
