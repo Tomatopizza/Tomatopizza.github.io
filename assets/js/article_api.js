@@ -1,16 +1,7 @@
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
+
 
 console.log("article.api js")
 
-// ===== weather에서 onload를 보낼때 캘린더도 같이 태워서 보냄 ==========
-// window.onload = async function () {
-//     // loadArticles();
-
-//     buildCalendar()
-//     console.log("article.api js")
-
-// }
 
 
 
@@ -219,7 +210,7 @@ async function buildCalendar() {
                           <h5 class="card-title">${categoryName}</h5>
                           <h6 class="card-subtitle mb-2 text-muted">${select_day}</h6>
                           <p class="card-text">${checkStatus}</p>
-                          <button type="button" onclick="location.href='${frontend_base_url}/article_detail.html?article_id=${articleId}'">상세보기</button>
+                          <button type="button" onclick="location.href='${frontend_base_url}/template/article_detail.html?article_id=${articleId}'">상세보기</button>
                         </div>
                       </div>`;
 

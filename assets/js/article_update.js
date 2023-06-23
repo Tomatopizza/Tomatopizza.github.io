@@ -1,10 +1,7 @@
-// console.log("update.js")
+
 const urlParams = new URLSearchParams(window.location.search);
 articleId = urlParams.get("article_id");
 // console.log(articleId)
-
-const backend_base_url = "http://127.0.0.1:8000"
-const frontend_base_url = "http://127.0.0.1:5500"
 
 
 
@@ -29,7 +26,7 @@ const toggleCategoryFields = (category) => {
     }
 };
 function articleNoUpdate() {
-    window.location.href = `${frontend_base_url}/article_detail.html?article_id=${articleId}`;
+    window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${articleId}`;
 }
 
 
