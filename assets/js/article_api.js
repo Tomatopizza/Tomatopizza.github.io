@@ -3,14 +3,14 @@
 
 console.log("article.api js")
 
-// =====  추후 article.index.js로 옮길것임 ============
-window.onload = async function () {
-    // await loadArticles();
+// ===== weather에서 onload를 보낼때 캘린더도 같이 태워서 보냄 ==========
+// window.onload = async function () {
+//     // loadArticles();
 
-    buildCalendar()
-    console.log("article.api js")
+//     buildCalendar()
+//     console.log("article.api js")
 
-}
+// }
 
 
 

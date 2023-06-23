@@ -212,6 +212,9 @@ async function loadFeed() {
   window.location.href = "feed.html"
 }
 
+function articleLoadPut() {
+  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
+}
 
 // 게시글 좋아요 버튼
 
@@ -246,81 +249,6 @@ async function articleLike() {
   }
 }
 
-
-// 게시글 수정
-function articleLoadPut() {
-  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
-}
-// const toggleCategoryFields = (category) => {
-//   const inCategoryFields = document.querySelectorAll(".in_category1");
-//   const outCategoryFields = document.querySelectorAll(".out_category1");
-
-//   if (category === "in") {
-//     inCategoryFields.forEach((field) => {
-//       field.style.display = "block";
-//     });
-//     outCategoryFields.forEach((field) => {
-//       field.style.display = "none";
-//     });
-//   } else if (category === "out") {
-//     outCategoryFields.forEach((field) => {
-//       field.style.display = "block";
-//     });
-//     inCategoryFields.forEach((field) => {
-//       field.style.display = "none";
-//     });
-//   }
-// };
-
-// async function articlePut() {
-//   // 필요한 데이터를 HTML 요소에서 가져옵니다.
-//   const content = document.getElementById("content1").value;
-//   // const image = document.getElementById("image").files[0];
-//   // const selectDay = document.getElementById("select_day").value;
-//   // const category = document.getElementById("category").value;
-//   // const inSubcategory = document.getElementById("in_subcategory1").value;
-//   // const outSubcategory = document.getElementById("out_subcategory1").value;
-//   const exerciseTime = document.getElementById("exercise_time1").value;
-//   const checkStatus = document.getElementById("check_status1").checked;
-//   const isPrivate = document.getElementById("is_private1").checked;
-//   const token = localStorage.getItem("access");
-
-// 선택된 카테고리에 따라 subcategory 값을 설정합니다.
-// const subcategory = category === 'in' ? inSubcategory : outSubcategory;
-
-// FormData를 생성하고 필요한 값을 추가합니다.
-//   const formData = new FormData();
-//   formData.append("content1", content);
-//   // formData.append("image", image);
-//   // formData.append("exercise_date", selectDay);
-//   // formData.append("category", category);
-//   // formData.append("in_subcategory1", subcategory);
-//   // formData.append("out_subcategory1", subcategory);
-//   formData.append("exercise_time1", exerciseTime);
-//   formData.append("check_status1", checkStatus);
-//   formData.append("is_private1", isPrivate);
-
-
-//   const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
-//     method: "PUT",
-//     headers: {
-//       Authorization: 'Bearer ' + token,
-//     },
-//     body: formData,
-//   });
-
-
-//   if (response == 201) {
-//     alert("수정 완료되었습니다.");
-//     // 필요한 경우 결과 처리를 수행하세요.
-//   } else {
-//     alert('수정에 실패하였습니다:', response.status, '-', response.statusText);
-//   }
-
-// };
-
-// const saveButton = document.getElementById("put");
-// saveButton.addEventListener("click", articlePut);
 
 
 
