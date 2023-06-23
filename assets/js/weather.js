@@ -155,9 +155,14 @@ window.onload = async function loadMainPage() {
 
       for (var i = 0; i < 6; i++) {
         time_measure[i] = Object.keys(response_json[0][i]);
+        console.log('time222222',time_measure[i])
+        console.log('response',response_json[0][i])
         weather["recommendation"][i] = response_json[1][i]; // 운동추천
-        weather["rain"][i]=forecast(response_json[0][time_measure[i]]) // 날씨
-        weather["icon"][i]=weatherIcon(Object.keys(weather["rain"])[i]); // 아이콘 사진 경로 저장
+        weather["rain"][i]=forecast(response_json[0][i][time_measure[i]]) // 날씨
+        console.log('rain2222',weather["rain"][i])
+        console.log('rain33333',response_json[0][i][time_measure[i]])
+        weather["icon"][i]=weatherIcon(response_json[0][i][time_measure[i]]); // 아이콘 사진 경로 저장
+        console.log("icoooooo",response_json[0][i][time_measure[i]])
         weather["rain_amount"][i]=response_json[3][i]; // 강수량
         weather["temperature"][i]=response_json[2][i]; // 기온
           
