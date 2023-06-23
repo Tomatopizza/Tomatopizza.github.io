@@ -13,12 +13,11 @@ window.onload = async function () {
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
+  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
   const response = await getArticle(articleId);
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
-
-
-  const articleTitle = document.getElementById("article_content");
+  console.log(articleUsername)
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
@@ -54,59 +53,72 @@ async function loadArticles(articleId) {
   });
 
   const likeResponse_json = await likeResponse.json() // 제이슨으로 변환
-  console.log(likeResponse_json.fluctuation) // 좋아요 갯수
+  // console.log(likeResponse_json.fluctuation) // 좋아요 갯수
 
   likeButton.innerText = likeResponse_json.message
   likeCount.innerText = likeResponse_json.fluctuation
 
   // 게시글 수정·삭제 기능
 
-  // let token = localStorage.getItem("access");
+  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const currentUser = parsedPayload.user_id
 
-  // const currentUser = await fetch(`${backend_base_url}/users/`, {
+  const articleEdit = document.getElementById("article_edit"); // 게시글 수정·삭제창
+  // 작성자에게만 기능 노출
+  if (currentUser == articleUserPk) {
+    articleEdit.style.display = "block";
+  } else {
+    articleEdit.style.display = "none";
+  }
+  // const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/`, {
   //   method: 'GET',
   //   headers: {
   //     'content-type': 'application/json',
   //     'Authorization': `Bearer ${token}`,
   //   },
   // }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
-  const payload = localStorage.getItem("payload");
-  const parsedPayload = JSON.parse(payload);
-  // console.log(parsedPayload.user_id);
-  // const currentUser = parsedPayload.user_id
-
+  
+  // console.log(currentUser)
   // const currentUserData = await currentUser.json();
-  const currentUserPk = parsedPayload.user_id
+  // console.log(currentUserData)
+  // const currentUserPk = await currentUserData["user_id"];
 
-  // 작성자에게만 기능 노출
-  const articleEdit = document.getElementById("article_edit");
-  if (currentUserPk == articleUserPk) {
-    articleEdit.style.display = "block";
-  } else {
-    articleEdit.style.display = "none";
-  }
+  // // 작성자에게만 기능 노출
+  // const articleEdit = document.getElementById("article_edit");
+  // if (currentUserPk == articleUserPk) {
+  //   articleEdit.style.display = "block";
+  // } else {
+  //   articleEdit.style.display = "none";
+  // }
 }
 
 // 댓글
 
 async function loadComments(articleId) {
-  const response = await getComments(articleId); // 해당 아티클의 댓글
 
-  console.log(response["length"])
+  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
+
+  const response = await getComments(articleId); // 해당 아티클의 댓글
+  let articleCommentCount = response["length"]
+  console.log(articleCommentCount) // 댓글 갯수
 
   // 댓글 edit기능을 위한 유저 식별
-  let token = localStorage.getItem("access");
 
-  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  });
+  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const currentUser = parsedPayload.user_id
 
-  const currentUserData = await currentUser.json();
-  const currentUserPk = await currentUserData["pk"];
+  // let token = localStorage.getItem("access");
+
+  // const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'Authorization': `Bearer ${token}`,
+  //   },
+  // });
+
+  // const currentUserData = await currentUser.json();
+  // const currentUserPk = await currentUserData["pk"];
 
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
@@ -121,7 +133,7 @@ async function loadComments(articleId) {
 
     // 유저 프로필 이미지로 분할
     if (UserAvatar) {
-      if (comment.user === currentUserPk) {
+      if (comment.user === currentUser) {
         commentList.innerHTML +=
           `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
@@ -145,7 +157,7 @@ async function loadComments(articleId) {
           </div>
         </li>`}
     } else {
-      if (comment.user === currentUserPk) {
+      if (comment.user === currentUser) {
         commentList.innerHTML +=
           `<li class="media d-flex mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>

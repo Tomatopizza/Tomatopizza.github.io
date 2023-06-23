@@ -5,9 +5,7 @@ function articleDetail(article_id) {
 window.onload = async function loadArticles() {
   articles = await getArticles()
   console.log(articles)
-
   const article_list = document.getElementById("article_list")
-
   articles.forEach(article => {
     const newCol = document.createElement("div"); // div 생성
     newCol.setAttribute("class", "col") // class 부여
@@ -44,8 +42,12 @@ window.onload = async function loadArticles() {
 
     const newCardTitle = document.createElement("li")
     newCardTitle.setAttribute("class", "card-title")
-    newCardTitle.innerText = article.title
+    newCardTitle.innerText = article.content // 콘텐츠로 변경
     newCardTitleBox.appendChild(newCardTitle)
+
+    const articleUser = document.createElement("p") // 게시물 작성자
+    articleUser.innerText = article.user
+    newCardTitleBox.appendChild(articleUser)
 
     const newText = document.createElement("div") //좋아요, 댓글, 작성시간 div
     newText.setAttribute("class", "collector")
@@ -58,7 +60,8 @@ window.onload = async function loadArticles() {
 
     const commentCount = document.createElement("li")
     commentCount.setAttribute("class", "comment_count")
-    commentCount.innerText = `댓글 수: ${article.comment_count || 0}` // 댓글 수 추가
+    // commentCount.innerText = `댓글 수: ${article.comment_count || 0}` // 댓글 수 추가
+    commentCount.innerText = `댓글 수: ${article.comment_count}` // 댓글 수 추가
     newText.appendChild(commentCount)
 
     const createdAt = document.createElement("li")
