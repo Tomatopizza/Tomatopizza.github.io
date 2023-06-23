@@ -9,6 +9,7 @@ window.onload = async function () {
   await loadComments(articleId);
 }
 
+
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
@@ -21,8 +22,10 @@ async function loadArticles(articleId) {
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
 
+
+  articleTitle.innerText = response.content;
   articleUser.innerText = articleUsername.username;
-  articleContent.innerText = response.content;
+  // articleContent.innerText = response.content;
   const newImage = document.createElement("img");
 
 
@@ -176,7 +179,7 @@ async function loadComments(articleId) {
           <p id="comment_content${commentId}">${comment.content}</p>
         </div>`}
     }
-    
+
     // 댓글 수정창
     const commentEditForm = document.createElement("div")
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`)
@@ -203,7 +206,7 @@ async function loadComments(articleId) {
 
     commentList.appendChild(commentEditForm)
   });
-  
+
 }
 
 
@@ -221,6 +224,9 @@ async function loadFeed() {
   window.location.href = "feed.html"
 }
 
+function articleLoadPut() {
+  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
+}
 
 // 게시글 좋아요 버튼
 
@@ -256,10 +262,9 @@ async function articleLike() {
 }
 
 
-// 게시글 수정
 
-async function articlePut() {
-};
+
+
 
 // 게시글 삭제
 async function articleDelete() {
