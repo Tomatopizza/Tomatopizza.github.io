@@ -22,7 +22,7 @@ async function handleRegister() {
     response_json = await response.json();
 
     if (response.status == 200) {
-        window.location.replace(`${frontend_base_url}/A8ooo_front/login.html`); // 로그인 페이지
+        window.location.replace(`${frontend_base_url}/A8ooo_FR/user/login.html`); // 로그인 페이지
     } else {
         alert(response.status); // "회원정보가 일치하지 않습니다."
     }
