@@ -3,7 +3,7 @@
 async function getComments(articleId) {
   const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`,)
 
-
+  
 
   if (response.status == 200) {
     response_json = await response.json()
@@ -33,9 +33,9 @@ async function postComment(articleId, newComment) {
   })
 
 
-  if (response.status == 200) {
+  if (response.status == 201) {
     response_json = await response.json()
-    return response_json
+    alert("댓글이 작성되었습니다.")
   } else {
     alert(response.status)
   }
@@ -88,6 +88,7 @@ async function saveNewComment(commentId) {
         'content': newEditComment,
       })
     });
+    alert("댓글이 수정되었습니다.")
   }
   location.reload();
 

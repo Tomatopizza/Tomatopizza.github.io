@@ -250,11 +250,12 @@ async function articleLike() {
     if (likeButton.innerText === "🧡") {
       likeButton.innerText = "🤍";
       likeCount.innerText = response_json.fluctuation;
+      alert("좋아요 취소")
 
     } else if (likeButton.innerText === "🤍") {
       likeButton.innerText = "🧡";
       likeCount.innerText = response_json.fluctuation;
-
+      alert("좋아요")
     }
 
   }
@@ -269,7 +270,7 @@ async function articleLike() {
 async function articleDelete() {
   let token = localStorage.getItem("access");
 
-  const confirmDelete = confirm("댓글을 삭제 하시겠습니까?");
+  const confirmDelete = confirm("게시글을 삭제 하시겠습니까?");
   if (confirmDelete) {
     const response = await fetch(`${backend_base_url}/articles/${articleId}/detail/`, {
       headers: {
