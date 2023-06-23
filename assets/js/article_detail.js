@@ -9,39 +9,39 @@ const urlParams = new URLSearchParams(window.location.search);
 console.log(urlParams)
 articleId = urlParams.get("article_id");
 console.log(articleId)
-console.log()
 
 
-async function detailLoda() {
-  const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
-    method: "POST",
-  });
-  const data = await updateLikeCount.json();
-  console.log(data)
-  const articleLikeCount = data.articleLikeCount || 0;
-  likeCount.innerText = articleLikeCount;
-
-  let token = localStorage.getItem("access");
-  const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
-    method: 'POST',
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${token}`
-    },
-  });
-  console.log(likeImage)
-  // likeButton.innerText = likeImage
-  // await loadArticleLikeStatus();
 
 
-  window.onload = async function () {
-    const urlParams = new URLSearchParams(window.location.search);
-    articleId = urlParams.get("article_id");
+// const updateLikeCount = await fetch(`${backend_base_url}/articles/${articleId}/update_like_count/`, {
+//   method: "POST",
+// });
+// const data = await updateLikeCount.json();
+// console.log(data)
+// const articleLikeCount = data.articleLikeCount || 0;
+// likeCount.innerText = articleLikeCount;
 
-    await loadArticles(articleId);
-    await loadComments(articleId);
-  }
+// let token = localStorage.getItem("access");
+// const likeImage = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`, {
+//   method: 'POST',
+//   headers: {
+//     'content-type': 'application/json',
+//     'Authorization': `Bearer ${token}`
+//   },
+// });
+// console.log(likeImage)
+// likeButton.innerText = likeImage
+// await loadArticleLikeStatus();
+
+
+window.onload = async function () {
+  const urlParams = new URLSearchParams(window.location.search);
+  articleId = urlParams.get("article_id");
+
+  await loadArticles(articleId);
+  await loadComments(articleId);
 }
+
 
 // 공유 게시글 불러오기
 
@@ -50,14 +50,14 @@ async function loadArticles(articleId) {
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
 
-  const articleTitle = document.getElementById("article_title");
+  const articleTitle = document.getElementById("article_content");
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
 
-  articleTitle.innerText = response.title;
+  articleTitle.innerText = response.content;
   articleUser.innerText = articleUsername.username;
-  articleContent.innerText = response.content;
+  // articleContent.innerText = response.content;
   const newImage = document.createElement("img");
 
 
