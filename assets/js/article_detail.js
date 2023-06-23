@@ -9,6 +9,7 @@ window.onload = async function () {
   await loadComments(articleId);
 }
 
+
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
@@ -16,12 +17,16 @@ async function loadArticles(articleId) {
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
 
+
+  const articleTitle = document.getElementById("article_content");
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
 
+
+  articleTitle.innerText = response.content;
   articleUser.innerText = articleUsername.username;
-  articleContent.innerText = response.content;
+  // articleContent.innerText = response.content;
   const newImage = document.createElement("img");
 
 
@@ -58,16 +63,20 @@ async function loadArticles(articleId) {
 
   // let token = localStorage.getItem("access");
 
-  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
+  // const currentUser = await fetch(`${backend_base_url}/users/`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'Authorization': `Bearer ${token}`,
+  //   },
+  // }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
+  const payload = localStorage.getItem("payload");
+  const parsedPayload = JSON.parse(payload);
+  // console.log(parsedPayload.user_id);
+  // const currentUser = parsedPayload.user_id
 
-  const currentUserData = await currentUser.json();
-  const currentUserPk = await currentUserData["pk"];
+  // const currentUserData = await currentUser.json();
+  const currentUserPk = parsedPayload.user_id
 
   // 작성자에게만 기능 노출
   const articleEdit = document.getElementById("article_edit");
@@ -158,7 +167,7 @@ async function loadComments(articleId) {
           <p id="comment_content${commentId}">${comment.content}</p>
         </div>`}
     }
-    
+
     // 댓글 수정창
     const commentEditForm = document.createElement("div")
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`)
@@ -185,7 +194,7 @@ async function loadComments(articleId) {
 
     commentList.appendChild(commentEditForm)
   });
-  
+
 }
 
 
@@ -203,6 +212,9 @@ async function loadFeed() {
   window.location.href = "feed.html"
 }
 
+function articleLoadPut() {
+  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
+}
 
 // 게시글 좋아요 버튼
 
@@ -238,10 +250,9 @@ async function articleLike() {
 }
 
 
-// 게시글 수정
 
-async function articlePut() {
-};
+
+
 
 // 게시글 삭제
 async function articleDelete() {
