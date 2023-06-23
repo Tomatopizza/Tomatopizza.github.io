@@ -124,7 +124,7 @@ function card_fail(template) { // 카드 실패 했을 때 띄울 거
 
 
 window.onload = async function loadMainPage() {
-  console.log(getCookie('success_or_fail'))
+  buildCalendar()
   if ((getCookie('success_or_fail') == null)) {
     var position = await success_fail(position) // -1일 경우 위치정보 수집 거부.
     console.log("position",position);
