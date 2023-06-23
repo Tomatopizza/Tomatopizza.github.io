@@ -29,7 +29,6 @@ window.onload = async function loadArticles() {
     }else{
       articleImage.setAttribute("src", "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg")
     }
-    
     imageSize.appendChild(articleImage)
 
     const newCardBody = document.createElement("div")
