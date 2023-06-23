@@ -23,7 +23,6 @@ async function loadArticles(articleId) {
   const articleImage = document.getElementById("article_image");
 
 
-  articleTitle.innerText = response.content;
   articleUser.innerText = articleUsername.username;
   // articleContent.innerText = response.content;
   const newImage = document.createElement("img");
