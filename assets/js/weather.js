@@ -127,11 +127,9 @@ window.onload = async function loadMainPage() {
   buildCalendar()
   if ((getCookie('success_or_fail') == null)) {
     var position = await success_fail(position) // -1일 경우 위치정보 수집 거부.
-    console.log("position",position);
     if (position[0] != -1){
       var latitude = position[0]
       var longitude = position[1]
-      console.log("long",longitude)
       const response = await fetch(`${back_base_url}/articles/weather/`,{ // 백엔드로 위치 정보 전달
         method: 'POST',
         headers: {
@@ -155,14 +153,9 @@ window.onload = async function loadMainPage() {
 
       for (var i = 0; i < 6; i++) {
         time_measure[i] = Object.keys(response_json[0][i]);
-        console.log('time222222',time_measure[i])
-        console.log('response',response_json[0][i])
         weather["recommendation"][i] = response_json[1][i]; // 운동추천
         weather["rain"][i]=forecast(response_json[0][i][time_measure[i]]) // 날씨
-        console.log('rain2222',weather["rain"][i])
-        console.log('rain33333',response_json[0][i][time_measure[i]])
         weather["icon"][i]=weatherIcon(response_json[0][i][time_measure[i]]); // 아이콘 사진 경로 저장
-        console.log("icoooooo",response_json[0][i][time_measure[i]])
         weather["rain_amount"][i]=response_json[3][i]; // 강수량
         weather["temperature"][i]=response_json[2][i]; // 기온
           
@@ -174,29 +167,25 @@ window.onload = async function loadMainPage() {
       setCookie('recommendation', weather['recommendation'], 5);
       setCookie('icon', weather['icon'], 5);
       setCookie('success_or_fail', 1, 5); // 쿠키 제대로 저장됐으면 1 아니면 -1
-      console.log("success_or_fail",getCookie('success_or_fail'))
+
     }
     else {
-      console.log("long",longitude)
+
       setCookie('success_or_fail', -1, 5);
-      console.log(getCookie('success_or_fail'))
+
     }
     
   }
-  console.log("hello")
+
   if (getCookie('success_or_fail') == '1'){ //쿠키가 제대로 저장이 됨.
-    console.log("hello2")
+
     time_list = getCookie('time').split(','); // 쿠키 불러와서 배열로 만듦. getCookie로 하면 ,가 기본적으로 들어와짐.
     rain_list = getCookie('rain').split(',');
     rain_amount_list = getCookie('rain_amount').split(',');
     temperature_list = getCookie('temperature').split(',');
     recommendation_list = getCookie('recommendation').split(',');
     icon_list = getCookie('icon').split(',');
-    console.log('time',time_list);
-    console.log('rain',getCookie('rain'));
-    console.log('rain',getCookie('rain_amount'));
-    console.log('rain',getCookie('recommendation'));
-    console.log('rain',getCookie('temperature'));
+
 
     var template = [] //html 카드 자동생성 템플릿
     var result = ""
@@ -205,19 +194,18 @@ window.onload = async function loadMainPage() {
       result = result.concat(" ", template[i]);
     }
     document.getElementById('param1').innerHTML=result; //html로 template 전달
-    console.log(template);
   }
   else {// 쿠키가 제대로 저장되지 않음.
-    console.log("HEEEEEE")
+
     var template = [];
     var result = "";
     card_fail(template);
     for (var i = 0; i < 1; i++) {
       result = result.concat(" ", template[i]);
     }
-    console.log(template)
+
     document.getElementById('param1').innerHTML=result;
-    console.log(template);
+
   }
   
   
