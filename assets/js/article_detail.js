@@ -63,16 +63,20 @@ async function loadArticles(articleId) {
 
   // let token = localStorage.getItem("access");
 
-  const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/user`, {
-    method: 'GET',
-    headers: {
-      'content-type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-    },
-  }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
+  // const currentUser = await fetch(`${backend_base_url}/users/`, {
+  //   method: 'GET',
+  //   headers: {
+  //     'content-type': 'application/json',
+  //     'Authorization': `Bearer ${token}`,
+  //   },
+  // }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
+  const payload = localStorage.getItem("payload");
+  const parsedPayload = JSON.parse(payload);
+  // console.log(parsedPayload.user_id);
+  // const currentUser = parsedPayload.user_id
 
-  const currentUserData = await currentUser.json();
-  const currentUserPk = await currentUserData["pk"];
+  // const currentUserData = await currentUser.json();
+  const currentUserPk = parsedPayload.user_id
 
   // 작성자에게만 기능 노출
   const articleEdit = document.getElementById("article_edit");

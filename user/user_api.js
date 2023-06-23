@@ -80,3 +80,5 @@ async function handleLogout() {
     alert("로그아웃완료");
     location.reload();
 }
+
+console.log(jsonPayload)

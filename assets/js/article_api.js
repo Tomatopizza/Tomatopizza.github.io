@@ -303,10 +303,10 @@ const toggleCategoryFields = (category) => {
 
 
 async function save_article() {
-    const categoryField = document.querySelector("#category");
+    const categoryField = document.getElementById("category");
     const category = categoryField.value;
-    const inCategoryField = document.querySelector(".in_category");
-    const outCategoryField = document.querySelector(".out_category");
+    const inCategoryField = document.getElementById("in_category");
+    const outCategoryField = document.getElementById("out_category");
 
     toggleCategoryFields(category);
 
@@ -325,6 +325,9 @@ async function save_article() {
     const isPrivate = document.getElementById("is_private").checked;
     const token = localStorage.getItem("access");
 
+    const subcategory = category === 'in' ? inCategoryField : outCategoryField;
+
+
     const isPositiveNumber = !isNaN(exerciseTime) && parseFloat(exerciseTime) > 0;
 
     // 양수가 아니면 에러 메시지 표시
@@ -340,10 +343,17 @@ async function save_article() {
     }
     formData.append("select_day", selectDay);
     formData.append("content", content);
-    formData.append("image", image);
     formData.append("check_status", checkStatus);
     formData.append("is_private", isPrivate);
     formData.append("exercise_time", exerciseTime);
+
+    const imageInput = document.getElementById("image");
+    const img = imageInput.files[0]; // 파일 업로드 input에서 선택한 파일 가져오기
+
+    if (img) {
+        formData.append("image", img);
+    }
+
 
     const response = await fetch(`${backend_base_url}/articles/my000/`, {
         method: "POST",
