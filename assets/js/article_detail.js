@@ -31,7 +31,6 @@ async function loadArticles(articleId) {
   articleUser.innerText = articleUsername.username;
   articleContent.innerText = response.content;
   articleDay.innerText = response.select_day;
-  // articleCategory.innerText = response.category;
 
   if (response.category === "in") {
     articleCategory.innerText = "실내 운동";
@@ -39,7 +38,6 @@ async function loadArticles(articleId) {
     articleCategory.innerText = "실외 운동";
   }
 
-  // articleIn.innerText = response.in_subcategory;
   const inSubCategoryMap = {
     걷기: "실내 걷기",
     뛰기: "트레드밀",
@@ -53,7 +51,6 @@ async function loadArticles(articleId) {
   articleIn.innerText =
     inSubCategoryMap[response.in_subcategory] || response.in_subcategory;
 
-  // articleOut.innerText = response.out_subcategory;
   const OutSubCategoryMap = {
     걷기: "실내 걷기",
     뛰기: "트레드밀",
@@ -68,7 +65,12 @@ async function loadArticles(articleId) {
     OutSubCategoryMap[response.out_subcategory] || response.out_subcategory;
 
   articleTime.innerText = response.exercise_time;
-  articleStatus.innerText = response.check_status;
+
+  if (response.check_status === "true") {
+    articleStatus.innerText = "오운완!";
+  } else {
+    articleStatus.innerText = "아직 계획 중이에요";
+  }
   const newImage = document.createElement("img");
 
   if (response.image) {
