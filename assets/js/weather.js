@@ -78,7 +78,7 @@ function weatherIcon(value) { // 아이콘 경로 저장하는 함수
     "6": "6_drizzle_snow",
     "7": "7_snow_litte"
   };
-  return "./assets/images/weather_icon/" + icon_dict[value] + ".svg";
+  return "/assets/images/weather_icon/" + icon_dict[value] + ".svg";
 }
 
 function card(template, weather) { // 카드 자동생성 함수
@@ -131,7 +131,7 @@ window.onload = async function loadMainPage() {
     if (position[0] != -1){
       var latitude = position[0]
       var longitude = position[1]
-      const response = await fetch(`${back_base_url}/articles/weather/`,{ // 백엔드로 위치 정보 전달
+      const response = await fetch(`${backend_base_url}/articles/weather/`,{ // 백엔드로 위치 정보 전달
 
         method: 'POST',
         headers: {
@@ -178,6 +178,7 @@ window.onload = async function loadMainPage() {
       setCookie('success_or_fail', -1, 5);
 
     }
+  }
 
 
   if (getCookie('success_or_fail') == '1'){ //쿠키가 제대로 저장이 됨.
@@ -188,6 +189,7 @@ window.onload = async function loadMainPage() {
     temperature_list = getCookie('temperature').split(',');
     recommendation_list = getCookie('recommendation').split(',');
     icon_list = getCookie('icon').split(',');
+    console.log(icon_list)
 
     var template = [] //html 카드 자동생성 템플릿
     var result = ""
@@ -210,11 +212,4 @@ window.onload = async function loadMainPage() {
     document.getElementById('param1').innerHTML=result;
 
   }
-
-
-
-
-
 }
-
-
