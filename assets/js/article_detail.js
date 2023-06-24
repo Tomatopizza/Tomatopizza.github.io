@@ -69,26 +69,7 @@ async function loadArticles(articleId) {
   } else {
     articleEdit.style.display = "none";
   }
-  // const currentUser = await fetch(`${backend_base_url}/users/dj-rest-auth/`, {
-  //   method: 'GET',
-  //   headers: {
-  //     'content-type': 'application/json',
-  //     'Authorization': `Bearer ${token}`,
-  //   },
-  // }); // 게시글 작성자와 현재 로그인 유저를 비교하기 위해 현재 로그인 유저의 정보 불러오기
-  
-  // console.log(currentUser)
-  // const currentUserData = await currentUser.json();
-  // console.log(currentUserData)
-  // const currentUserPk = await currentUserData["user_id"];
 
-  // // 작성자에게만 기능 노출
-  // const articleEdit = document.getElementById("article_edit");
-  // if (currentUserPk == articleUserPk) {
-  //   articleEdit.style.display = "block";
-  // } else {
-  //   articleEdit.style.display = "none";
-  // }
 }
 
 // 댓글
@@ -197,11 +178,7 @@ async function loadComments(articleId) {
     commentEditComplete.setAttribute("class", "btn btn-primary comment_edit_complete")
     commentEditForm.appendChild(commentEditComplete)
 
-    // const commentEditCancel = document.createElement("button")
-    // commentEditCancel.innerText = "취소"
-    // commentEditCancel.setAttribute("class", "btn btn-primary")
-    // commentEditCancel.addEventListener("click", () => cancelNewComment(commentId))
-    // commentEditForm.appendChild(commentEditCancel)
+
 
     commentList.appendChild(commentEditForm)
   });
@@ -224,7 +201,7 @@ async function loadFeed() {
 }
 
 function articleLoadPut() {
-  window.location.href = `${frontend_base_url}/article_update2.html?article_id=${articleId}`;
+  window.location.href = `${frontend_base_url}/template/article_update2.html?article_id=${articleId}`;
 }
 
 // 게시글 좋아요 버튼
@@ -281,10 +258,9 @@ async function articleDelete() {
 
     if (response.status === 204) {
       alert("게시글이 삭제되었습니다.");
-      window.location.href = `${frontend_base_url}/feed.html`;
+      window.location.href = `${frontend_base_url}/template/feed.html`;
     } else {
       alert("게시글 삭제에 실패했습니다.");
     }
   }
 }
-

@@ -75,24 +75,13 @@ form {
     border-bottom-width: 2px;
 }
 
-.eye-icon {
-    position: absolute;
-    top: 50%;
-    right: 10px;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #8b8b8b;
-    cursor: pointer;
-    padding: 5px;
-}
-
-/* login button css */
+/* signup button css */
 .field.button-field {
     text-align: center;
     margin-bottom: 20px;
 }
 
-.login-btn {
+.signup-btn {
     display: inline-block;
     padding: 12px 24px;
     font-size: 20px;
@@ -114,7 +103,13 @@ form {
     border-radius: 6px;
 }
 
-/* 회원가입, 비밀번호 찾기 css */
+/*로그인 css*/
+.form-login {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 20px;
+}
+
 .form-link {
     text-align: center;
     margin-top: 10px;
@@ -130,10 +125,6 @@ form {
     font-size: 20px;
     font-weight: 400;
     color: blue;
-}
-
-.form-content a:hover {
-    text-decoration: underline;
 }
 
 .team {
