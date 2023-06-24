@@ -1,10 +1,9 @@
 function articleDetail(article_id) {
-  window.location.href = `${frontend_base_url}/article_detail.html?article_id=${article_id}`;
+  window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${article_id}`;
 }
 window.onload = async function loadArticles() {
   articles = await getArticles();
   console.log(articles);
-
   const article_list = document.getElementById("article_list");
 
   articles.forEach((article) => {
@@ -35,7 +34,6 @@ window.onload = async function loadArticles() {
     }
 
     imageSize.appendChild(articleImage);
-
     const newCardBody = document.createElement("div");
     newCardBody.setAttribute("class", "card-body"); // 게시글
     newCard.appendChild(newCardBody);

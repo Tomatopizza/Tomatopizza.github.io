@@ -99,7 +99,7 @@ function setThumbnail(event) {
   let reader = new FileReader();
 
   reader.onload = function (event) {
-    let img = document.createElement("image");
+    let img = document.createElement("img");
     img.setAttribute("src", event.target.result);
 
     // 썸네일 크기 조절
