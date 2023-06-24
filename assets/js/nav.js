@@ -4,7 +4,7 @@ $(document).ready(function () {
     //유저 토큰을 가져와서 로그인시 닉네임 표시
     const payload = localStorage.getItem("payload");
     const payload_parse = JSON.parse(payload);
-
+    //유저 토큰값 만료시간 확인 후 지나면 로그아웃처리
     token_exp = payload_parse.exp;
     const currentTime = Math.floor(Date.now() / 1000);
 
