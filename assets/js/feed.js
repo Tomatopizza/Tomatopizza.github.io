@@ -1,7 +1,6 @@
 function articleDetail(article_id) {
   window.location.href = `${frontend_base_url}/article_detail.html?article_id=${article_id}`;
 }
-
 window.onload = async function loadArticles() {
   articles = await getArticles();
   console.log(articles);
