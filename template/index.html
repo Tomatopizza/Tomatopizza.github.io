@@ -1,15 +1,14 @@
 <!DOCTYPE html>
 <html>
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>메인페이지</title>
-    <link rel="shortcut icon" href="#">
+    <link rel="shortcut icon" href="#" />
     <!-- css -->
-    <link rel="stylesheet" href="../assets/css/index.css">
-    <link rel="stylesheet" href="../assets/css/weather.css">
+    <link rel="stylesheet" href="../assets/css/index.css" />
+    <link rel="stylesheet" href="../assets/css/weather.css" />
     <!-- js -->
     <script src="../assets/js/urls.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
@@ -26,11 +25,68 @@
 
 </head>
 <style>
-    
+    .modal_w {
+        display: none;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: -250px 0 0 -250px;
+        background: #eee;
+        z-index: 2;
+    }
+
+    .black_bg {
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .modal_out {
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+    }
+
+    .modal_out>a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
+
+    .modal_check {
+        display: block;
+        width: 500px;
+        height: 500px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin: 150px 0 0 -250;
+        background: #eee;
+        z-index: 2;
+    }
+
+    .modal_x {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
 </style>
 
-<body>
-
+  <body>
     <!-- 상단 네비게이션바 -->
     <div id="navbar-container"></div>
     <!-- 상단 네비게이션 끝-->

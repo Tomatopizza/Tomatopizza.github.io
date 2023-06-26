@@ -2,71 +2,68 @@
 // const frontend_base_url = "http://127.0.0.1:5500"
 
 function setCookie(cookie_name, value, minutes) {
-  const exdate = new Date();
-  exdate.setMinutes(exdate.getMinutes() + minutes);
-  const cookie_value = escape(value) + ((minutes == null) ? '' : '; expires=' + exdate.toUTCString());
-  document.cookie = cookie_name + '=' + cookie_value;
+    const exdate = new Date();
+    exdate.setMinutes(exdate.getMinutes() + minutes);
+    const cookie_value =
+        escape(value) +
+        (minutes == null ? "" : "; expires=" + exdate.toUTCString());
+    document.cookie = cookie_name + "=" + cookie_value;
 }
 
 function getCookie(cookie_name) {
-  var x, y;
-  var val = document.cookie.split(';');
+    var x, y;
+    var val = document.cookie.split(";");
 
-  for (var i = 0; i < val.length; i++) {
-    x = val[i].substr(0, val[i].indexOf('='));
-    y = val[i].substr(val[i].indexOf('=') + 1);
-    x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
-    if (x == cookie_name) {
-      return unescape(y); // unescape로 디코딩 후 값 리턴
+    for (var i = 0; i < val.length; i++) {
+        x = val[i].substr(0, val[i].indexOf("="));
+        y = val[i].substr(val[i].indexOf("=") + 1);
+        x = x.replace(/^\s+|\s+$/g, ""); // 앞과 뒤의 공백 제거하기
+        if (x == cookie_name) {
+            return unescape(y); // unescape로 디코딩 후 값 리턴
+        }
     }
-  }
 }
 
-
-
-async function getPosition() { // 현재 위치 뽑아내고 위치 정보 수집 동의 띄우는 함수
-  // Simple wrapper
-  return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject)
-  })
-
+async function getPosition() {
+    // 현재 위치 뽑아내고 위치 정보 수집 동의 띄우는 함수
+    // Simple wrapper
+    return new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(resolve, reject);
+    });
 }
 
-
-async function success_fail(position) { // getPostion함수에서 넘어오게 될 함수
-  try {
-    let position = await getPosition();
-    const latitude = position.coords.latitude;
-    const longitude = position.coords.longitude;
-    lat_lon = [latitude, longitude];
-    return lat_lon;
-
-  } catch (err) {
-    const latitude = -1;
-    const longitude = -1;
-    lat_lon = [latitude, longitude];
-    return lat_lon;
-  }
-
-
+async function success_fail(position) {
+    // getPostion함수에서 넘어오게 될 함수
+    try {
+        let position = await getPosition();
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        lat_lon = [latitude, longitude];
+        return lat_lon;
+    } catch (err) {
+        const latitude = -1;
+        const longitude = -1;
+        lat_lon = [latitude, longitude];
+        return lat_lon;
+    }
 }
 
+function forecast(value) {
+    // 날씨 반환하는 함수
+    let forecast_dict = {
+        0: "맑음",
+        1: "비",
+        2: "비 또는 눈",
+        3: "눈",
+        4: "소나기",
+        5: "빗방울",
+        6: "빗방울눈날림",
+        7: "눈날림"
+    };
 
-function forecast(value) { // 날씨 반환하는 함수
-  let forecast_dict = {
-    "0": "맑음",
-    "1": "비",
-    "2": "비 또는 눈",
-    "3": "눈",
-    "4": "소나기",
-    "5": "빗방울",
-    "6": "빗방울눈날림",
-    "7": "눈날림"
-  };
-
-  return forecast_dict[value];
-
+    return forecast_dict[value];
 }
+
 function weatherIcon(value) { // 아이콘 경로 저장하는 함수
   let icon_dict = {
     "0": "0_bright",
@@ -78,12 +75,13 @@ function weatherIcon(value) { // 아이콘 경로 저장하는 함수
     "6": "6_drizzle_snow",
     "7": "7_snow_litte"
   };
-  return "./assets/images/weather_icon/" + icon_dict[value] + ".svg";
+  return "/assets/images/weather_icon/" + icon_dict[value] + ".svg";
 }
 
-function card(template, weather) { // 카드 자동생성 함수
-  for (var i = 0; i < 6; i++) {
-    template[i] = `
+function card(template, weather) {
+    // 카드 자동생성 함수
+    for (var i = 0; i < 6; i++) {
+        template[i] = `
               <div class="col">
                 <div class="card h-100" >
                     <img class="myimg" src=${icon_list[i]} class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
@@ -98,14 +96,14 @@ function card(template, weather) { // 카드 자동생성 함수
                     </div>
                 </div>     
               </div>
-            `
-  }
-
+            `;
+    }
 }
 
-function card_fail(template) { // 카드 실패 했을 때 띄울 거
+function card_fail(template) {
+    // 카드 실패 했을 때 띄울 거
 
-  template[0] = `
+    template[0] = `
       <div class="col">
         <div class="card h-100" >
             <img class="myimg" src="./assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
@@ -116,14 +114,11 @@ function card_fail(template) { // 카드 실패 했을 때 띄울 거
             </div>
         </div>     
       </div>
-    `
-
+    `;
 }
 
-
-
-
 window.onload = async function loadMainPage() {
+
   buildCalendar()
   if ((getCookie('success_or_fail') == null)) {
     var position = await success_fail(position) // -1일 경우 위치정보 수집 거부.
@@ -131,7 +126,7 @@ window.onload = async function loadMainPage() {
     if (position[0] != -1){
       var latitude = position[0]
       var longitude = position[1]
-      const response = await fetch(`${back_base_url}/articles/weather/`,{ // 백엔드로 위치 정보 전달
+      const response = await fetch(`${backend_base_url}/articles/weather/`,{ // 백엔드로 위치 정보 전달
 
         method: 'POST',
         headers: {
@@ -178,6 +173,7 @@ window.onload = async function loadMainPage() {
       setCookie('success_or_fail', -1, 5);
 
     }
+  }
 
 
   if (getCookie('success_or_fail') == '1'){ //쿠키가 제대로 저장이 됨.
@@ -188,6 +184,7 @@ window.onload = async function loadMainPage() {
     temperature_list = getCookie('temperature').split(',');
     recommendation_list = getCookie('recommendation').split(',');
     icon_list = getCookie('icon').split(',');
+    console.log(icon_list)
 
     var template = [] //html 카드 자동생성 템플릿
     var result = ""
@@ -210,11 +207,4 @@ window.onload = async function loadMainPage() {
     document.getElementById('param1').innerHTML=result;
 
   }
-
-
-
-
-
 }
-
-
