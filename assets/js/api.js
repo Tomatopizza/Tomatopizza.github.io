@@ -109,7 +109,7 @@ async function commentDelete(commentId) {
 
     if (response.status === 204) {
       alert("댓글이 삭제되었습니다.");
-      window.location.href = `${frontend_base_url}/article_detail.html?article_id=${articleId}`;
+      window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${articleId}`;
     } else {
       alert("댓글 삭제에 실패했습니다.");
     }
