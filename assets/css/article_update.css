@@ -68,9 +68,15 @@
 .checkbox_list{
     margin-bottom: 10px;
     display: flex;
-    flex-wrap: wrap;
-    align-content: space-around;
+    justify-content: center;
+    align-items: center;
 }
+
+.exercise_complete,
+.user_only{
+    margin: 0px 20px;
+}
+
   
 .button_list {
     margin: 10px 0px;
