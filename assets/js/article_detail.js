@@ -211,7 +211,7 @@ async function loadComments(articleId) {
     commentEditComplete.innerText = "수정완료";
     commentEditComplete.setAttribute(
       "class",
-      "btn btn-primary comment_edit_complete"
+      "btn btn-dark comment_edit_complete"
     );
     commentEditForm.appendChild(commentEditComplete);
 
