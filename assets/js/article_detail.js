@@ -66,7 +66,7 @@ async function loadArticles(articleId) {
 
   articleTime.innerText = response.exercise_time;
 
-  if (response.check_status === "true") {
+  if (response.check_status === true) {
     articleStatus.innerText = "오운완!";
   } else {
     articleStatus.innerText = "아직 계획 중이에요";
@@ -158,8 +158,8 @@ async function loadComments(articleId) {
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}" data-value="${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
           </div>
         </li>`;
       } else {
@@ -180,8 +180,8 @@ async function loadComments(articleId) {
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
           </div>
         </li>`;
       } else {
@@ -211,7 +211,7 @@ async function loadComments(articleId) {
     commentEditComplete.innerText = "수정완료";
     commentEditComplete.setAttribute(
       "class",
-      "btn btn-primary comment_edit_complete"
+      "btn btn-dark comment_edit_complete"
     );
     commentEditForm.appendChild(commentEditComplete);
 
