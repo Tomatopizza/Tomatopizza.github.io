@@ -47,6 +47,10 @@ window.onload = async function loadArticles() {
     newCardTitle.innerText = article.content;
     newCardTitleBox.appendChild(newCardTitle);
 
+    const articleWriter = document.createElement("p")
+    articleWriter.innerText = article.user
+    newCardTitleBox.appendChild(articleWriter)
+
     const newText = document.createElement("div"); //좋아요, 댓글, 작성시간 div
     newText.setAttribute("class", "collector");
     newCardBody.appendChild(newText);
