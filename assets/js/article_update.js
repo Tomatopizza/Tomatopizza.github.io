@@ -102,9 +102,9 @@ function setThumbnail(event) {
     let img = document.createElement("img");
     img.setAttribute("src", event.target.result);
 
-    // 썸네일 크기 조절
-    img.style.width = "150px"; // 너비 150px로 설정
-    img.style.height = "auto"; // 높이 자동 설정
+        // 썸네일 크기 조절
+        img.style.width = "400px"; // 너비 150px로 설정
+        img.style.height = "300px"; // 높이 자동 설정
 
     // 이미지 미리보기 영역
     let imgThumbnail = document.querySelector("#imgthumbnail2");
