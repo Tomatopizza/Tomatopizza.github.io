@@ -158,8 +158,8 @@ async function loadComments(articleId) {
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}" data-value="${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-primary" style="margin: auto; display: block;">삭제</button>
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
           </div>
         </li>`;
       } else {
@@ -180,8 +180,8 @@ async function loadComments(articleId) {
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block;">삭제</button>
+            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
+            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
           </div>
         </li>`;
       } else {

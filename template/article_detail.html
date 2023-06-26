@@ -110,7 +110,7 @@
     </div>
     <button
       onclick="loadFeed()"
-      class="btn btn-primary"
+      class="btn btn-dark"
       style="margin: auto; display: block"
     >
       목록
@@ -139,7 +139,7 @@
         id="put"
         type="button"
         onclick="articleLoadPut()"
-        style="margin: auto; display: block"
+        style="margin: auto; display: block; color: grey"
         class="btn btn_org"
       >
         수정
@@ -147,7 +147,7 @@
       <button
         id="delete"
         onclick="articleDelete()"
-        style="margin: auto; display: block"
+        style="margin: auto; display: block; color: grey"
         class="btn btn_org"
       >
         삭제
@@ -172,11 +172,7 @@
           />
         </div>
         <div class="col-sm">
-          <button
-            type="button"
-            class="btn btn-primary"
-            onclick="submitComment()"
-          >
+          <button type="button" class="btn btn-dark" onclick="submitComment()">
             등록
           </button>
         </div>
