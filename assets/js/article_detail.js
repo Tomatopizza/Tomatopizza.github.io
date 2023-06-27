@@ -74,10 +74,8 @@ async function loadArticles(articleId) {
   const newImage = document.createElement("img");
 
   if (response.image) {
-    newImage.setAttribute("width", "100%");
     newImage.setAttribute("src", `${backend_base_url}${response.image}`);
   } else {
-    newImage.setAttribute("width", "100%");
     newImage.setAttribute(
       "src",
       "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg"
