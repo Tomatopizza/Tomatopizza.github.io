@@ -23,158 +23,80 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+
+    <link rel="stylesheet" href="../assets/css/article_detail.css">
   </head>
 
   <body>
     <!-- 상단 네비게이션바 -->
     <div id="navbar-container"></div>
     <!-- 상단 네비게이션 끝-->
-
-    <div class="container" style="margin-top: 60px">
-      <div>
-        <h2 id="article_content" style="float: left; margin-left: 25%">
-          게시글 제목
-        </h2>
-        <a
-          id="article_user"
-          style="float: right; margin-right: 25%; margin-top: 2%"
-          >작성자</a
-        >
-      </div>
-      <div
-        class="row-cols-1 row-cols-md-2"
-        id="article"
-        style="margin-top: 30px; clear: both"
-      >
-        <div
-          class="col"
-          id="article_image"
-          style="margin: auto; display: block"
-        ></div>
-        <div class="col" style="margin: auto">
-          운동 날짜 :
-          <div
-            class="col"
-            id="article_day"
-            style="margin: auto; display: block; margin-top: 10px"
-          >
-            게시글 내용
+    <div class="main">
+      <div class="container">
+        <div class="article_title">
+           <h2 class="article_content" id="article_content">게시글 제목</h2>
+           <p class="article_user" id="article_user">작성자</p>
+        </div>
+  
+        <div class="article" id="article">
+          <div class="article_image" id="article_image"></div>
+  
+          <div class="article_text">
+            <p class="exercise_day"> 운동 날짜:
+                <div class="article_day">
+                    <li id="article_day">입력 날짜</li>
+                </div>
+            </p>
+  
+            <p class="exercise_category">운동 종류:
+              <div class="article_category">
+                  <li id="article_category">입력 장소</li>
+              </div>
+             
+               <div class="exercise_category_list">
+                   <li class="article_in" id="article_in">실내 </li>
+                   <li class="article_out" id="article_out">실외 </li>        
+               </div>
+            </p>
+  
+            <p class="exercise_time">운동 시간:
+              <div class="article_time">
+                  <li id="article_time">입력 시간</li>
+              </div>
+            </p>
+  
+            <p class="exercise_status">운동 완료여부:
+              <div class="article_status">
+                  <li  id="article_status">완료 여부</li>
+              </div>
+            </p>
           </div>
         </div>
-
-        <div class="col" style="margin: auto">
-          운동 카테고리 :
-          <div
-            class="col"
-            id="article_category"
-            style="margin: auto; display: block; margin-top: 10px"
-          >
-            게시글 내용
+  
+        <div class="button_box">
+          <button class="btn btn-dark" onclick="loadFeed()"  >목록</button>
+          <button class="btn btn_org" id="likes"  onclick="articleLike()">🤍</button>
+          <li id="like_count">0</li>
+          <div id="article_edit">
+              <button class="btn btn-outline-dark" id="put" onclick="articleLoadPut()" >수정</button>
           </div>
-        </div>
-        <div
-          class="col"
-          id="article_in"
-          style="margin: auto; display: block; margin-top: 10px; color: gray"
-        >
-          게시글 내용
-        </div>
-        <div
-          class="col"
-          id="article_out"
-          style="margin: auto; display: block; margin-top: 10px; color: gray"
-        >
-          게시글 내용
-        </div>
-        <div class="col" style="margin: auto">
-          운동 시간 :
-          <div
-            class="col"
-            id="article_time"
-            style="margin: auto; display: block; margin-top: 10px"
-          >
-            게시글 내용
-          </div>
-        </div>
-        <div class="col" style="margin: auto">
-          운동 완료여부 :
-          <div
-            class="col"
-            id="article_status"
-            style="margin: auto; display: block; margin-top: 10px"
-          >
-            게시글 내용
+          <div id="article_edit">
+              <button class="btn btn-outline-dark" id="delete" onclick="articleDelete()" >삭제</button>
           </div>
         </div>
       </div>
     </div>
-    <button
-      onclick="loadFeed()"
-      class="btn btn-dark"
-      style="margin: auto; display: block"
-    >
-      목록
-    </button>
-    <button
-      id="likes"
-      class="btn btn_org"
-      onclick="articleLike()"
-      style="margin: auto; display: block"
-    >
-      🤍
-    </button>
-    <div
-      id="like_count"
-      style="
-        width: fit-content;
-        text-align: center;
-        margin: auto;
-        display: block;
-      "
-    >
-      0
-    </div>
-    <div id="article_edit">
-      <button
-        id="put"
-        type="button"
-        onclick="articleLoadPut()"
-        style="margin: auto; display: block; color: grey"
-        class="btn btn_org"
-      >
-        수정
-      </button>
-      <button
-        id="delete"
-        onclick="articleDelete()"
-        style="margin: auto; display: block; color: grey"
-        class="btn btn_org"
-      >
-        삭제
-      </button>
-    </div>
-    <div
-      class="container mt-5"
-      id="article_comment"
-      style="margin: auto; display: block; width: 50%"
-    >
+
+    <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%">
       <ul class="list-style" id="comment_list"></ul>
     </div>
     <div class="container" style="margin: auto; display: block; width: 50%">
       <div class="row g-3">
         <div class="col-sm-10">
-          <input
-            type="text"
-            class="form-control"
-            id="new_comment"
-            placeholder="댓글을 작성해주세요."
-            aria-label="comment"
-          />
+            <input type="text" class="form-control" id="new_comment" placeholder="댓글을 작성해주세요." aria-label="comment">
         </div>
         <div class="col-sm">
-          <button type="button" class="btn btn-dark" onclick="submitComment()">
-            등록
-          </button>
+            <button type="button" class="btn btn-dark" onclick="submitComment()">등록</button>
         </div>
       </div>
     </div>
