@@ -85,13 +85,20 @@ function card(template, weather) {
 		template[i] = `
               <div class="col">
                 <div class="card h-100" >
-                    <img class="myimg" src=${icon_list[i]} class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
+                    <img class="myimg" src=${
+						icon_list[i]
+					} class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
                     <div class="card-body">
                       <div class="fontContainer">
                         
-                        시각: <strong>${time_list[i]}시</strong><br>
+                        시각: <strong>${time_list[i].substr(
+							0,
+							2
+						)}시</strong><br>
                         기온: <strong>"${temperature_list[i]}도"</strong><br>
-                        추천 운동:<strong>"${recommendation_list[i]}"</strong><br>
+                        추천 운동:<strong>"${
+							recommendation_list[i]
+						}"</strong><br>
                         
                       </div>
                     </div>
