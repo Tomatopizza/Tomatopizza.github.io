@@ -13,15 +13,16 @@
         crossorigin="anonymous"></script>
 
 
+
     <style>
         .modal_wrap {
             display: none;
             width: 500px;
-            height: 500px;
+            height: 750px;
             position: absolute;
             top: 50%;
             left: 50%;
-            margin: -250px 0 0 -250px;
+            margin: -360px 0 0 -250px;
             background: #fff;
             border: 1px solid #000;
             z-index: 2;
@@ -155,25 +156,31 @@
                             <option value="구기종목">구기종목</option>
                         </select>
                     </div>
-                    <p>운동시간</p>
-                    <input id="exercise_time" type="text" placeholder="숫자로만 적어주세요">
-                    <div class="input-group">
+                    <p> </p>
+                    <div class="input-group mb-3">
+                    <label class="input-group-text" for="exercise_time">운동시간</label>
+                    <input id="exercise_time"  class="form-control"aria-label="Username" aria-describedby="basic-addon1" type="text" placeholder="운동시간을 분으로 적어주세요">
+                </div>
+                    <div class="input">
                         <form id="imgForm">
-                            <p>내용</p>
-                            <textarea id="content" rows="3" placeholder="운동 내용을 기록해주세요"></textarea>
-                            <br>
-                            <label><input type="checkbox" value="01" id="check_status">완료하셨다면 체크박스!</label>
-                            <br>
-                            <label><input type="checkbox" value="02" id="is_private">나만 보기</label>
+                            <div class="mb-3">
+                                <label for="content" class="input-group-text1">메모</label>
+                            <textarea id="content"  class="form-control" rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
+                        </div>
+                        </div>
+                            <div class="form-check">
+                            <label><input type="checkbox" value="01" id="check_status" class="form-check-input">완료하셨다면 체크박스!</label></div>
+                            <div class="form-check form-switch">
+                            <label><input type="checkbox" value="02" class="form-check-input" id="is_private">나만 보기</label></div>
                             <p>체크를 하지 않을 경우 자동으로 피드에 공유됩니다.</p>
                             <div class="input-group mb-3">
                                 <form id="imgForm">
                                     <input type="file" value="none" id="image" onchange="setThumbnail(event);">
                             </div>
-                            <div id="imgthumbnail"></div>
-                            <button type="button" id="save-article" onclick="save_article()">등록</button>
+                            <div style="width: 150px; height: 100px;" id="imgthumbnail"></div>
                     </div>
-
+                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-dark" id="save-article" onclick="save_article()">등록</button></div>
                 </div>
             </div>
         </div>
