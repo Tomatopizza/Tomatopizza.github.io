@@ -1,10 +1,10 @@
 function articleDetail(article_id) {
   window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${article_id}`;
 }
-window.onload = async function loadArticles() {
-  articles = await getArticles();
-  console.log(articles);
+
+const renderArticles = (articles) => {
   const article_list = document.getElementById("article_list");
+  article_list.innerHTML = "";
 
   articles.forEach((article) => {
     const newCol = document.createElement("div"); // div 생성
@@ -47,9 +47,9 @@ window.onload = async function loadArticles() {
     newCardTitle.innerText = article.content;
     newCardTitleBox.appendChild(newCardTitle);
 
-    const articleWriter = document.createElement("p")
-    articleWriter.innerText = article.user
-    newCardTitleBox.appendChild(articleWriter)
+    const articleWriter = document.createElement("p");
+    articleWriter.innerText = article.user;
+    newCardTitleBox.appendChild(articleWriter);
 
     const newText = document.createElement("div"); //좋아요, 댓글, 작성시간 div
     newText.setAttribute("class", "collector");
@@ -84,3 +84,29 @@ window.onload = async function loadArticles() {
     newText.appendChild(createdAt);
   });
 };
+
+//페이지네이션
+const loadArticles = async (page = 1) => {
+  const articles = await getArticles(page);
+  console.log(articles);
+  renderArticles(articles);
+};
+
+let pageNumber = 1;
+
+const movePage = (direction) => {
+  pageNumber += direction;
+  loadArticles(pageNumber);
+};
+
+const init = () => {
+  document
+    .getElementById("nextButton")
+    .addEventListener("click", () => movePage(1));
+  document
+    .getElementById("prevButton")
+    .addEventListener("click", () => movePage(-1));
+  loadArticles();
+};
+
+document.addEventListener("DOMContentLoaded", init);

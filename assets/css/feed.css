@@ -20,7 +20,6 @@
   flex-direction: row !important;
   align-items: middle;
   margin-bottom: 10px;
-
 }
 
 .card-body {
@@ -89,4 +88,8 @@
   /* 이미지 크기 */
   padding-left: 36px;
   /* 내부 여백 */
+}
+
+.button-container {
+  justify-content: center;
 }
