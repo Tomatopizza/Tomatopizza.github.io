@@ -29,11 +29,12 @@ async function postComment(articleId, newComment) {
     }
   );
 
-  if (response.status == 200) {
+  if (response.status == 201) {
     response_json = await response.json();
+    alert("댓글이 작성되었습니다");
     return response_json;
   } else {
-    alert(response.status);
+    alert("로그인이 필요합니다");
   }
 }
 
@@ -142,19 +143,3 @@ async function getArticle(articleId) {
     alert(response.status);
   }
 }
-
-// async function getAllArticles(articleId) {
-//   const response = await fetch(`${backend_base_url}/articles/feed/`); // 각 게시글 상세보기
-
-//   if (response.status == 200) {
-//     response_jsonall = await response.json();
-//     console.log(response_jsonall);
-//     const totalArticles = response_jsonall.length;
-
-//     const totalPages = Math.ceil(totalArticles / 5);
-//     console.log(totalPages);
-//     return response_jsonall;
-//   } else {
-//     alert(response.status);
-//   }
-// }
