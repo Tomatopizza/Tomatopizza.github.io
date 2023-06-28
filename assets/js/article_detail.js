@@ -5,7 +5,11 @@ window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
-  await loadArticles(articleId);
+  try {
+    await loadArticles(articleId);
+  } catch (error) {
+  }
+  // await loadArticles(articleId);
   await loadComments(articleId);
 };
 
@@ -16,8 +20,6 @@ async function loadArticles(articleId) {
   const response = await getArticle(articleId);
   const articleUsername = response.user;
   const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
-  console.log(articleUsername);
-  console.log(response);
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
@@ -85,7 +87,6 @@ async function loadArticles(articleId) {
 
   // 좋아요 상태 불러오기
 
-  let token = localStorage.getItem("access");
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
 
@@ -96,13 +97,11 @@ async function loadArticles(articleId) {
       method: "GET",
       headers: {
         "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
       },
     }
   );
 
   const likeResponse_json = await likeResponse.json(); // 제이슨으로 변환
-  // console.log(likeResponse_json.fluctuation) // 좋아요 갯수
 
   likeButton.innerText = likeResponse_json.message;
   likeCount.innerText = likeResponse_json.fluctuation;
@@ -127,21 +126,37 @@ async function loadComments(articleId) {
   const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
 
   const response = await getComments(articleId); // 해당 아티클의 댓글
-  let articleCommentCount = response["length"];
-  console.log(articleCommentCount); // 댓글 갯수
 
   // 댓글 edit기능을 위한 유저 식별
 
+  try { const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const currentUser = parsedPayload.user_id;
+  } catch {
+    const commentList = document.getElementById("comment_list");
+    commentList.innerHTML = "";
+    response.forEach((comment) => {
+    
+      commentId = comment["id"];
+      // 프로필 이미지 가져오기
+      const User = comment.user;
+      const UserAvatar = User.avatar;
+
+      commentList.innerHTML += `<li class="media d-flex mb-3">
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
+        <div class="media-body">
+          <h5 class="mt-0 mb-1">${comment.username}</h5>
+          <p id="comment_content${commentId}">${comment.content}</p>
+        </div>`;
+  })
+  }
   const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
   const currentUser = parsedPayload.user_id;
-
   const commentList = document.getElementById("comment_list");
-  commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
-
+  commentList.innerHTML = "";
   // 댓글 작성하기
   response.forEach((comment) => {
+    
     commentId = comment["id"];
-    console.log(comment)
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
@@ -152,7 +167,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}" data-value="${commentId}">
@@ -164,7 +179,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
         </li>`;
@@ -174,7 +189,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}">
@@ -186,7 +201,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
-          <h5 class="mt-0 mb-1">${comment.user}</h5>
+          <h5 class="mt-0 mb-1">${comment.username}</h5>
           <p id="comment_content${commentId}">${comment.content}</p>
         </div>`;
       }
