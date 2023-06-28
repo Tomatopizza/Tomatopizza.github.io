@@ -78,6 +78,7 @@ async function loadArticle() {
     return response_json;
   } else {
     alert("로그인을 해주세요!");
+    window.location.replace("user_login.html");
   }
 }
 

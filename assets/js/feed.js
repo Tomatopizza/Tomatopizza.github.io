@@ -85,11 +85,47 @@ const renderArticles = (articles) => {
   });
 };
 
-//페이지네이션
+async function getAllArticles(articleId) {
+  const response = await fetch(`${backend_base_url}/articles/feed/`); // 각 게시글 상세보기
+
+  if (response.status == 200) {
+    response_jsonall = await response.json();
+    return response_jsonall;
+  } else {
+    alert(response.status);
+  }
+}
+
+async function ArticlesPages() {
+  const allArticles = await getAllArticles();
+  const totalArticles = allArticles.length;
+
+  const articlesPerPage = 5;
+  const totalPages = Math.ceil(totalArticles / articlesPerPage);
+
+  return totalPages;
+}
+
+// //페이지네이션
 const loadArticles = async (page = 1) => {
+  const totalPages = Math.ceil((await getAllArticles()).length / 5);
+  console.log(totalPages);
+
   const articles = await getArticles(page);
   console.log(articles);
   renderArticles(articles);
+
+  const currentPageElement = document.getElementById("currentPage");
+  currentPageElement.textContent = `현재 페이지: ${page}`;
+
+  if (page > totalPages) {
+    alert("페이지가 존재하지 않습니다!");
+    location.reload();
+  }
+  if (page == 0) {
+    alert("페이지가 존재하지 않습니다!");
+    location.reload();
+  }
 };
 
 let pageNumber = 1;
@@ -98,15 +134,16 @@ const movePage = (direction) => {
   pageNumber += direction;
   loadArticles(pageNumber);
 };
-
 const init = () => {
   document
     .getElementById("nextButton")
     .addEventListener("click", () => movePage(1));
+
   document
     .getElementById("prevButton")
     .addEventListener("click", () => movePage(-1));
-  loadArticles();
+
+  loadArticles(); // 이곳에서만 호출하면 됩니다.
 };
 
 document.addEventListener("DOMContentLoaded", init);

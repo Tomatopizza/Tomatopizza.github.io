@@ -117,7 +117,7 @@ async function commentDelete(commentId) {
 
 // 피드페이지
 
-async function getArticles(page = 1) {
+async function getArticles(page) {
   const response = await fetch(`${backend_base_url}/articles/?page=${page}`); // 공유한 게시글만 불러오기
 
   if (response.status == 200) {
@@ -142,3 +142,19 @@ async function getArticle(articleId) {
     alert(response.status);
   }
 }
+
+// async function getAllArticles(articleId) {
+//   const response = await fetch(`${backend_base_url}/articles/feed/`); // 각 게시글 상세보기
+
+//   if (response.status == 200) {
+//     response_jsonall = await response.json();
+//     console.log(response_jsonall);
+//     const totalArticles = response_jsonall.length;
+
+//     const totalPages = Math.ceil(totalArticles / 5);
+//     console.log(totalPages);
+//     return response_jsonall;
+//   } else {
+//     alert(response.status);
+//   }
+// }

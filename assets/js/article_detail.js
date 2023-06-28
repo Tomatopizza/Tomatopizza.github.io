@@ -143,7 +143,7 @@ async function loadComments(articleId) {
   // 댓글 작성하기
   response.forEach((comment) => {
     commentId = comment["id"];
-    console.log(comment)
+    console.log(comment);
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
