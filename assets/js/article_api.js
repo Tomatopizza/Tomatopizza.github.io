@@ -20,6 +20,7 @@ function card_fail(template) {
 
 // ========== index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기 ========================
 async function loadArticle() {
+
 	const response = await fetch(`${backend_base_url}/articles/my000/`, {
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("access"),
@@ -132,6 +133,7 @@ async function loadArticle() {
 	} else {
 		alert("로그인을 해주세요!");
 	}
+
 }
 
 // ================================ 여기서부터 달력 js =======================================

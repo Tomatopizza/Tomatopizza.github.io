@@ -7,8 +7,7 @@ window.onload = async function () {
 
   try {
     await loadArticles(articleId);
-  } catch (error) {
-  }
+  } catch (error) {}
   // await loadArticles(articleId);
   await loadComments(articleId);
 };
@@ -129,13 +128,13 @@ async function loadComments(articleId) {
 
   // 댓글 edit기능을 위한 유저 식별
 
-  try { const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
-  const currentUser = parsedPayload.user_id;
+  try {
+    const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+    const currentUser = parsedPayload.user_id;
   } catch {
     const commentList = document.getElementById("comment_list");
     commentList.innerHTML = "";
     response.forEach((comment) => {
-    
       commentId = comment["id"];
       // 프로필 이미지 가져오기
       const User = comment.user;
@@ -147,7 +146,7 @@ async function loadComments(articleId) {
           <h5 class="mt-0 mb-1">${comment.username}</h5>
           <p id="comment_content${commentId}">${comment.content}</p>
         </div>`;
-  })
+    });
   }
   const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
   const currentUser = parsedPayload.user_id;
@@ -155,7 +154,6 @@ async function loadComments(articleId) {
   commentList.innerHTML = "";
   // 댓글 작성하기
   response.forEach((comment) => {
-    
     commentId = comment["id"];
     // 프로필 이미지 가져오기
     const User = comment.user;
