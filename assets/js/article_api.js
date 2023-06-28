@@ -192,13 +192,13 @@ async function buildCalendar() {
 
 		// ========= 날짜열=backdata의 selected_day 일 경우/ 상태의 따라서 색깔이 다르게 나타냄 ========
 
-		if (nowDayStr in selectedArticles) {
-			if (selectedArticles[nowDayStr].check_status == true) {
-				newDIV.style.backgroundColor = "rgb(235, 179, 106)";
-			} else {
-				newDIV.style.backgroundColor = "skyblue";
-			}
-		}
+    if (nowDayStr in selectedArticles) {
+      if (selectedArticles[nowDayStr].check_status == true) {
+        newDIV.style.backgroundColor = "rgb(255, 153, 153)";
+      } else {
+        newDIV.style.backgroundColor = "skyblue";
+      }
+    }
 
 		// if (nowDay = response_json)
 		if (nowDay.getDay() == 6) {
@@ -422,8 +422,8 @@ function setThumbnail(event) {
 		img.setAttribute("src", event.target.result);
 
 		// 썸네일 크기 조절
-		img.style.width = "150px"; // 너비 150px로 설정
-		img.style.height = "auto"; // 높이 자동 설정
+		img.style.width = "200px"; // 너비 150px로 설정
+		img.style.height = "150px"; // 높이 자동 설정
 
 		// 이미지 미리보기 영역
 		let imgThumbnail = document.querySelector("#imgthumbnail");
