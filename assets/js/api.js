@@ -1,8 +1,6 @@
 // 댓글
 async function getComments(articleId) {
-  const response = await fetch(
-    `${backend_base_url}/articles/comment/${articleId}/`
-  );
+  const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`,)
 
   if (response.status == 200) {
     response_json = await response.json();
@@ -29,11 +27,12 @@ async function postComment(articleId, newComment) {
     }
   );
 
-  if (response.status == 200) {
-    response_json = await response.json();
-    return response_json;
+  if (response.status == 201) {
+    response_json = await response.json()
+    alert("댓글이 작성되었습니다")
+    return response_json
   } else {
-    alert(response.status);
+    alert("로그인이 필요합니다")
   }
 }
 
