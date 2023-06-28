@@ -98,6 +98,15 @@
   /* 내부 여백 */
 }
 
+.button_box{
+  display: flex;
+  justify-content: center;
+}
+
 .button-container {
   justify-content: center;
+}
+
+.button-container button{
+  width: 100px;
 }

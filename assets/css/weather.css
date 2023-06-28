@@ -8,6 +8,7 @@
 *{
   font-family: 'KimjungchulMyungjo-Bold', sans-serif;
   }
+
 .calenderWeather {
 
 
@@ -21,12 +22,8 @@
   display:inline-block;
   margin-right: 10px;
   font-size: 50%;
-  
-
   }
+
 .fontContainer {
   font-size: 1vw;
-
-  
-
   }
