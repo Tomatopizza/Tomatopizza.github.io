@@ -27,8 +27,7 @@ function articleNoUpdate() {
 }
 
 async function articleUpdate() {
-  const categoryField = document.getElementById("category");
-  const category = categoryField.value;
+  const category = document.querySelector("#category").value;
   const inCategoryField = document.getElementById("in_category");
   const outCategoryField = document.getElementById("out_category");
 
@@ -49,12 +48,12 @@ async function articleUpdate() {
   const isPrivate1 = document.getElementById("is_private1").checked;
   const token = localStorage.getItem("access");
 
-  const subcategory = category === "in" ? inCategoryField : outCategoryField;
-
   const formData = new FormData();
   formData.append("category", category);
-  if (selectedSubCategory) {
-    formData.append("selectedSubCategory", selectedSubCategory);
+  if (category === "in") {
+    formData.append("in_subcategory", selectedSubCategory);
+  } else if (category === "out") {
+    formData.append("out_subcategory", selectedSubCategory);
   }
   formData.append("content", content);
   formData.append("select_day", selectDay);
@@ -102,9 +101,9 @@ function setThumbnail(event) {
     let img = document.createElement("img");
     img.setAttribute("src", event.target.result);
 
-        // 썸네일 크기 조절
-        img.style.width = "400px"; // 너비 150px로 설정
-        img.style.height = "300px"; // 높이 자동 설정
+    // 썸네일 크기 조절
+    img.style.width = "400px"; // 너비 150px로 설정
+    img.style.height = "300px"; // 높이 자동 설정
 
     // 이미지 미리보기 영역
     let imgThumbnail = document.querySelector("#imgthumbnail2");
