@@ -5,7 +5,11 @@ window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
 
-  await loadArticles(articleId);
+  try {
+    await loadArticles(articleId);
+  } catch (error) {
+  }
+  // await loadArticles(articleId);
   await loadComments(articleId);
 };
 
@@ -127,16 +131,34 @@ async function loadComments(articleId) {
 
   // 댓글 edit기능을 위한 유저 식별
 
+  try { const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const currentUser = parsedPayload.user_id;
+  } catch {
+    const commentList = document.getElementById("comment_list");
+    commentList.innerHTML = "";
+    response.forEach((comment) => {
+    
+      commentId = comment["id"];
+      // 프로필 이미지 가져오기
+      const User = comment.user;
+      const UserAvatar = User.avatar;
+
+      commentList.innerHTML += `<li class="media d-flex mb-3">
+        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
+        <div class="media-body">
+          <h5 class="mt-0 mb-1">${comment.username}</h5>
+          <p id="comment_content${commentId}">${comment.content}</p>
+        </div>`;
+  })
+  }
   const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
   const currentUser = parsedPayload.user_id;
-
   const commentList = document.getElementById("comment_list");
-  commentList.innerHTML = ""; // 새로운 댓글을 포함한 댓글창을 새로고침 하지 않고 보여주기
-
+  commentList.innerHTML = "";
   // 댓글 작성하기
   response.forEach((comment) => {
+    
     commentId = comment["id"];
-    console.log(comment)
     // 프로필 이미지 가져오기
     const User = comment.user;
     const UserAvatar = User.avatar;
@@ -147,7 +169,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}" data-value="${commentId}">
@@ -159,7 +181,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
         </li>`;
@@ -169,7 +191,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.user}</h5>
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
           </div>
           <div id="comment_edit${commentId}">
@@ -181,7 +203,7 @@ async function loadComments(articleId) {
         commentList.innerHTML += `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
-          <h5 class="mt-0 mb-1">${comment.user}</h5>
+          <h5 class="mt-0 mb-1">${comment.username}</h5>
           <p id="comment_content${commentId}">${comment.content}</p>
         </div>`;
       }
