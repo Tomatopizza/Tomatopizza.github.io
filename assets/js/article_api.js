@@ -1,5 +1,23 @@
 console.log("article.api js");
 
+// 졸라맨 애니메이션
+function card_fail(template) {
+  // 카드 실패 했을 때 띄울 거
+
+  template[0] = `
+      <div class="col">
+        <div class="card h-100" >
+            <img class="myimg" src="/assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
+            <div class="card-body">
+              <div class="fontContainer">
+                <strong>"오늘도 화이팅!"</strong><br>
+              </div>
+            </div>
+        </div>     
+      </div>
+    `;
+}
+
 // ========== index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기 ========================
 async function loadArticle() {
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
@@ -16,13 +34,23 @@ async function loadArticle() {
     if (response_json.length > 0) {
       const checkCount1 = response_json[0].check_status_count;
       console.log(checkCount1);
+
       if (checkCount1 == 3) {
         let modal = document.getElementById("modal");
         let checkArticle = document.getElementById("check-article");
-
+        let animation_title = `
+				<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_TkCUDK.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;" autoplay></lottie-player>`;
+        let animation_content = `<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_q1c2x59v.json"
+								background="transparent"
+								style="width: 100px; height: 100px; margin:auto;"
+								speed="1"
+								loop
+								autoplay></lottie-player>`;
+        document.getElementById("animation").innerHTML = animation_content;
+        document.getElementById("animation_title").innerHTML = animation_title;
         checkArticle.innerText = `작심삼일도 100번하면 습관이 되죠 :)`;
-        checkArticle.setAttribute("class", "modal_check");
-        checkArticle.setAttribute("style", "color:black;");
+        // checkArticle.setAttribute("class", "modal_check");
+        // checkArticle.setAttribute("style", "color:black;");
 
         modal.style.display = "block";
 
@@ -37,10 +65,19 @@ async function loadArticle() {
       if (checkCount1 == 7) {
         let modal = document.getElementById("modal");
         let checkArticle = document.getElementById("check-article");
-
+        let animation_title = `
+				<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_TkCUDK.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;" autoplay></lottie-player>`;
+        let animation_content = `<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_q1c2x59v.json"
+								background="transparent"
+								style="width: 100px; height: 100px; margin:auto;"
+								speed="3"
+								loop
+								autoplay></lottie-player>`;
+        document.getElementById("animation").innerHTML = animation_content;
+        document.getElementById("animation_title").innerHTML = animation_title;
         checkArticle.innerText = `벌써 7번째 운동 완료!!`;
-        checkArticle.setAttribute("class", "modal_check");
-        checkArticle.setAttribute("style", "color:black;");
+        // checkArticle.setAttribute("class", "modal_check");
+        // checkArticle.setAttribute("style", "color:black;");
 
         modal.style.display = "block";
 
@@ -55,10 +92,20 @@ async function loadArticle() {
       if (checkCount1 >= 10) {
         let modal = document.getElementById("modal");
         let checkArticle = document.getElementById("check-article");
-
+        let animation_title = `
+				<lottie-player src="https://assets6.lottiefiles.com/packages/lf20_TkCUDK.json"  background="transparent"  speed="1"  style="width: 50px; height: 50px;" autoplay></lottie-player>`;
+        let animation_content = `
+								<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_q1c2x59v.json"
+								background="transparent"
+								style="width: 100px; height: 100px; margin:auto;"
+								speed="5"
+								loop
+								autoplay></lottie-player>`;
+        document.getElementById("animation").innerHTML = animation_content;
+        document.getElementById("animation_title").innerHTML = animation_title;
         checkArticle.innerText = `벌써 ${checkCount1}번 운동했어요 대단해요!!`;
-        checkArticle.setAttribute("class", "modal_check");
-        checkArticle.setAttribute("style", "color:black;");
+        // checkArticle.setAttribute("class", "modal_check");
+        // checkArticle.setAttribute("style", "color:black;");
 
         modal.style.display = "block";
 
@@ -78,7 +125,7 @@ async function loadArticle() {
     return response_json;
   } else {
     alert("로그인을 해주세요!");
-    window.location.replace("user_login.html");
+    location.replace("./user_login.html");
   }
 }
 
@@ -354,7 +401,6 @@ async function save_article() {
   }
 
   const saveButton = document.getElementById("save-article");
-  saveButton.addEventListener("click", save_article);
 }
 
 // 이미지 업로드 미리보기

@@ -15,6 +15,7 @@
     <script src="../assets/js/nav.js"></script>
     <script src="../assets/js/article_api.js"></script>
     <script src="../assets/js/weather.js"></script>
+    <script src="../assets/js/footer.js"></script>
 
     <!-- 부트스트랩-->
     <link
@@ -28,6 +29,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
   </head>
   <style>
     .modal_w {
@@ -138,11 +140,38 @@
       </div>
 
       <!-- 업적달성 modal-->
-      <div id="modal" class="modal">
-        <div class="modal-content">
-          <h3 id="check-article"></h3>
+
+      <div class="modal" tabindex="-1" id="modal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <div id="animation_title"></div>
+              <h5 class="modal-title">띵동! 오운완 알림이 도착했어요!</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <h3 id="check-article"></h3>
+              <div id="animation"></div>
+            </div>
+          </div>
         </div>
       </div>
+      <!-- <div id="modal" class="modal">
+            <div class="modal-content">
+                <h3 id="check-article">
+                </h3>
+            </div>
+
+        </div> -->
     </div>
+
+    <!-- 푸터 추가 -->
+    <div id="footer-container"></div>
+    <!-- 푸터 끝 -->
   </body>
 </html>
