@@ -8,6 +8,9 @@ $(document).ready(function () {
     token_exp = payload_parse.exp;
     const currentTime = Math.floor(Date.now() / 1000);
 
+    document.querySelector("#select_day").value = new Date().toISOString().slice(0, 10);
+    document.querySelector("#select_day").min = new Date().toISOString().slice(0, 10);
+
     const intro = document.getElementById("intro");
     if (token_exp > currentTime) {
       if (intro) {
