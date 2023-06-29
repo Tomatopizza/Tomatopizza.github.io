@@ -1,8 +1,16 @@
+@font-face {
+    font-family: 'KimjungchulMyungjo-Bold';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
+    font-weight: 700;
+    font-style: normal;
+  }
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     list-style-type: none;
+    font-family: 'KimjungchulMyungjo-Bold', sans-serif;
 }
 
 .main{
