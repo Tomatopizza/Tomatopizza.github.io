@@ -109,7 +109,7 @@ function setThumbnail(event) {
     let imgThumbnail = document.querySelector("#imgthumbnail2");
 
     // 기존 이미지가 있으면 제거
-    while (imgThumbnail.firstChild) {
+    if (imgThumbnail && imgThumbnail.firstChild) {
       imgThumbnail.removeChild(imgThumbnail.firstChild);
     }
 
