@@ -1,15 +1,15 @@
 @font-face {
-    font-family: 'KimjungchulMyungjo-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
-    font-weight: 700;
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight:300;
     font-style: normal;
-  }
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;    
-    font-family: 'KimjungchulMyungjo-Bold', sans-serif;
+    font-family: 'IBMPlexSansKR-Regular', sans-serif;
 }
 
 .modal_body {

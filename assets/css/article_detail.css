@@ -1,16 +1,16 @@
 @font-face {
-    font-family: 'KimjungchulMyungjo-Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302_01@1.0/KimjungchulMyungjo-Bold.woff2') format('woff2');
-    font-weight: 700;
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight:300;
     font-style: normal;
-  }
+}
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
     list-style-type: none;
-    font-family: 'KimjungchulMyungjo-Bold', sans-serif;
+    font-family: 'IBMPlexSansKR-Regular', sans-serif;
 }
 
 .main{
@@ -68,19 +68,20 @@
     width: 100%;
     margin:10px;
     grid-template-columns: 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px 50px;
-    grid-template-rows: 40px 40px 20px;
-    grid-gap: 4px;
+    grid-template-rows: 40px 40px;
+    grid-gap: 5px;
 }
 
 
 .exercise_day{
     text-align: center;
-    grid-column: 2/5;
+    grid-column: 1/3;
     grid-row: 1/2;
 }
 .article_day{
-    text-align: center;
-    grid-column: 5/8;
+    margin-left: 10px;
+    text-align: left;
+    grid-column: 3/6;
     grid-row: 1/2;
 }
 
