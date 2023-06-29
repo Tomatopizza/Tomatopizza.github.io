@@ -42,3 +42,7 @@
     background-position: center;
     border:1px solid black;
 }
+
+.article_post h3{
+    text-align: center;
+}
