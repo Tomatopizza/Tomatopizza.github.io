@@ -17,9 +17,32 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/urls.js"></script>
     <script src="../assets/js/nav.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/profile.js"></script>
+    <!-- <script src="../assets/js/profile.js"></script> -->
     <!-- <script src="/assets/js/profile_update.js"></script> -->
     <style>
+.form-group{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.mylist_name{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:26px;
+    margin-bottom: 30px;
+}
+
+.btn btn-dark more {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
 
     </style>
 </head>
@@ -32,7 +55,6 @@
     <!-- 상단 네비게이션 끝-->
 
 
-    <form>
         <div class="row mt-5 align-items-center">
             <div class="col-md-3 text-center mb-5">
                 <div class="avatar avatar-xl">
@@ -41,28 +63,32 @@
             </div>
             <div class="col">
                 <div class="row align-items-center">
-                    <div class="col-md-7">
+                    <div class="col-md-7" style="margin-left: 150px; margin-bottom: 7px;">
                         <h4 class="mb-1" id="username">Username</h4>
                         <p class="small mb-3"><span class="badge badge-dark"></span></p>
                     </div>
                 </div>
                 <div class="row mb-4">
-                    <span id="email">Email</span>
+                    <span id="email" style="margin-left: 150px;margin-bottom: 20px;">Email</span>
                     <div class="col-md-7">
-                        <p class="text-muted" id="aboutme">
+                        <p class="text-muted" style="margin-left: 150px;" id="aboutme">
                             aboutme
                         </p>
                     </div>
                 </div>
             </div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-outline-dark me-md-2" type="button">수정</button>
-                </div>
+                <button class="btn btn-outline-dark me-md-4" type="button">프로필 수정</button>
+              </div>
         </div>
         <hr class="my-4" />
-        <div class="form-group">
-            <span>운동뭐했지?</span>
+            <div class="mylist_name"><strong>나의 운동 기록</strong></div>
+            <div class="form-group">
+            <ul class="list-group" id="article_mylist" class="mylist"></ul> 
         </div>
+        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+        <button id="loadMore" type="button" class="btn btn-dark more">더 보기</button>
+    </div>
         <hr class="my-4" />
     </form>
                     <div class=" permission">
