@@ -110,3 +110,8 @@
 .button-container button{
   width: 100px;
 }
+
+#currentPage{
+  display: flex;
+  align-items: center;
+}
