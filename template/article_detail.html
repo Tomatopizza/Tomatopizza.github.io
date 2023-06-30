@@ -72,17 +72,15 @@
         <button class="btn btn-dark" onclick="loadFeed()">목록</button>
         <button class="btn btn_org" id="likes" onclick="articleLike()">🤍</button>
         <li id="like_count">0</li>
-        <div id="article_edit">
+        <div id="article_edit" style="display: none;">
           <button class="btn btn-outline-dark" id="put" onclick="articleLoadPut()">수정</button>
-        </div>
-        <div id="article_edit">
           <button class="btn btn-outline-dark" id="delete" onclick="articleDelete()">삭제</button>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%">
+  <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%;">
     <ul class="list-style" id="comment_list"></ul>
   </div>
   <div class="container" style="margin: auto; display: block; width: 50%">
