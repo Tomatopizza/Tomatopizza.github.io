@@ -1,5 +1,13 @@
+@font-face {
+  font-family: 'IBMPlexSansKR-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+  font-weight:300;
+  font-style: normal;
+}
+
 .main {
   margin: 20px 20px 20px 20px;
+  font-family: 'IBMPlexSansKR-Regular', sans-serif;
 }
 
 .article_list {
@@ -90,6 +98,20 @@
   /* 내부 여백 */
 }
 
+.button_box{
+  display: flex;
+  justify-content: center;
+}
+
 .button-container {
   justify-content: center;
+}
+
+.button-container button{
+  width: 100px;
+}
+
+#currentPage{
+  display: flex;
+  align-items: center;
 }
