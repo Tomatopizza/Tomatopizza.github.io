@@ -285,32 +285,30 @@ async function articleLike() {
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
 
-  const response = await fetch(
-    `${backend_base_url}/articles/${articleId}/like_article/`,
-    {
-      // 게시글 좋아요/좋아요취소 요청
-      method: "POST",
-      headers: {
-        "content-type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-    }
-  );
+  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`,{
+    // 게시글 좋아요/좋아요취소 요청
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
 
   const response_json = await response.json();
-  console.log(response_json);
 
-  if (response.status == 200) {
-    if (likeButton.innerText === "🧡") {
-      likeButton.innerText = "🤍";
-      likeCount.innerText = response_json.fluctuation;
-      alert("좋아요 취소");
-    } else if (likeButton.innerText === "🤍") {
-      likeButton.innerText = "🧡";
-      likeCount.innerText = response_json.fluctuation;
-      alert("좋아요");
+    if (response.status == 200) {
+      if (likeButton.innerText === "🧡") {
+        likeButton.innerText = "🤍";
+        likeCount.innerText = response_json.fluctuation;
+        alert("좋아요 취소");
+      } else if (likeButton.innerText === "🤍") {
+        likeButton.innerText = "🧡";
+        likeCount.innerText = response_json.fluctuation;
+        alert("좋아요");
+      }
+    } else {
+      alert("로그인 해주세요!")
     }
-  }
 }
 
 // 게시글 삭제
@@ -353,7 +351,7 @@ async function commentLike(commentId) {
   let token = localStorage.getItem("access");
   const likeButton = document.getElementById(`comment_Like${commentId}`);
   const likeCount = document.getElementById(`comment_like_count${commentId}`);
-
+  try {
   const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`, {
     method: "POST",
     headers: {
@@ -377,6 +375,9 @@ async function commentLike(commentId) {
         alert("좋아요");
       }
     }
+  } catch {
+    alert("로그인 해주세요!")
+  }
 }
 
  

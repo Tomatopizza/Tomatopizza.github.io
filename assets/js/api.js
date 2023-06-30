@@ -34,7 +34,7 @@ async function postComment(articleId, newComment) {
     alert("댓글이 작성되었습니다");
     return response_json;
   } else {
-    alert("로그인이 필요합니다");
+    alert("로그인 해주세요!");
   }
 }
 
