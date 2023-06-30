@@ -52,17 +52,6 @@ async function commentPut(commentId) {
   editComment.style.display = "block";
 }
 
-// // 댓글 수정 취소
-// async function cancelNewComment(commentId) {
-//   const beforeComment = document.getElementById(`comment_content${commentId}`)
-//   const editComment = document.getElementById(`comment_edit_${commentId}`)
-//   const editInput = document.getElementById(`comment_edit_input${commentId}`)
-
-//   beforeComment.style.display = "block";
-//   editComment.style.display = "none";
-//   editInput.value = "";
-// }
-
 // 수정된 댓글 저장
 async function saveNewComment(commentId) {
   const newEditComment = document.getElementById(
@@ -79,7 +68,7 @@ async function saveNewComment(commentId) {
       {
         headers: {
           Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json", // 이해필요
+          "Content-Type": "application/json",
         },
         method: "PUT",
         body: JSON.stringify({
@@ -88,6 +77,7 @@ async function saveNewComment(commentId) {
       }
     );
   }
+  alert("댓글이 수정되었습니다.")
   location.reload();
 }
 
@@ -119,7 +109,7 @@ async function commentDelete(commentId) {
 // 피드페이지
 
 async function getArticles(page) {
-  const response = await fetch(`${backend_base_url}/articles/?page=${page}`); // 공유한 게시글만 불러오기
+  const response = await fetch(`${backend_base_url}/articles/?page=${page}`);
 
   if (response.status == 200) {
     const response_json = await response.json();

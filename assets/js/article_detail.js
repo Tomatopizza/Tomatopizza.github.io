@@ -9,17 +9,16 @@ window.onload = async function () {
   try {
     await loadArticles(articleId);
   } catch (error) {}
-  // await loadArticles(articleId);
   await loadComments(articleId);
 };
 
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
-  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
+  const payload = localStorage.getItem("payload");
   const response = await getArticle(articleId);
   const articleUsername = response.user;
-  const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
+  const articleUserPk = articleUsername["pk"];
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
@@ -105,7 +104,7 @@ async function loadArticles(articleId) {
     }
   );
 
-  const likeResponse_json = await likeResponse.json(); // 제이슨으로 변환
+  const likeResponse_json = await likeResponse.json();
   if (token) {
     likeButton.innerText = likeResponse_json.message;
     likeCount.innerText = likeResponse_json.fluctuation;
@@ -129,10 +128,10 @@ async function loadArticles(articleId) {
 
   // 게시글 수정·삭제 기능
 
-  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
 
-  const articleEdit = document.getElementById("article_edit"); // 게시글 수정·삭제창
+  const articleEdit = document.getElementById("article_edit");
   // 작성자에게만 기능 노출
   if (currentUser == articleUserPk) {
     articleEdit.style.display = "block";
@@ -144,14 +143,14 @@ async function loadArticles(articleId) {
 // 댓글
 
 async function loadComments(articleId) {
-  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
+  const payload = localStorage.getItem("payload");
 
-  const response = await getComments(articleId); // 해당 아티클의 댓글
+  const response = await getComments(articleId);
 
   // 댓글 edit기능을 위한 유저 식별
 
   try {
-    const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+    const parsedPayload = JSON.parse(payload);
     const currentUser = parsedPayload.user_id;
   } catch {
     const commentList = document.getElementById("comment_list");
@@ -176,7 +175,7 @@ async function loadComments(articleId) {
       </li>`;
     })
   }
-  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = "";
@@ -194,7 +193,7 @@ async function loadComments(articleId) {
     } else {
       avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
     }
-    // 유저 프로필 이미지로 분할
+
     if (comment.user === currentUser) {
       commentList.innerHTML +=
         `<li class="media d-flex mb-3">
@@ -258,14 +257,13 @@ async function loadComments(articleId) {
   }
   )
 }
-// array 안에서 값이 있는지 찾을 때는  array.includes(찾는 값) -> true or false
 
 // 댓글 작성하기 버튼
 async function submitComment() {
   const commentElement = document.getElementById("new_comment");
   const newComment = commentElement.value;
   const response = await postComment(articleId, newComment);
-  commentElement.value = ""; // 댓글 작성 후 작성칸 초기화
+  commentElement.value = "";
 
   loadComments(articleId);
 }
@@ -304,7 +302,7 @@ async function articleLike() {
       } else if (likeButton.innerText === "🤍") {
         likeButton.innerText = "🧡";
         likeCount.innerText = response_json.fluctuation;
-        alert("좋아요");
+        alert("이 게시물을 좋아합니다");
       }
     } else {
       alert("로그인 해주세요!")
@@ -336,17 +334,6 @@ async function articleDelete() {
   }
 }
 
-// async function getCommentLike(commentId) {
-//   const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`,)
-
-//   if (response.status == 200) {
-//     response_json = await response.json();
-//     return response_json;
-//   } else {
-//     alert(response.status);
-//   }
-// }
-
 async function commentLike(commentId) {
   let token = localStorage.getItem("access");
   const likeButton = document.getElementById(`comment_Like${commentId}`);
@@ -372,7 +359,7 @@ async function commentLike(commentId) {
       } else if (likeButton.innerText === "🤍") {
         likeButton.innerText = "🧡";
         likeCount.innerText = response_json.comment_like;
-        alert("좋아요");
+        alert("이 댓글을 좋아합니다.");
       }
     }
   } catch {
