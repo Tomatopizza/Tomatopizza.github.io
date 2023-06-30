@@ -1,5 +1,28 @@
-console.log("안녕");
+window.onload = async function() {
 
+  const payload = localStorage.getItem("payload");
+  const parsedPayload = JSON.parse(payload);
+  const userId = parsedPayload.user_id
+ 
+  const response = await fetch(`${backend_base_url}/users/${userId}`, {
+    headers: {
+      Authorization: "Bearer" + localStorage.getItem("access"),
+    },
+    method: "GET",
+  });
+  const data = await response.json();
+
+  const beforeUserEmail = document.getElementById("email")
+  const beforeUsername = document.getElementById("username")
+  const beforeAboutMe = document.getElementById("aboutme")
+
+  beforeUsername.innerText = data.username
+  beforeUserEmail.innerText = data.email
+  beforeAboutMe.innerText = data.about_me
+
+
+
+}
 //프로필 수정하기
 async function putProfile(user_id) {
   const payload = localStorage.getItem("payload");
