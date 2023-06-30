@@ -301,12 +301,8 @@ async function articleLike() {
       }
     } else {
       alert("로그인 해주세요!")
-
     }
-  } else {
-    alert("로그인 해주세요!");
   }
-}
 
 // 게시글 삭제
 async function articleDelete() {
