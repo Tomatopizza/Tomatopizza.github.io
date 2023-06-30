@@ -24,17 +24,28 @@ $(document).ready(async function () {
   const user = $("#username");
   const useremail = $("#email");
   const user_aboutme = $("#aboutme");
+  const photo = $("#photo");
 
   user.text(profile.username);
   useremail.text(profile.email ? profile.email : "이메일을 작성해주세요.");
   user_aboutme.text(
     profile.about_me ? profile.about_me : "간단한 내 소개를 입력해주세요 :)"
   );
+  if (
+    profile.photo == "" ||
+    profile.photo == null ||
+    typeof profile.photo === "undefined"
+  ) {
+    $("#photo").attr("src", "../assets/images/ooo.png");
+  } else {
+    $("#photo").attr("src", `${backend_base_url}${profile.photo}`);
+  }
 });
 
 let displayCount = 5;
 let articles = [];
 
+//프로필 더보기
 $(function () {
   $("#loadMore").click(function () {
     displayCount += 5;
@@ -42,6 +53,7 @@ $(function () {
   });
 });
 
+// 운동내역 불러오기
 async function myLoadArticle() {
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
     headers: {
@@ -86,7 +98,6 @@ async function myLoadArticle() {
         <span class="badge rounded-pill ${badgeClass}">${badgeText}</span>
       `;
 
-      // 목록을 순차적으로 추가해줍니다.
       article_mylist.append(newRow);
     });
   } else {
@@ -96,4 +107,37 @@ async function myLoadArticle() {
 
 function articleDetail(article_id) {
   window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${article_id}`;
+}
+
+function loadPutProfile(users_id) {
+  window.location.href = `/template/profile_update.html`;
+}
+
+// 이미지 업로드 미리보기
+function setThumbnail(event) {
+  let reader = new FileReader();
+
+  reader.onload = function (event) {
+    let img = document.createElement("img");
+    img.setAttribute("src", event.target.result);
+
+    // 썸네일 크기 조절
+    img.style.width = "200px"; // 너비 150px로 설정
+    img.style.marginLeft = "150px";
+    img.style.borderRadius = "50%";
+    img.style.borderStyle = "solid";
+
+    // 이미지 미리보기 영역
+    let imgThumbnail = document.querySelector("#imgthumbnail2");
+
+    // 기존 이미지가 있으면 제거
+    while (imgThumbnail.firstChild) {
+      imgThumbnail.removeChild(imgThumbnail.firstChild);
+    }
+
+    // 새 이미지를 미리보기 영역에 추가
+    imgThumbnail.appendChild(img);
+  };
+
+  reader.readAsDataURL(event.target.files[0]);
 }

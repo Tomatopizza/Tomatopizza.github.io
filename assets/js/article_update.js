@@ -82,7 +82,7 @@ async function articleUpdate() {
 
   if (response.status == 201) {
     alert("게시글 수정 완료");
-    window.location.href = "index.html";
+    window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${articleId}`;
   } else if (content == "" || exerciseTime1 == "") {
     alert("빈칸을 입력해 주세요.");
   } else {

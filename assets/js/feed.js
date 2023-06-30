@@ -116,7 +116,7 @@ const loadArticles = async (page = 1) => {
   renderArticles(articles);
 
   const currentPageElement = document.getElementById("currentPage");
-  currentPageElement.textContent = `현재 페이지: ${page}`;
+  currentPageElement.textContent = `현재 페이지: ${page}/${totalPages}`;
 
   if (page > totalPages) {
     alert("페이지가 존재하지 않습니다!");
