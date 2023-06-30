@@ -1,6 +1,7 @@
 let articleId;
 let commentId;
 
+
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
@@ -85,7 +86,9 @@ async function loadArticles(articleId) {
   }
   articleImage.appendChild(newImage);
 
-  // 좋아요 상태 불러오기
+  // 게시글 좋아요 상태 불러오기
+
+  const token = localStorage.getItem("access")
 
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
@@ -97,14 +100,33 @@ async function loadArticles(articleId) {
       method: "GET",
       headers: {
         "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+
       },
     }
   );
 
   const likeResponse_json = await likeResponse.json(); // 제이슨으로 변환
+  if (token) {
+    likeButton.innerText = likeResponse_json.message;
+    likeCount.innerText = likeResponse_json.fluctuation;
+  } else {
+    likeButton.innerText = "🤍";
+    const likeResponse = await fetch(
+      `${backend_base_url}/articles/${articleId}/like_article/`,
+      {
+        // 게시글 좋아요 상태와 좋아요 수 가져오기
+        method: "GET",
+        headers: {
+          "content-type": "application/json",
+  
+        },
+      }
+    );
+    const likeResponse_json = await likeResponse.json(); //
+    likeCount.innerText = likeResponse_json.fluctuation
+  }
 
-  likeButton.innerText = likeResponse_json.message;
-  likeCount.innerText = likeResponse_json.fluctuation;
 
   // 게시글 수정·삭제 기능
 
@@ -129,84 +151,84 @@ async function loadComments(articleId) {
 
   // 댓글 edit기능을 위한 유저 식별
 
-  try { const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
-  const currentUser = parsedPayload.user_id;
+  try {
+    const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+    const currentUser = parsedPayload.user_id;
   } catch {
     const commentList = document.getElementById("comment_list");
     commentList.innerHTML = "";
     response.forEach((comment) => {
     
-      commentId = comment["id"];
+      commentId = comment.id;
       // 프로필 이미지 가져오기
       const User = comment.user;
       const UserAvatar = User.avatar;
 
-      commentList.innerHTML += `<li class="media d-flex mb-3">
+      commentList.innerHTML +=
+      `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.username}</h5>
           <p id="comment_content${commentId}">${comment.content}</p>
-        </div>`;
-  })
+        </div>
+        <div id="commentLikes" style="display: flex;">
+          <button class="btn btn_org" id="comment_Like" onclick="commentLike()">🤍</button>
+          <div id="comment_like_count" style="text-align: center;">${comment.like_count}</div>
+        </div>
+      </li>`;
+    })
   }
   const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
   const currentUser = parsedPayload.user_id;
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = "";
+
+
   // 댓글 작성하기
-  response.forEach((comment) => {
-    
-    commentId = comment["id"];
+  response.forEach(function(comment) {
+    const commentId = comment.id;
     // 프로필 이미지 가져오기
     const User = comment.user;
-    const UserAvatar = User.avatar;
+    let avatar = null
 
+    if (comment.user.avatar) {
+      avatar = comment.user.avatar
+    } else {
+      avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+    }
     // 유저 프로필 이미지로 분할
-    if (UserAvatar) {
-      if (comment.user === currentUser) {
-        commentList.innerHTML += `<li class="media d-flex mb-3">
-          <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
+    if (comment.user === currentUser) {
+      commentList.innerHTML +=
+        `<li class="media d-flex mb-3">
+          <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.username}</h5>
             <p id="comment_content${commentId}">${comment.content}</p>
+          </div>
+          <div id="commentLikes" style="display: flex;">
+            <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
+            <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
           </div>
           <div id="comment_edit${commentId}" data-value="${commentId}">
             <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
             <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
           </div>
-        </li>`;
-      } else {
-        commentList.innerHTML += `<li class="media d-flex mb-3">
-          <img src="${UserAvatar}" alt="프로필 이미지" width=50 height=50>
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.username}</h5>
-            <p id="comment_content${commentId}">${comment.content}</p>
-          </div>
-        </li>`;
-      }
-    } else {
-      if (comment.user === currentUser) {
-        commentList.innerHTML += `<li class="media d-flex mb-3">
-          <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.username}</h5>
-            <p id="comment_content${commentId}">${comment.content}</p>
-          </div>
-          <div id="comment_edit${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
-          </div>
-        </li>`;
-      } else {
-        commentList.innerHTML += `<li class="media d-flex mb-3">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
-        <div class="media-body">
-          <h5 class="mt-0 mb-1">${comment.username}</h5>
-          <p id="comment_content${commentId}">${comment.content}</p>
-        </div>`;
-      }
-    }
 
+        </li>`;
+    } else {
+      commentList.innerHTML +=
+        `<li class="media d-flex mb-3">
+          <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
+          <div class="media-body">
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
+            <p id="comment_content${commentId}">${comment.content}</p>
+          </div>
+          <div id="commentLikes" style="display: flex;">
+            <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
+            <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
+          </div>
+        </li>`;
+    }
     // 댓글 수정창
     const commentEditForm = document.createElement("div");
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`);
@@ -229,8 +251,16 @@ async function loadComments(articleId) {
     commentEditForm.appendChild(commentEditComplete);
 
     commentList.appendChild(commentEditForm);
-  });
+
+    // 댓글 좋아요 표시
+    const likeButton = document.getElementById(`comment_Like${commentId}`);
+    if (comment.likes.includes(currentUser)) {
+      likeButton.innerText = "🧡"
+    }
+  }
+  )
 }
+// array 안에서 값이 있는지 찾을 때는  array.includes(찾는 값) -> true or false
 
 // 댓글 작성하기 버튼
 async function submitComment() {
@@ -309,3 +339,46 @@ async function articleDelete() {
     }
   }
 }
+
+// async function getCommentLike(commentId) {
+//   const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`,)
+
+//   if (response.status == 200) {
+//     response_json = await response.json();
+//     return response_json;
+//   } else {
+//     alert(response.status);
+//   }
+// }
+
+async function commentLike(commentId) {
+  let token = localStorage.getItem("access");
+  const likeButton = document.getElementById(`comment_Like${commentId}`);
+  const likeCount = document.getElementById(`comment_like_count${commentId}`);
+
+  const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`, {
+    method: "POST",
+    headers: {
+      "content-type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  const response_json = await response.json();
+  console.log(response_json);
+  console.log(response.status)
+
+ 
+    if (response.status === 200) {
+      if (likeButton.innerText === "🧡") {
+        likeButton.innerText = "🤍";
+        likeCount.innerText = response_json.comment_like;
+        alert("좋아요 취소");
+      } else if (likeButton.innerText === "🤍") {
+        likeButton.innerText = "🧡";
+        likeCount.innerText = response_json.comment_like;
+        alert("좋아요");
+      }
+    }
+}
+
+ 
