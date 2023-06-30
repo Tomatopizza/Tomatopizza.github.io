@@ -171,7 +171,7 @@ async function loadComments(articleId) {
         </div>
         <div id="commentLikes" style="display: flex;">
           <button class="btn btn_org" id="comment_Like" onclick="commentLike()">🤍</button>
-          <div id="comment_like_count" style="text-align: center;">${comment.like_count}</div>
+          <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
         </div>
       </li>`;
     })
