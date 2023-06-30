@@ -131,15 +131,45 @@
     margin:1vw;
     justify-content: center;
     align-items: center;
-    grid-template-columns: 6vw 6vw 6vw 6vw 6vw;
-    grid-template-rows: 3vh;
+    grid-template-columns: repeat(11, 30px);
+    grid-template-rows: 40px;
 }
 
-#like_count{
-    text-align: left;
+.btn_list{
+    display: flex;
+    justify-content: center;
+    grid-column: 1/4;
+    grid-row: 1/2;
 }
 
 #likes{
-    margin-left: 30px;
+    display: flex;
+    justify-content: center;
+    grid-column: 4/5;
+    grid-row: 1/2;
 }
 
+#like_count{
+    margin-left: 10px;
+    grid-column: 5/7;
+    grid-row: 1/2;
+}
+
+#article_edit{
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    grid-template-columns: 70px 60px 10px 60px;
+}
+
+#article_edit #put{
+    display: flex;
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+
+#article_edit #delete{
+    display: flex;
+    grid-column: 4/5;
+    grid-row: 1/2;
+}
