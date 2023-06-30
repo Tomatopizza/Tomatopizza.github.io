@@ -1,3 +1,14 @@
+@font-face {
+  font-family: 'IBMPlexSansKR-Regular';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+  font-weight:300;
+  font-style: normal;
+}
+
+*{
+  font-family: 'IBMPlexSansKR-Regular', sans-serif;
+  }
+
 .calenderWeather {
 
 
@@ -11,12 +22,8 @@
   display:inline-block;
   margin-right: 10px;
   font-size: 50%;
-  
-
   }
+
 .fontContainer {
   font-size: 1vw;
-
-  
-
   }

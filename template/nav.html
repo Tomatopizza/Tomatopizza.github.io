@@ -18,7 +18,7 @@
         .modal_wrap {
             display: none;
             width: 500px;
-            height: 750px;
+            height: 745px;
             position: absolute;
             top: 50%;
             left: 50%;
@@ -82,7 +82,7 @@
                 </ul>
 
                 <a href="/template/index.html" class="me-auto navbar-brand"><img
-                        src="../assets/images/ooo-removebg-preview.png" alt="상단로고" width="100">오운완프로젝트</a>
+                        src="../assets/images/ooo-removebg-preview.png" alt="상단로고" width="100"><strong>오운완프로젝트</strong></a>
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -121,9 +121,9 @@
         <div>
             <div class="modal_body">
                 <div class="article_post">
-                    <h3>운동 기록하기</h3>
+                    <h3 style="text-align: center;">운동 기록하기</h3>
                     <label for="select_day">운동 날짜를 선택하세요:
-                        <input type="date" id="select_day" max="2055-06-20" min="2023-06-16" value="2023-06-16">
+                        <input type="date" id="select_day" max="2055-06-20" min="null" value="null">
                     </label>
                     <br>
                     <label for="category">운동선택</label>
@@ -158,14 +158,14 @@
                     </div>
                     <p> </p>
                     <div class="input-group mb-3">
-                    <label class="input-group-text" for="exercise_time">운동시간</label>
-                    <input id="exercise_time"  class="form-control"aria-label="Username" aria-describedby="basic-addon1" type="text" placeholder="운동시간을 분으로 적어주세요">
+                    <label class="input-group-text" for="exercise_time">운동시간(분)</label>
+                    <input id="exercise_time"  class="form-control"aria-label="Username" aria-describedby="basic-addon1" type="text" placeholder="운동시간을 숫자로만 적어주세요">
                 </div>
                     <div class="input">
                         <form id="imgForm">
                             <div class="mb-3">
                                 <label for="content" class="input-group-text1">메모</label>
-                            <textarea id="content"  class="form-control" rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
+                            <textarea id="content"  class="form-control" maxlength="15" rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
                         </div>
                         </div>
                             <div class="form-check">

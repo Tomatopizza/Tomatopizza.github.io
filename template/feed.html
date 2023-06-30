@@ -3,13 +3,14 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>피드페이지</title>
+    <title>오운완 | 피드페이지</title>
     <script src="../assets/js/urls.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="../assets/js/nav.js"></script>
     <script src="../assets/js/api.js"></script>
     <script src="../assets/js/feed.js"></script>
     <script src="../assets/js/article_api.js"></script>
+    <script src="../assets/js/footer.js"></script>
     <link rel="stylesheet" href="/assets/css/feed.css" />
 
     <link
@@ -34,13 +35,18 @@
     <div class="main">
       <div class="container">
         <div class="article_list" id="article_list"></div>
-        <button type="button" id="prevButton" class="btn btn_org;">
-          &laquo;
-        </button>
-        <button type="button" id="nextButton" class="btn btn_org;">
-          &raquo;
-        </button>
+      
+        <div class="button_box">
+          <button type="button" id="prevButton" class="btn btn_org;">&laquo;</button>
+          <span id="currentPage"></span>
+          <button type="button" id="nextButton" class="btn btn_org;">&raquo;</button>
+        </div>
       </div>
     </div>
+
+    <!-- 푸터 추가 -->
+    <div id="footer-container"></div>
+    <!-- 푸터 끝 -->
+
   </body>
 </html>

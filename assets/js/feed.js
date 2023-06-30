@@ -57,12 +57,12 @@ const renderArticles = (articles) => {
 
     const likeCount = document.createElement("li");
     likeCount.setAttribute("class", "like_count");
-    likeCount.innerText = `좋아요 수: ${article.like_count}`; // 좋아요 수 추가
+    likeCount.innerText = `${article.like_count}`; // 좋아요 수 추가
     newText.appendChild(likeCount);
 
     const commentCount = document.createElement("li");
     commentCount.setAttribute("class", "comment_count");
-    commentCount.innerText = `댓글 수: ${article.comment_count || 0}`; // 댓글 수 추가
+    commentCount.innerText = `${article.comment_count || 0}`; // 댓글 수 추가
     newText.appendChild(commentCount);
 
     const createdAt = document.createElement("li");
@@ -80,16 +80,52 @@ const renderArticles = (articles) => {
       displayTime = `${Math.floor(timeDiff / 1440)} 일 전`; // 그 이상은 일 단위로 표시
     }
 
-    createdAt.innerText = `작성일: ${displayTime}`; // 작성일 추가
+    createdAt.innerText = `${displayTime}`; // 작성일 추가
     newText.appendChild(createdAt);
   });
 };
 
-//페이지네이션
+async function getAllArticles(articleId) {
+  const response = await fetch(`${backend_base_url}/articles/feed/`); // 각 게시글 상세보기
+
+  if (response.status == 200) {
+    response_jsonall = await response.json();
+    return response_jsonall;
+  } else {
+    alert(response.status);
+  }
+}
+
+async function ArticlesPages() {
+  const allArticles = await getAllArticles();
+  const totalArticles = allArticles.length;
+
+  const articlesPerPage = 5;
+  const totalPages = Math.ceil(totalArticles / articlesPerPage);
+
+  return totalPages;
+}
+
+// //페이지네이션
 const loadArticles = async (page = 1) => {
+  const totalPages = Math.ceil((await getAllArticles()).length / 5);
+  console.log(totalPages);
+
   const articles = await getArticles(page);
   console.log(articles);
   renderArticles(articles);
+
+  const currentPageElement = document.getElementById("currentPage");
+  currentPageElement.textContent = `${page}`;
+
+  if (page > totalPages) {
+    alert("페이지가 존재하지 않습니다!");
+    location.reload();
+  }
+  if (page == 0) {
+    alert("페이지가 존재하지 않습니다!");
+    location.reload();
+  }
 };
 
 let pageNumber = 1;
@@ -98,15 +134,16 @@ const movePage = (direction) => {
   pageNumber += direction;
   loadArticles(pageNumber);
 };
-
 const init = () => {
   document
     .getElementById("nextButton")
     .addEventListener("click", () => movePage(1));
+
   document
     .getElementById("prevButton")
     .addEventListener("click", () => movePage(-1));
-  loadArticles();
+
+  loadArticles(); // 이곳에서만 호출하면 됩니다.
 };
 
 document.addEventListener("DOMContentLoaded", init);

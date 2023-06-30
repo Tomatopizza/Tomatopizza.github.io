@@ -1,0 +1,100 @@
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight:300;
+    font-style: normal;
+  }
+ 
+*{
+    color:black;
+    list-style-type: none;
+    font-family: 'IBMPlexSansKR-Regular', sans-serif;
+}
+
+.line {
+    display: block;
+    width: 100%;
+    margin: 20px auto;
+    border-style: inset;
+    border-width: 2px 0 0;
+}
+
+.nav-item mb-2{
+    font-size: 16px;
+}
+
+.main-footer h5{
+    font-size: 16px;
+}
+
+.container-footer{
+    background-color:white;
+    margin: 0px auto;
+    font-size: 14px !important;
+    width: 800px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.main-footer{
+    display: grid;
+    width: 800px;
+    grid-template-columns: 200px 120px 120px 120px 120px 120px;
+    text-align: center;
+    margin: 10px;
+}
+
+
+.text-decoration-none img{
+    width: 100px;
+    height: 100px;
+}
+
+.footer_url_box{
+    white-space: inherit;
+}
+
+.footer flex-column{
+    grid-column: 1/2;
+    margin: 10px;
+}
+
+.footer-text1, .footer-text2, .footer-text3, .footer-text4, .footer-text5{
+    display: block;
+    margin: 20px;
+}
+
+
+.footer-text1{
+    grid-column: 2/3;
+}
+
+.footer-text2{
+    grid-column: 3/4;
+}
+
+.footer-text3{
+    grid-column: 4/5;
+}
+
+.footer-text4{
+    grid-column: 5/6;
+}
+
+.footer-text5{
+    grid-column: 6/7;
+}
+
+.under-line {
+    display: block;
+    width: 100%;
+    margin: 20px auto 3px;
+    border-style: inset;
+    border-width: 2px 0 0;
+}
+
+.under-text{
+    background-color: darkgray;
+    text-align: center;
+}

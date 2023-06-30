@@ -1,6 +1,8 @@
 // 댓글
 async function getComments(articleId) {
-  const response = await fetch(`${backend_base_url}/articles/comment/${articleId}/`,)
+  const response = await fetch(
+    `${backend_base_url}/articles/comment/${articleId}/`
+  );
 
   if (response.status == 200) {
     response_json = await response.json();
@@ -28,11 +30,11 @@ async function postComment(articleId, newComment) {
   );
 
   if (response.status == 201) {
-    response_json = await response.json()
-    alert("댓글이 작성되었습니다")
-    return response_json
+    response_json = await response.json();
+    alert("댓글이 작성되었습니다");
+    return response_json;
   } else {
-    alert("로그인이 필요합니다")
+    alert("로그인이 필요합니다");
   }
 }
 
@@ -116,7 +118,7 @@ async function commentDelete(commentId) {
 
 // 피드페이지
 
-async function getArticles(page = 1) {
+async function getArticles(page) {
   const response = await fetch(`${backend_base_url}/articles/?page=${page}`); // 공유한 게시글만 불러오기
 
   if (response.status == 200) {

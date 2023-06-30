@@ -8,8 +8,7 @@ window.onload = async function () {
 
   try {
     await loadArticles(articleId);
-  } catch (error) {
-  }
+  } catch (error) {}
   // await loadArticles(articleId);
   await loadComments(articleId);
 };
@@ -158,8 +157,7 @@ async function loadComments(articleId) {
     const commentList = document.getElementById("comment_list");
     commentList.innerHTML = "";
     response.forEach((comment) => {
-    
-      commentId = comment.id;
+      commentId = comment["id"];
       // 프로필 이미지 가져오기
       const User = comment.user;
       const UserAvatar = User.avatar;
@@ -185,8 +183,8 @@ async function loadComments(articleId) {
 
 
   // 댓글 작성하기
-  response.forEach(function(comment) {
-    const commentId = comment.id;
+  response.forEach((comment) => {
+    commentId = comment["id"];
     // 프로필 이미지 가져오기
     const User = comment.user;
     let avatar = null
