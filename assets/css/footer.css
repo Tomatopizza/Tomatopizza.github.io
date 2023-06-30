@@ -1,6 +1,14 @@
+@font-face {
+    font-family: 'IBMPlexSansKR-Regular';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-07@1.0/IBMPlexSansKR-Regular.woff') format('woff');
+    font-weight:300;
+    font-style: normal;
+  }
+ 
 *{
     color:black;
     list-style-type: none;
+    font-family: 'IBMPlexSansKR-Regular', sans-serif;
 }
 
 .line {
@@ -27,11 +35,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-}
-
-
-.custom-footer{
-
 }
 
 .main-footer{
