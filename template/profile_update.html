@@ -17,10 +17,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/urls.js"></script>
     <script src="../assets/js/nav.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="../assets/js/profile.js"></script>
+    <script src="../assets/js/profile_update.js"></script>
     <!-- <script src="../assets/js/profile.js"></script> -->
-    <!-- <script src="/assets/js/profile_update.js"></script> -->
     <style>
 .form-group{
     display: flex;
@@ -57,49 +55,43 @@
 
         <div class="row mt-5 align-items-center">
             <div class="col-md-3 text-center mb-5">
-                <div class="avatar avatar-xl">
-                    <img src="#" alt="..." class="avatar-img rounded-circle" id="photo" />
-                </div>
+                <div class="avatar-img" id="imgthumbnail2">
+                  </div>
             </div>
             <div class="col">
                 <div class="row align-items-center">
                     <div class="col-md-7" style="margin-left: 150px; margin-bottom: 7px;">
-                        <h4 class="mb-1" id="username">Username</h4>
+                        <h4 class="mb-1" id="username_name">Username</h4>
+                        <textarea cols="15" rows="1" class="username_input" type="text" id="username"autocomplete="username" placeholder="유저이름"></textarea>
                         <p class="small mb-3"><span class="badge badge-dark"></span></p>
                     </div>
                     
                 </div>
                 <div class="row mb-4">
-                    <span id="email" style="margin-left: 150px;margin-bottom: 20px;">Email</span>
+                    <span id="email_name" style="margin-left: 150px;">Email</span>
+                    <textarea cols="15" rows="1" style="margin-left:160px; margin-bottom: 20px; max-width: 300px;" class="email_input" type="text" id="email" autocomplete="email" placeholder="이메일을 입력해주세요!"></textarea>
                     <div class="col-md-7">
-                        <p class="text-muted" style="margin-left: 150px;" id="aboutme">
+                        <p class="text-muted" style="margin-left: 150px;" id="aboutme_name">
                             aboutme
                         </p>
+                        <textarea cols="30" style="margin-left: 150px;"  class="aboutme_input" type="text" id="aboutme" rows="2" placeholder=" 내소개를 입력해주세요"></textarea>
+
                     </div>
                 </div>
             </div>
-            <!-- <form id="imgForm">
-                <input type="file" value="none" id="photo" onchange="setThumbnail(event);">
-            </form>
+            <form id="imgForm">
+                <input type="file" style="margin-left: 150px;" value="none" id="photo" onchange="setThumbnail(event);">
+              </form>
         </div>
-        <div class="image-view" id="imgthumbnail2"></div> -->
+        <div class="image-view" style="margin-left: 150px;"  id="imgthumbnail2"></div>
             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                <button class="btn btn-outline-dark me-md-4" type="button" onclick="loadPutProfile()">프로필 수정</button>
+                <button class="btn btn-outline-dark me-md-4" type="button" onclick=" putProfile()">프로필 수정완료</button>
+                <button class="btn btn-outline-dark me-md-4" type="button" onclick=" profileNoUpdate()">수정 취소하기</button>
               </div>
         </div>
-        <hr class="my-4" />
-            <div class="mylist_name"><strong>나의 운동 기록</strong></div>
-            <div class="form-group">
-            <ul class="list-group" id="article_mylist" class="mylist"></ul> 
-        </div>
-        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-        <button id="loadMore" type="button" class="btn btn-dark more">더 보기</button>
-    </div>
-        <hr class="my-4" />
+
     </form>
-                    <!-- <div class=" permission">
-                        <button id="withdrawal-btn" class="btn btn-danger" onclick="UserDelete()">탈퇴하기</button>
-                    </div> -->
+
                 </div>
         </form>
     </div>
