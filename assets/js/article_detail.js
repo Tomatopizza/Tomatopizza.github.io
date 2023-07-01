@@ -1,7 +1,6 @@
 let articleId;
 let commentId;
 
-
 window.onload = async function () {
   const urlParams = new URLSearchParams(window.location.search);
   articleId = urlParams.get("article_id");
@@ -9,17 +8,16 @@ window.onload = async function () {
   try {
     await loadArticles(articleId);
   } catch (error) {}
-  // await loadArticles(articleId);
   await loadComments(articleId);
 };
 
 // 공유 게시글 불러오기
 
 async function loadArticles(articleId) {
-  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
+  const payload = localStorage.getItem("payload");
   const response = await getArticle(articleId);
   const articleUsername = response.user;
-  const articleUserPk = articleUsername["pk"]; // 수정·삭제 기능 노출을 위한 게시글 작성자 pk 추출
+  const articleUserPk = articleUsername["pk"];
   const articleUser = document.getElementById("article_user");
   const articleContent = document.getElementById("article_content");
   const articleImage = document.getElementById("article_image");
@@ -87,7 +85,7 @@ async function loadArticles(articleId) {
 
   // 게시글 좋아요 상태 불러오기
 
-  const token = localStorage.getItem("access")
+  const token = localStorage.getItem("access");
 
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
@@ -100,12 +98,11 @@ async function loadArticles(articleId) {
       headers: {
         "content-type": "application/json",
         Authorization: `Bearer ${token}`,
-
       },
     }
   );
 
-  const likeResponse_json = await likeResponse.json(); // 제이슨으로 변환
+  const likeResponse_json = await likeResponse.json();
   if (token) {
     likeButton.innerText = likeResponse_json.message;
     likeCount.innerText = likeResponse_json.fluctuation;
@@ -118,21 +115,19 @@ async function loadArticles(articleId) {
         method: "GET",
         headers: {
           "content-type": "application/json",
-  
         },
       }
     );
     const likeResponse_json = await likeResponse.json(); //
-    likeCount.innerText = likeResponse_json.fluctuation
+    likeCount.innerText = likeResponse_json.fluctuation;
   }
-
 
   // 게시글 수정·삭제 기능
 
-  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
 
-  const articleEdit = document.getElementById("article_edit"); // 게시글 수정·삭제창
+  const articleEdit = document.getElementById("article_edit");
   // 작성자에게만 기능 노출
   if (currentUser == articleUserPk) {
     articleEdit.style.display = "block";
@@ -144,14 +139,14 @@ async function loadArticles(articleId) {
 // 댓글
 
 async function loadComments(articleId) {
-  const payload = localStorage.getItem("payload"); // 현재 로그인 유저 정보
+  const payload = localStorage.getItem("payload");
 
-  const response = await getComments(articleId); // 해당 아티클의 댓글
+  const response = await getComments(articleId);
 
   // 댓글 edit기능을 위한 유저 식별
 
   try {
-    const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+    const parsedPayload = JSON.parse(payload);
     const currentUser = parsedPayload.user_id;
   } catch {
     const commentList = document.getElementById("comment_list");
@@ -162,8 +157,7 @@ async function loadComments(articleId) {
       const User = comment.user;
       const UserAvatar = User.avatar;
 
-      commentList.innerHTML +=
-      `<li class="media d-flex mb-3">
+      commentList.innerHTML += `<li class="media d-flex mb-3">
         <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
         <div class="media-body">
           <h5 class="mt-0 mb-1">${comment.username}</h5>
@@ -171,33 +165,32 @@ async function loadComments(articleId) {
         </div>
         <div id="commentLikes" style="display: flex;">
           <button class="btn btn_org" id="comment_Like" onclick="commentLike()">🤍</button>
-          <div id="comment_like_count" style="text-align: center;">${comment.like_count}</div>
+          <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
         </div>
       </li>`;
-    })
+    });
   }
-  const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
+  const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = "";
-
 
   // 댓글 작성하기
   response.forEach((comment) => {
     commentId = comment["id"];
     // 프로필 이미지 가져오기
     const User = comment.user;
-    let avatar = null
+    let avatar = null;
 
     if (comment.user.avatar) {
-      avatar = comment.user.avatar
+      avatar = comment.user.avatar;
     } else {
-      avatar = 'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'
+      avatar =
+        "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png";
     }
-    // 유저 프로필 이미지로 분할
+
     if (comment.user === currentUser) {
-      commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+      commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.username}</h5>
@@ -214,8 +207,7 @@ async function loadComments(articleId) {
 
         </li>`;
     } else {
-      commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
+      commentList.innerHTML += `<li class="media d-flex mb-3">
           <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
           <div class="media-body">
             <h5 class="mt-0 mb-1">${comment.username}</h5>
@@ -253,19 +245,17 @@ async function loadComments(articleId) {
     // 댓글 좋아요 표시
     const likeButton = document.getElementById(`comment_Like${commentId}`);
     if (comment.likes.includes(currentUser)) {
-      likeButton.innerText = "🧡"
+      likeButton.innerText = "🧡";
     }
-  }
-  )
+  });
 }
-// array 안에서 값이 있는지 찾을 때는  array.includes(찾는 값) -> true or false
 
 // 댓글 작성하기 버튼
 async function submitComment() {
   const commentElement = document.getElementById("new_comment");
   const newComment = commentElement.value;
   const response = await postComment(articleId, newComment);
-  commentElement.value = ""; // 댓글 작성 후 작성칸 초기화
+  commentElement.value = "";
 
   loadComments(articleId);
 }
@@ -285,14 +275,17 @@ async function articleLike() {
   const likeButton = document.getElementById("likes");
   const likeCount = document.getElementById("like_count");
 
-  const response = await fetch(`${backend_base_url}/articles/${articleId}/like_article/`,{
-    // 게시글 좋아요/좋아요취소 요청
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${backend_base_url}/articles/${articleId}/like_article/`,
+    {
+      // 게시글 좋아요/좋아요취소 요청
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   const response_json = await response.json();
 
@@ -304,12 +297,12 @@ async function articleLike() {
       } else if (likeButton.innerText === "🤍") {
         likeButton.innerText = "🧡";
         likeCount.innerText = response_json.fluctuation;
-        alert("좋아요");
+        alert("이 게시물을 좋아합니다");
       }
     } else {
       alert("로그인 해주세요!")
     }
-}
+  }
 
 // 게시글 삭제
 async function articleDelete() {
@@ -336,34 +329,25 @@ async function articleDelete() {
   }
 }
 
-// async function getCommentLike(commentId) {
-//   const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`,)
-
-//   if (response.status == 200) {
-//     response_json = await response.json();
-//     return response_json;
-//   } else {
-//     alert(response.status);
-//   }
-// }
-
 async function commentLike(commentId) {
   let token = localStorage.getItem("access");
   const likeButton = document.getElementById(`comment_Like${commentId}`);
   const likeCount = document.getElementById(`comment_like_count${commentId}`);
   try {
-  const response = await fetch(`${backend_base_url}/articles/comment/${commentId}/like_comment/`, {
-    method: "POST",
-    headers: {
-      "content-type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  });
-  const response_json = await response.json();
-  console.log(response_json);
-  console.log(response.status)
+    const response = await fetch(
+      `${backend_base_url}/articles/comment/${commentId}/like_comment/`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    const response_json = await response.json();
+    console.log(response_json);
+    console.log(response.status);
 
- 
     if (response.status === 200) {
       if (likeButton.innerText === "🧡") {
         likeButton.innerText = "🤍";
@@ -372,12 +356,10 @@ async function commentLike(commentId) {
       } else if (likeButton.innerText === "🤍") {
         likeButton.innerText = "🧡";
         likeCount.innerText = response_json.comment_like;
-        alert("좋아요");
+        alert("이 댓글을 좋아합니다.");
       }
     }
   } catch {
-    alert("로그인 해주세요!")
+    alert("로그인 해주세요!");
   }
 }
-
- 
