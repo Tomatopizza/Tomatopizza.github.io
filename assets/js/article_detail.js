@@ -163,17 +163,25 @@ async function loadComments(articleId) {
       const UserAvatar = User.avatar;
 
       commentList.innerHTML +=
-      `<li class="media d-flex mb-3">
-        <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
-        <div class="media-body">
-          <h5 class="mt-0 mb-1">${comment.username}</h5>
-          <p id="comment_content${commentId}">${comment.content}</p>
+      `<div class="comment-wrapper">
+        <div class="media">
+          <div class="comment-profile-img">
+            <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" class="mr-3" alt="프로필 이미지" width=50 height=50>
+          </div>
+          <div class="comment_username">
+            <h5 class="mt-0 mb-1">${comment.username}</h5>
+          </div>
+          <div class="comment_content">
+            <p id="comment_content${commentId}">${comment.content}</p>
+          </div>
+          <div class="comment_like_icon">  
+            <button class="btn btn_org" id="comment_Like" onclick="commentLike()">🤍</button>
+          </div>
+          <div class="comment_like_icon_count">  
+            <div id="comment_like_count">${comment.like_count}</div>
+          </div>  
         </div>
-        <div id="commentLikes" style="display: flex;">
-          <button class="btn btn_org" id="comment_Like" onclick="commentLike()">🤍</button>
-          <div id="comment_like_count" style="text-align: center;">${comment.like_count}</div>
-        </div>
-      </li>`;
+      </div>`;
     })
   }
   const parsedPayload = JSON.parse(payload); // 현재 로그인 유저 정보
@@ -197,35 +205,52 @@ async function loadComments(articleId) {
     // 유저 프로필 이미지로 분할
     if (comment.user === currentUser) {
       commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
-          <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.username}</h5>
-            <p id="comment_content${commentId}">${comment.content}</p>
+        `<div class="comment-wrapper">
+          <div class="media">
+            <div class="comment-profile-img">
+              <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
+            </div>
+            <div class="comment_username">
+              <h5 class="mt-0 mb-1">${comment.username}</h5>
+            </div>
+            <div class="comment_content"> 
+              <p id="comment_content${commentId}">${comment.content}</p>
+            </div>
+            <div class="comment_like_icon">  
+              <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
+            </div>
+            <div class="comment_like_icon_count">  
+              <div id="comment_like_count${commentId}">${comment.like_count}</div>
+            </div>
+            <div class="comment_btn_box">
+              <div id="comment_edit${commentId}" data-value="${commentId}">
+                <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn-outline-dark">수정</button>
+                <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn-outline-dark" >삭제</button>
+              </div>
+            </div>
           </div>
-          <div id="commentLikes" style="display: flex;">
-            <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
-            <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
-          </div>
-          <div id="comment_edit${commentId}" data-value="${commentId}">
-            <button id="comment_put" onclick="commentPut(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">수정</button>
-            <button id="comment_delete" onclick="commentDelete(${commentId})" class="btn btn_org" style="margin: auto; display: block; color:grey;">삭제</button>
-          </div>
-
-        </li>`;
+        </div>`;
     } else {
       commentList.innerHTML +=
-        `<li class="media d-flex mb-3">
-          <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
-          <div class="media-body">
-            <h5 class="mt-0 mb-1">${comment.username}</h5>
-            <p id="comment_content${commentId}">${comment.content}</p>
+        `<div class="comment-wrapper">
+          <div class="media">
+            <div class="comment-profile-img">
+              <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
+            </div>
+            <div class="comment_username">
+              <h5 class="mt-0 mb-1">${comment.username}</h5>
+            </div>
+            <div class="comment_content">
+              <p id="comment_content${commentId}">${comment.content}</p>
+            </div>
+            <div class="comment_like_icon">
+              <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
+            </div>
+            <div class="comment_like_icon_count">  
+              <div id="comment_like_count${commentId}">${comment.like_count}</div>
+            </div>
           </div>
-          <div id="commentLikes" style="display: flex;">
-            <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
-            <div id="comment_like_count${commentId}" style="text-align: center;">${comment.like_count}</div>
-          </div>
-        </li>`;
+        </div>`;
     }
     // 댓글 수정창
     const commentEditForm = document.createElement("div");
