@@ -155,25 +155,6 @@
     grid-row: 1/2;
 }
 
-#article_edit{
-    display: grid !important;
-    align-items: center;
-    justify-content: center;
-    grid-template-columns: 70px 60px 10px 60px;
-}
-
-#article_edit #put{
-    display: flex;
-    grid-column: 2/3;
-    grid-row: 1/2;
-}
-
-#article_edit #delete{
-    display: flex;
-    grid-column: 4/5;
-    grid-row: 1/2;
-}
-
 .comment_box{ /*댓글 생성 전체 공간*/
 
 }
