@@ -26,6 +26,8 @@
   <!-- 상단 네비게이션바 -->
   <div id="navbar-container"></div>
   <!-- 상단 네비게이션 끝-->
+
+  <!-- 게시글 -->
   <div class="main">
     <div class="container">
       <div class="article_title">
@@ -36,6 +38,7 @@
       <div class="article" id="article">
         <div class="article_image" id="article_image"></div>
 
+        <!-- 게시글 입력 정보 -->
         <div class="article_text">
           <p class="exercise_day"> 운동 날짜:
           <div class="article_day">
@@ -68,11 +71,14 @@
         </div>
       </div>
 
+      <!-- 게시글 버튼 list -->
       <div class="button_box">
-        <button class="btn btn-dark" onclick="loadFeed()">목록</button>
+        <div class="btn_list">
+          <button class="btn btn-dark" onclick="loadFeed()">목록</button>
+        </div>
         <button class="btn btn_org" id="likes" onclick="articleLike()">🤍</button>
         <li id="like_count">0</li>
-        <div id="article_edit" style="display: none;">
+        <div id="article_edit">
           <button class="btn btn-outline-dark" id="put" onclick="articleLoadPut()">수정</button>
           <button class="btn btn-outline-dark" id="delete" onclick="articleDelete()">삭제</button>
         </div>
@@ -80,15 +86,17 @@
     </div>
   </div>
 
-  <div class="container mt-5" id="article_comment" style="margin: auto; display: block; width: 50%;">
-    <ul class="list-style" id="comment_list"></ul>
-  </div>
-  <div class="container" style="margin: auto; display: block; width: 50%">
-    <div class="row g-3">
-      <div class="col-sm-10">
+  <div class="comment_box">
+    <!-- 댓글 저장 공간-->
+    <div class="container_savebox" id="article_comment">
+      <ul class="list-style" id="comment_list"></ul>
+    </div>
+    <!-- 댓글 작성 -->
+    <div class="container_comment">
+      <div class="comment_input_box">
         <input type="text" class="form-control" id="new_comment" placeholder="댓글을 작성해주세요." aria-label="comment">
       </div>
-      <div class="col-sm">
+      <div class="comment_btn">
         <button type="button" class="btn btn-dark" onclick="submitComment()">등록</button>
       </div>
     </div>
