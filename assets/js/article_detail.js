@@ -127,11 +127,35 @@ async function loadArticles(articleId) {
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
 
-  const articleEdit = document.getElementById("article_edit");
+  console.log(currentUser)
+  console.log(articleUserPk)
+
+  const articleEdit = document.getElementById("article_edit")
+
+  const articlePut = document.querySelector("#put")
+
+  const articleDelete = document.querySelector("#delete")
   // 작성자에게만 기능 노출
+
   if (currentUser == articleUserPk) {
-    articleEdit.style.display = "block";
+    console.log(currentUser)
+    articleEdit.style.display = "grid";
+    articleEdit.style.alignItems = "center";
+    articleEdit.style.justifyContent = "center";
+    articleEdit.style.gridTemplateColumns = "70px 60px 10px 60px";
+
+    articlePut.style.display = "flex";
+    articlePut.style.gridColumn = "2/3";
+    articlePut.style.gridRow = "1/2";
+    articlePut.innerText = "수정"
+
+    articleDelete.style.display = "flex";
+    articleDelete.style.gridColumn = "4/5";
+    articleDelete.style.gridRow = "1/2";
+    articleDelete.innerText = "삭제";
+
   } else {
+    console.log(currentUser)
     articleEdit.style.display = "none";
   }
 }
