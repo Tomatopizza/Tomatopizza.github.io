@@ -341,7 +341,7 @@ async function save_article() {
 
   if (response.status == 201) {
     alert("글 작성 완료");
-    window.location.replace("index.html");
+    window.location.reload();
   } else if (category === "" || select_day === "" || exercise_time === "") {
     alert("카테고리, 날짜, 운동시간은 필수 입니다!");
   }

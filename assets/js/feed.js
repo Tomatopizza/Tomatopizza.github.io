@@ -126,6 +126,10 @@ const loadArticles = async (page = 1) => {
     alert("페이지가 존재하지 않습니다!");
     location.reload();
   }
+  if (totalPages == 0) {
+    alert("홈화면으로 이동합니다!");
+    location.href = `${frontend_base_url}/template/index.html`;
+  }
 };
 
 let pageNumber = 1;
