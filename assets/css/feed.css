@@ -32,7 +32,7 @@
 
 .card-body {
   display: grid !important;
-  grid-template-columns: auto 200px;
+  grid-template-columns: auto 130px;
 }
 
 .img-size {
@@ -48,7 +48,8 @@
 }
 
 .collector {
-  margin-left: auto;
+  text-align: left;
+  margin-left: 10px;
   margin-top: auto;
   margin-bottom: 10px;
   grid-template-columns: 2/3;
