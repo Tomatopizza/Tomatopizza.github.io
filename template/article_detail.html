@@ -79,8 +79,8 @@
         <button class="btn btn_org" id="likes" onclick="articleLike()">🤍</button>
         <li id="like_count">0</li>
         <div id="article_edit">
-          <button class="btn btn-outline-dark" id="put" onclick="articleLoadPut()">수정</button>
-          <button class="btn btn-outline-dark" id="delete" onclick="articleDelete()">삭제</button>
+          <button class="btn btn-outline-dark" id="put" onclick="articleLoadPut()"></button>
+          <button class="btn btn-outline-dark" id="delete" onclick="articleDelete()"></button>
         </div>
       </div>
     </div>
@@ -94,7 +94,8 @@
     <!-- 댓글 작성 -->
     <div class="container_comment">
       <div class="comment_input_box">
-        <input type="text" class="form-control" id="new_comment" placeholder="댓글을 작성해주세요." aria-label="comment">
+        <input type="text" class="form-control" id="new_comment" placeholder="댓글은 30자까지 작성하실 수 있습니다."
+          aria-label="comment">
       </div>
       <div class="comment_btn">
         <button type="button" class="btn btn-dark" onclick="submitComment()">등록</button>

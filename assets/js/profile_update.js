@@ -12,13 +12,29 @@ window.onload = async function() {
   });
   const data = await response.json();
 
+  console.log(data)
+
   const beforeUserEmail = document.getElementById("email")
   const beforeUsername = document.getElementById("username")
   const beforeAboutMe = document.getElementById("aboutme")
 
+  //
+  const avatarBox = document.getElementById("imgthumbnail2")
+  const beforeImg = document.createElement("img")
+  beforeImg.setAttribute("id", "beforeImg")
+  avatarBox.appendChild(beforeImg)
+
+  const beforeAvatar = document.getElementById("beforeImg");
+  beforeAvatar.style.width = "200px"
+  beforeAvatar.style.marginLeft = "150px"
+  beforeAvatar.style.borderRadius = "50%"
+  beforeAvatar.setAttribute("src",`${backend_base_url}/${data.photo}`)
+  console.log(beforeAvatar)
+
   beforeUsername.innerText = data.username
   beforeUserEmail.innerText = data.email
   beforeAboutMe.innerText = data.about_me
+
 
 
 
@@ -42,6 +58,8 @@ async function putProfile(user_id) {
 
   const imageInput = document.getElementById("photo");
   const photo = imageInput.files[0]; // 파일 업로드 input에서 선택한 파일 가져오기
+  console.log(imageInput)
+  console.log(photo)
 
   if (photo) {
     formData.append("photo", photo);
