@@ -12,34 +12,24 @@ window.onload = async function() {
   });
   const data = await response.json();
 
+  console.log(data)
+
   const beforeUserEmail = document.getElementById("email")
   const beforeUsername = document.getElementById("username")
   const beforeAboutMe = document.getElementById("aboutme")
 
   //
-  const beforeAvatar = document.querySelector("#avatar-img");
+  const avatarBox = document.getElementById("imgthumbnail2")
+  const beforeImg = document.createElement("img")
+  beforeImg.setAttribute("id", "beforeImg")
+  avatarBox.appendChild(beforeImg)
 
-  if (beforeAvatar) {
-    const imgImg = document.createElement("img");
-    imgImg.style.width = "30px";
-    imgImg.style.height = "30px";
-    imgImg.style.backgroundColor = "black";
-    beforeAvatar.appendChild(imgImg);
-  }
-
-  // beforeAvatar.src = imgImg.src
-
-
-  //
-
-  // const beforeAvatar = document.getElementById("photo")
-  // const avatarImg = document.getElementById("imgthumbnai12");
-  // const photoImg = document.querySelector("#photo");
-  
-  // avatarImg.src = photoImg.src;
-
-  // console.log(data.photo)
-  // console.log(beforeAvatar)
+  const beforeAvatar = document.getElementById("beforeImg");
+  beforeAvatar.style.width = "200px"
+  beforeAvatar.style.marginLeft = "150px"
+  beforeAvatar.style.borderRadius = "50%"
+  beforeAvatar.setAttribute("src",`${backend_base_url}/${data.photo}`)
+  console.log(beforeAvatar)
 
   beforeUsername.innerText = data.username
   beforeUserEmail.innerText = data.email
