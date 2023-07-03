@@ -165,9 +165,35 @@ async function buildCalendar() {
           const select_day = data.select_day;
           const category = data.category;
           const articleId = data.id;
+          const inSubcategory = data.in_subcategory || {};
+          const outSubcategory = data.out_subcategory || {};
+
+          console.log(inSubcategory, outSubcategory);
 
           const categoryName =
             category === 1 ? "실내운동" : category === 2 ? "실외운동" : "기타";
+
+          const inSubCategoryMap = {
+            1: "실내 걷기",
+            2: "트레드밀",
+            3: "실내 싸이클",
+            4: "상체 웨이트",
+            5: "하체 웨이트",
+            6: "수영",
+            7: "실내 코어운동",
+          };
+
+          const inSubCategoryName = inSubCategoryMap[inSubcategory] || "";
+
+          const outSubCategoryMap = {
+            1: "실외 걷기",
+            2: "야외 런닝",
+            3: "야외 싸이클",
+            4: "구기종목",
+          };
+
+          const outSubCategoryName = outSubCategoryMap[outSubcategory] || "";
+
           const checkStatus =
             check_status === true
               ? "운동완료 !"
@@ -178,7 +204,7 @@ async function buildCalendar() {
           articleCard.innerHTML = `
 		  <div class="card" style="width: 100%;">
 		  <div class="card">
-			  <h5 class="card-title" style="text-align: center; margin-top:10px;">${categoryName}</h5>
+			  <h5 class="card-title" style="text-align: center; margin-top:10px;">${categoryName} (${inSubCategoryName}${outSubCategoryName})</h5>
 			  <h6 class="card-subtitle mb-2 text-muted" style="text-align: center;">${select_day}</h6>
 			  <p class="card-text" style="text-align: center;">${checkStatus}</p>
 			  <div style="text-align: center;">
