@@ -166,7 +166,8 @@
 
 .comment-wrapper {  /*생성된 댓글*/
     align-items: center;
-    width: 500px; /* 원하는 크기로 설정 */
+    height: auto;
+    width: 700px; /* 원하는 크기로 설정 */
     padding: 10px; /* 원하는 여백 크기로 설정 */
     border: 1px solid #ccc; /* 원하는 테두리 스타일로 설정 */
     border-radius: 20px; /* 원하는 테두리 둥글기로 설정 */
@@ -175,8 +176,8 @@
 
 .media{ /*생성된 댓글의 요소 배치 grid*/
     display: grid;
-    grid-template-columns: repeat(9,60px);
-    grid-template-rows: repeat(4, 15px);
+    grid-template-columns: repeat(12, 60px);
+    grid-template-rows: repeat(6, auto);
     grid-gap: 3px;
 }
 
@@ -193,30 +194,38 @@
 .comment_username{/*댓글 아이디*/
     font-size: 12px;
     grid-column: 2/5;
-    grid-row: 1/3;
+    grid-row: 2/4;
 }
 
 .comment_content{ /*댓글 내용*/
+    display: table;
+    height: 100%;
     font-size: 20px;
-    grid-column: 2/8;
-    grid-row: 3/5;
+    grid-column: 1/11;
+    grid-row: 4/6;
+    overflow: auto;
 }
+
+.comment_content p{
+    display: table-row;
+}
+
 
 .comment_like_icon{ /*댓글 하트*/
     margin-left: 20px;
-    grid-column: 6/7;
-    grid-row: 1/3;
+    grid-column: 10/11;
+    grid-row: 2/4;
 }
 
 .comment_like_icon_count{ /*댓글 하트 수*/
     margin-top: 5px;
-    grid-column: 7/9;
-    grid-row: 1/3;
+    grid-column: 11/12;
+    grid-row: 2/4;
 }
 
 .comment_btn_box{ /*댓글 수정 삭제*/
-    grid-column: 9/10;
-    grid-row: 1/2;
+    grid-column: 12/13;
+    grid-row: 1/7;
 }
 
 .container_comment{ /*댓글 작성 바*/
@@ -237,3 +246,15 @@
     grid-column: 19/22;
     grid-row: 1/2;
 }
+
+.comment_edit_form textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 14px;
+    line-height: 1.5;
+    resize: vertical;
+  }
