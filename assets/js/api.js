@@ -30,13 +30,13 @@ async function postComment(articleId, newComment) {
   );
 
   if (response.status == 201) {
-    response_json = await response.json();
-    alert("댓글이 작성되었습니다");
-    return response_json;
-  } else if (newComment.length > 30) {
-    alert("댓글은 30자까지 가능합니다.");
+  response_json = await response.json();
+  alert("댓글이 작성되었습니다.");
+  return response_json;
+  } else if (response.status == 400) {
+    alert("댓글은 최대 100자까지만 작성하실 수 있습니다.")
   } else {
-    alert("로그인 해주세요!");
+    alert("로그인이 필요합니다.")
   }
 }
 
