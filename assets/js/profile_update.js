@@ -26,6 +26,8 @@ window.onload = async function() {
 
   const beforeAvatar = document.getElementById("beforeImg");
   beforeAvatar.style.width = "200px"
+  beforeAvatar.style.minHeight ="200px";
+  beforeAvatar.style.maxHeight ="200px";
   beforeAvatar.style.marginLeft = "150px"
   beforeAvatar.style.borderRadius = "50%"
   beforeAvatar.setAttribute("src",`${backend_base_url}/${data.photo}`)
@@ -95,9 +97,10 @@ function setThumbnail(event) {
 
     // 썸네일 크기 조절
     img.style.width = "200px";
+    img.style.minHeight ="200px";
+    img.style.maxHeight ="200px";
     img.style.marginLeft = "150px";
     img.style.borderRadius = "50%";
-    img.style.borderStyle = "solid";
 
     // 이미지 미리보기 영역
     let imgThumbnail = document.querySelector("#imgthumbnail2");
