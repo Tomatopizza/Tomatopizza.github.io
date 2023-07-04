@@ -6,7 +6,7 @@ console.log(users_id);
 
 //프로필불러오기
 async function getProfile(users_id) {
-  const response = await fetch(`${backend_base_url}/users/${users_id}`, {
+  const response = await fetch(`${backend_base_url}/users/profile/${users_id}`, {
     headers: {
       Authorization: "Bearer" + localStorage.getItem("access"),
     },
@@ -14,6 +14,7 @@ async function getProfile(users_id) {
   });
   const data = await response.json();
   return data;
+
 }
 
 $(document).ready(async function () {
@@ -36,9 +37,9 @@ $(document).ready(async function () {
     profile.photo == null ||
     typeof profile.photo === "undefined"
   ) {
-    $("#photo").attr("src", "../assets/images/ooo.png");
+    photo.attr("src", "../assets/images/ooo.png");
   } else {
-    $("#photo").attr("src", `${backend_base_url}${profile.photo}`);
+    photo.attr("src", `${backend_base_url}${profile.photo}`);
   }
 });
 
