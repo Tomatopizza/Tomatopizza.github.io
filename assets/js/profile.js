@@ -1,8 +1,26 @@
-console.log("안녕");
+window.onload = async function() {
+  try {
+  const payload = localStorage.getItem("payload");
+  const payload_parse = JSON.parse(payload);
+  const users_id = payload_parse.user_id;
+
+    const response = await fetch(`${backend_base_url}/users/profile/${users_id}`, {
+      headers: {
+        Authorization: "Bearer" + localStorage.getItem("access"),
+      },
+      method: "GET",
+    });
+    const data = await response.json();
+    return data;
+    } catch {
+      alert("로그인을 해주세요!")
+      location.replace("./user_login.html");
+    }
+  
+}
 const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const users_id = payload_parse.user_id;
-console.log(users_id);
 
 //프로필불러오기
 async function getProfile(users_id) {

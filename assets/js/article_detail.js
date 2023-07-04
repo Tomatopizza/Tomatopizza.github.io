@@ -226,7 +226,9 @@ async function loadComments(articleId) {
             <div class="comment_username">
               <h5 class="mt-0 mb-1">${comment.username}</h5>
             </div>
-            
+            <div class="comment_content"> 
+              <p id="comment_content${commentId}">${comment.content}</p>
+            </div>
             <div class="comment_like_icon">  
               <button class="btn btn_org" id="comment_Like${commentId}" class="commentImg" onclick="commentLike(${commentId})">🤍</button>
             </div>
@@ -240,9 +242,7 @@ async function loadComments(articleId) {
               </div>
             </div>
           </div>
-          <div class="comment_content"> 
-              <p id="comment_content${commentId}">${comment.content}</p>
-            </div>
+
         </div>`;
     } else {
       commentList.innerHTML += `<div class="comment-wrapper">
@@ -271,10 +271,17 @@ async function loadComments(articleId) {
     commentEditForm.setAttribute("class", "comment_edit_form");
     commentEditForm.style.display = "none";
 
-    const commentEditInput = document.createElement("input");
+    const commentEditInput = document.createElement("textarea");
     commentEditInput.setAttribute("id", `comment_edit_input${commentId}`);
     commentEditInput.setAttribute("type", "text");
     commentEditForm.appendChild(commentEditInput);
+
+    commentEditInput.style.width = "600px";
+    commentEditInput.style.height = "100px";
+    commentEditInput.style.fontSize = "16px";
+    commentEditInput.style.resize = "none";
+
+    commentEditInput.style.border = "1px solid black";
 
     const commentEditComplete = document.createElement("button");
     commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`);
