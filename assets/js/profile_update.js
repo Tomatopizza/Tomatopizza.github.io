@@ -1,18 +1,18 @@
 window.onload = async function() {
+  try {
+    const payload = localStorage.getItem("payload");
+    const parsedPayload = JSON.parse(payload);
+    const userId = parsedPayload.user_id
+  
+    const response = await fetch(`${backend_base_url}/users/profile/${userId}`, {
+      headers: {
+        Authorization: "Bearer" + localStorage.getItem("access"),
+      },
+      method: "GET",
+    });
+    const data = await response.json();
 
-  const payload = localStorage.getItem("payload");
-  const parsedPayload = JSON.parse(payload);
-  const userId = parsedPayload.user_id
- 
-  const response = await fetch(`${backend_base_url}/users/profile/${userId}`, {
-    headers: {
-      Authorization: "Bearer" + localStorage.getItem("access"),
-    },
-    method: "GET",
-  });
-  const data = await response.json();
 
-  console.log(data)
 
   const beforeUserEmail = document.getElementById("email")
   const beforeUsername = document.getElementById("username")
@@ -43,10 +43,10 @@ window.onload = async function() {
   beforeUsername.innerText = data.username
   beforeUserEmail.innerText = data.email
   beforeAboutMe.innerText = data.about_me
-
-
-
-
+} catch {
+  alert("로그인을 해주세요!");
+  location.replace("./user_login.html");
+  }
 }
 //프로필 수정하기
 async function putProfile(user_id) {
