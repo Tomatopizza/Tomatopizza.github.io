@@ -4,7 +4,7 @@ window.onload = async function() {
   const parsedPayload = JSON.parse(payload);
   const userId = parsedPayload.user_id
  
-  const response = await fetch(`${backend_base_url}/users/${userId}`, {
+  const response = await fetch(`${backend_base_url}/users/profile/${userId}`, {
     headers: {
       Authorization: "Bearer" + localStorage.getItem("access"),
     },
@@ -28,8 +28,15 @@ window.onload = async function() {
   beforeAvatar.style.width = "200px"
   beforeAvatar.style.marginLeft = "150px"
   beforeAvatar.style.borderRadius = "50%"
-  beforeAvatar.setAttribute("src",`${backend_base_url}/${data.photo}`)
   console.log(beforeAvatar)
+  console.log(beforeAvatar.src)
+  if (data.photo == "" ||
+  data.photo == null ||
+  typeof data.photo === "undefined") {
+    beforeAvatar.setAttribute("src", "http://127.0.0.1:5500/assets/images/ooo.png")
+  } else {
+  beforeAvatar.setAttribute("src",`${backend_base_url}/${data.photo}`)
+  }
 
   beforeUsername.innerText = data.username
   beforeUserEmail.innerText = data.email
@@ -65,7 +72,7 @@ async function putProfile(user_id) {
     formData.append("photo", photo);
   }
 
-  const response = await fetch(`${backend_base_url}/users/${user_id}/`, {
+  const response = await fetch(`${backend_base_url}/users/profile/${user_id}/`, {
     method: "PUT",
     headers: {
       Authorization: "Bearer " + token,
@@ -97,7 +104,6 @@ function setThumbnail(event) {
     img.style.width = "200px";
     img.style.marginLeft = "150px";
     img.style.borderRadius = "50%";
-    img.style.borderStyle = "solid";
 
     // 이미지 미리보기 영역
     let imgThumbnail = document.querySelector("#imgthumbnail2");

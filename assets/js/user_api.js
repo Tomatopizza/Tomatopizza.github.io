@@ -50,14 +50,12 @@ async function handleLogin() {
 		// access,refresh 토큰 저장
 		// response_json으로 불러오면 { 'email' : ~~, 'password' : ~~, 'toekn' : {'rfresh': ~~ , 'access' : ~~}} 이런식으로 불러와짐.
 		// 그래서 일단 token만 불러온다음에 필요없는 부분을 제거한 뒤 access와 refresh에 넣어줌. 바로 딕셔너리로는 인식시키는 법을 몰라서 택함.
-		var token = response_json.tokens;
-		var token_list = token.split(":");
-		var refresh = token_list[1].replace(/'/g, "");
-		refresh = refresh.replace(/, acces/);
-		var access = token_list[2].replace(/'/g, "");
-		access = access.replace("}", "");
-		localStorage.setItem("access", access);
-		localStorage.setItem("refresh", refresh);
+    var token = response_json.tokens;
+    console.log(token.access);
+    var refresh = token.refresh;
+    var access = token.access;
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
 
 		const base64Url = access.split(".")[1];
 		const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
