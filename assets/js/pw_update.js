@@ -1,4 +1,3 @@
-console.log("pw_js");
 //비밀번호 변경
 async function fixProfile(user_id) {
   const payload = localStorage.getItem("payload");
