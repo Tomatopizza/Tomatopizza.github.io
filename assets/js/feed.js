@@ -151,3 +151,72 @@ const init = () => {
 };
 
 document.addEventListener("DOMContentLoaded", init);
+
+async function ranking() {
+	const response = await fetch(`${backend_base_url}/articles/ranking/`, {
+		headers: {
+			Authorization: "Bearer " + localStorage.getItem("access"),
+		},
+		method: "GET",
+	});
+	if (response.status == 200) {
+		const response_json = await response.json();
+		let ranking = "";
+		let ranking_1 = "";
+		let ranking_2 = "";
+		let ranking_3 = "";
+		if (response_json[0] != null) {
+			ranking_1 = response_json[0][0];
+		}
+
+		if (response_json[1] != null) {
+			ranking_2 = response_json[1][0];
+		}
+
+		if (response_json[2] != null) {
+			ranking_3 = response_json[2][0];
+		}
+
+		ranking = `
+    
+    <div class="row">
+      <div class="col-sm-2 " style="display:block">
+        <div class="card">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFD700" class="bi bi-award-fill" viewBox="0 0 16 16">
+              <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
+              <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+            </svg>
+            <p class="card-text">${ranking_1}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2" style="display: block">
+        <div class="card">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#C0C0C0" class="bi bi-award-fill" viewBox="0 0 16 16">
+              <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
+              <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+            </svg>
+            <p class="card-text">${ranking_2}</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-2" style="display: block">
+        <div class="card">
+          <div class="card-body">
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#B87333" class="bi bi-award-fill" viewBox="0 0 16 16">
+              <path d="m8 0 1.669.864 1.858.282.842 1.68 1.337 1.32L13.4 6l.306 1.854-1.337 1.32-.842 1.68-1.858.282L8 12l-1.669-.864-1.858-.282-.842-1.68-1.337-1.32L2.6 6l-.306-1.854 1.337-1.32.842-1.68L6.331.864 8 0z"/>
+              <path d="M4 11.794V16l4-1 4 1v-4.206l-2.018.306L8 13.126 6.018 12.1 4 11.794z"/>
+            </svg>
+            <p class="card-text">${ranking_3}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+		`;
+
+		document.getElementById("ranking").innerHTML = ranking;
+	}
+}
+ranking();
