@@ -1,3 +1,16 @@
+window.onload = async function () {
+  const category = document.querySelector("#category").value
+  const categoryOut = document.querySelector(".out_category")
+  const categoryIn = document.querySelector(".in_category")
+  if (category == "in") {
+    categoryOut.style.display = "none";
+    categoryIn.style.display = "block";
+  } else {
+    categoryIn.style.display = "none";
+    categoryOut.style.display = "block";
+  }
+}
+
 const urlParams = new URLSearchParams(window.location.search);
 articleId = urlParams.get("article_id");
 // console.log(articleId)
