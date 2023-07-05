@@ -24,15 +24,17 @@ const users_id = payload_parse.user_id;
 
 //프로필불러오기
 async function getProfile(users_id) {
-  const response = await fetch(`${backend_base_url}/users/profile/${users_id}`, {
-    headers: {
-      Authorization: "Bearer" + localStorage.getItem("access"),
-    },
-    method: "GET",
-  });
+  const response = await fetch(
+    `${backend_base_url}/users/profile/${users_id}`,
+    {
+      headers: {
+        Authorization: "Bearer" + localStorage.getItem("access"),
+      },
+      method: "GET",
+    }
+  );
   const data = await response.json();
   return data;
-
 }
 
 $(document).ready(async function () {
@@ -159,4 +161,8 @@ function setThumbnail(event) {
   };
 
   reader.readAsDataURL(event.target.files[0]);
+}
+
+function changePW(users_id) {
+  window.location.href = `/template/profile_pw_update.html`;
 }
