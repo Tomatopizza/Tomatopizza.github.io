@@ -4,7 +4,6 @@ async function handleRegister() {
     username: document.getElementById("floatingInput").value,
     password: document.getElementById("floatingPassword").value,
     email: document.getElementById("floatingInputEmail").value,
-    // fullname: document.getElementById("floatingInputFullname").value,
   };
 
   const response = await fetch(`${backend_base_url}/users/register/`, {
@@ -27,7 +26,6 @@ async function handleRegister() {
 }
 
 async function handleLogin() {
-  console.log("로그인 신호");
   const loginData = {
     email: document.getElementById("floatingInput").value, // 이 부분이 email로 변화
     password: document.getElementById("floatingPassword").value,
@@ -50,7 +48,6 @@ async function handleLogin() {
     // response_json으로 불러오면 { 'email' : ~~, 'password' : ~~, 'toekn' : {'rfresh': ~~ , 'access' : ~~}} 이런식으로 불러와짐.
     // 그래서 일단 token만 불러온다음에 필요없는 부분을 제거한 뒤 access와 refresh에 넣어줌. 바로 딕셔너리로는 인식시키는 법을 몰라서 택함.
     var token = response_json.tokens;
-    console.log(token.access);
     var refresh = token.refresh;
     var access = token.access;
     localStorage.setItem("access", access);

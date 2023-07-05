@@ -31,8 +31,7 @@ window.onload = async function () {
     beforeAvatar.style.maxHeight = "200px";
     beforeAvatar.style.marginLeft = "150px";
     beforeAvatar.style.borderRadius = "50%";
-    console.log(beforeAvatar);
-    console.log(beforeAvatar.src);
+
     if (
       data.photo == "" ||
       data.photo == null ||
@@ -59,7 +58,6 @@ async function putProfile(user_id) {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload);
   user_id = payload_parse.user_id;
-  console.log(user_id);
 
   const username = document.getElementById("username").value;
   const email = document.getElementById("email").value;

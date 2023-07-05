@@ -45,7 +45,7 @@ async function commentPut(commentId) {
   const a = document.getElementsByClassName("comment_edit_complete");
   for (let i = 0; i < a.length; i++) {
     a[i].addEventListener("click", () => saveNewComment(a[i].dataset.id));
-  } // 이해필요
+  }
 
   const beforeComment = document.getElementById(`comment_content${commentId}`);
   const editComment = document.getElementById(`comment_edit_${commentId}`);

@@ -124,9 +124,6 @@ async function loadArticles(articleId) {
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
 
-  console.log(currentUser);
-  console.log(articleUserPk);
-
   const articleEdit = document.getElementById("article_edit");
 
   const articlePut = document.querySelector("#put");
@@ -135,7 +132,6 @@ async function loadArticles(articleId) {
   // 작성자에게만 기능 노출
 
   if (currentUser == articleUserPk) {
-    console.log(currentUser);
     articleEdit.style.display = "grid";
     articleEdit.style.alignItems = "center";
     articleEdit.style.justifyContent = "center";
@@ -151,7 +147,6 @@ async function loadArticles(articleId) {
     articleDelete.style.gridRow = "1/2";
     articleDelete.innerText = "삭제";
   } else {
-    console.log(currentUser);
     articleEdit.style.display = "none";
   }
 }
@@ -402,8 +397,6 @@ async function commentLike(commentId) {
       }
     );
     const response_json = await response.json();
-    console.log(response_json);
-    console.log(response.status);
 
     if (response.status === 200) {
       if (likeButton.innerText === "🧡") {

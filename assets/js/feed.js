@@ -109,10 +109,8 @@ async function ArticlesPages() {
 // //페이지네이션
 const loadArticles = async (page = 1) => {
   const totalPages = Math.ceil((await getAllArticles()).length / 5);
-  console.log(totalPages);
 
   const articles = await getArticles(page);
-  console.log(articles);
   renderArticles(articles);
 
   const currentPageElement = document.getElementById("currentPage");

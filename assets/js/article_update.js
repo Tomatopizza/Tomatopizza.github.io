@@ -13,7 +13,6 @@ window.onload = async function () {
 
 const urlParams = new URLSearchParams(window.location.search);
 articleId = urlParams.get("article_id");
-// console.log(articleId)
 
 // 게시글 정보 가져오기
 async function getArticleInfo(articleId) {
@@ -49,7 +48,6 @@ function bindData(articleInfo) {
   document.querySelector("#is_private1").checked = articleInfo.is_private;
   // 이미지 미리보기
   const imgThumbnail = document.querySelector("#imgthumbnail2");
-  console.log(imgThumbnail);
   if (articleInfo.image) {
     let img = document.createElement("img");
     img.setAttribute("src", `${backend_base_url}${articleInfo.image}`);
@@ -141,7 +139,6 @@ async function articleUpdate() {
   } else {
     console.error("요청 실패:", response);
     for (const selectDay of formData.values()) {
-      console.log(selectDay);
     }
   }
 }
