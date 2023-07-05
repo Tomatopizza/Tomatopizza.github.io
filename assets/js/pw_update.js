@@ -1,3 +1,11 @@
+window.onload = async function () {
+    const payload = localStorage.getItem("payload");
+    if (payload == null) {
+    alert("비밀번호 변경은 로그인 이후 이용하실 수 있습니다.");
+    location.replace("./user_login.html");
+  }
+}
+
 //비밀번호 변경
 async function fixProfile(user_id) {
   const payload = localStorage.getItem("payload");

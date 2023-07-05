@@ -219,7 +219,7 @@ async function buildCalendar() {
         document.querySelector(".modal_w").style.display = "block";
       } else if (response.status == 404) {
         // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
-        alert("로그인을 해주세요.");
+        alert("로그인을 해주세요!");
       } else {
         // 기타 오류 처리를 수행합니다.
         alert("API 호출에 실패하였습니다.");

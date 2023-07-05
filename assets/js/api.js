@@ -36,7 +36,7 @@ async function postComment(articleId, newComment) {
   } else if (response.status == 400) {
     alert("댓글은 최대 100자까지만 작성하실 수 있습니다.")
   } else {
-    alert("로그인이 필요합니다.")
+    alert("댓글 작성은 로그인이 필요합니다!")
   }
 }
 
