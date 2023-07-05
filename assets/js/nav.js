@@ -22,6 +22,9 @@ $(document).ready(function () {
       const profile = await getProfile(users_id);
       console.log(profile.username);
 
+      document.querySelector("#select_day").value = new Date().toISOString().slice(0, 10);
+      document.querySelector("#select_day").min = new Date().toISOString().slice(0, 10);
+
       const intro = document.getElementById("intro");
       if (intro) {
         intro.innerText = `${profile.username}님 안녕하세요`;
