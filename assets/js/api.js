@@ -51,7 +51,7 @@ async function commentPut(commentId) {
   const editComment = document.getElementById(`comment_edit_${commentId}`);
   const editInput = document.getElementById(`comment_edit_input${commentId}`);
   editInput.value = beforeComment.innerText; // 이전 댓글 내용 그대로 표시
-  editComment.style.display = "block";
+  editComment.style.display = "grid";
 }
 
 // 수정된 댓글 저장

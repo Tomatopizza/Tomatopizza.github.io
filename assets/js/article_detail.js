@@ -266,18 +266,20 @@ async function loadComments(articleId) {
         </div>`;
     }
     // 댓글 수정창
+
     const commentEditForm = document.createElement("div");
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`);
     commentEditForm.setAttribute("class", "comment_edit_form");
     commentEditForm.style.display = "none";
 
+    
     const commentEditInput = document.createElement("textarea");
     commentEditInput.setAttribute("id", `comment_edit_input${commentId}`);
     commentEditInput.setAttribute("type", "text");
     commentEditForm.appendChild(commentEditInput);
-
-    commentEditInput.style.width = "600px";
-    commentEditInput.style.height = "100px";
+    
+    commentEditForm.style.alignItems="center";
+    commentEditInput.style.width = "550px";
     commentEditInput.style.fontSize = "16px";
     commentEditInput.style.resize = "none";
 
@@ -287,6 +289,8 @@ async function loadComments(articleId) {
     commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`);
     commentEditComplete.setAttribute("data-id", `${commentId}`); // commentId를 넘기기 위함.
     commentEditComplete.innerText = "수정완료";
+
+    
     commentEditComplete.setAttribute(
       "class",
       "btn btn-dark comment_edit_complete"
@@ -416,3 +420,4 @@ async function commentLike(commentId) {
     alert("로그인 해주세요!");
   }
 }
+
