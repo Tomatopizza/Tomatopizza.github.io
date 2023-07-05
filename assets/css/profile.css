@@ -59,3 +59,8 @@ body {
   background-position: center;
   background-repeat: no-repeat;
 }
+
+.text-muted{
+  width:500px;
+  word-wrap: break-word;
+}
