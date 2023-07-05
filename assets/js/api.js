@@ -65,6 +65,9 @@ async function saveNewComment(commentId) {
 
   const confirmPut = confirm("댓글을 수정하시겠습니까?");
   if (confirmPut) {
+    if (newEditComment.length > 100) {
+      alert("댓글은 최대 100자까지만 작성하실 수 있습니다.")
+    } else {
     const response = await fetch(
       `${backend_base_url}/articles/comment/${articleId}/${commentId}/`,
       {
@@ -78,9 +81,11 @@ async function saveNewComment(commentId) {
         }),
       }
     );
+    alert("댓글이 수정되었습니다.");
+    location.reload();
+    }
   }
-  alert("댓글이 수정되었습니다.");
-  location.reload();
+
 }
 
 // 댓글 삭제
