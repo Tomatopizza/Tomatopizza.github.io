@@ -73,34 +73,35 @@ async function putProfile(user_id) {
 
   const imageInput = document.getElementById("photo");
   const photo = imageInput.files[0]; // 파일 업로드 input에서 선택한 파일 가져오기
-  console.log(imageInput);
-  console.log(photo);
 
-  if (photo) {
-    formData.append("photo", photo);
-  }
-
-  const response = await fetch(
-    `${backend_base_url}/users/profile/${user_id}/`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: "Bearer " + token,
-      },
-      body: formData,
-    }
-  );
-
-  if (response.status == 200) {
-    alert("프로필 수정 완료");
-    window.location.href = "profile.html";
-  } else if (username == "" || aboutMe == "" || email == "") {
-    alert("빈칸을 입력해 주세요.");
-  } else if (response.status == 400) {
-    alert("이메일 양식에 맞게 작성해주세요.");
+  if (aboutMe.length > 256) {
+    alert("aboutme를 256자 이내로 작성해주세요.")
   } else {
-    console.error("요청 실패:", response);
-  }
+    if (photo) {
+      formData.append("photo", photo);
+    }
+  
+    const response = await fetch(
+      `${backend_base_url}/users/profile/${user_id}/`,
+      {
+        method: "PUT",
+        headers: {
+          Authorization: "Bearer " + token,
+        },
+        body: formData,
+      }
+    );
+  
+    if (response.status == 200) {
+      alert("프로필 수정 완료");
+      window.location.href = "profile.html";
+    } else if (username == "" || aboutMe == "" || email == "") {
+      alert("빈칸을 입력해 주세요.");
+    } else if (response.status == 400) {
+      alert("이메일 양식에 맞게 작성해주세요.");
+    } else {
+      console.error("요청 실패:", response);
+    }}
 }
 
 // 이미지 업로드 미리보기
