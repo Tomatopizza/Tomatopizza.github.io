@@ -145,7 +145,7 @@ async function buildCalendar() {
         `${backend_base_url}/articles/my000/?date=${selected_date_str}`,
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("access"),
+            "Authorization": "Bearer " + localStorage.getItem("access"),
             "Content-Type": "application/json",
           },
           method: "GET",
