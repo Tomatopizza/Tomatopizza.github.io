@@ -100,23 +100,21 @@ form {
 .login-btn {
     display: inline-block;
     padding: 12px 24px;
-    font-size: 20px;
     text-decoration: none;
     background-color: #8b8b8b;
     color: black;
-    border-radius: 25px;
     cursor: pointer;
     width: 300px;
-    font-weight: bold;
 }
 
 .field button {
+    font-size: 30px;
     height: 100%;
-    width: 100%;
     border: none;
     font-size: 16px;
     font-weight: 400;
-    border-radius: 6px;
+    border-radius: 25px;
+    font-weight: bold;
 }
 
 /* 회원가입, 비밀번호 찾기 css */
