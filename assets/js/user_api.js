@@ -71,7 +71,7 @@ async function handleLogin() {
     localStorage.setItem("payload", jsonPayload);
     window.location.replace(`${frontend_base_url}/template/index.html`);
   } else {
-    alert(response.status); // "회원정보가 일치하지 않습니다."
+    alert("등록된 회원이 아닙니다.");
   }
 }
 
