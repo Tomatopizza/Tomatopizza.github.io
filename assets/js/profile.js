@@ -188,18 +188,8 @@ async function deactivateUserAccount() {
       console.log(data)
       alert("회원 탈퇴 되었습니다.")
       location.replace("./user_login.html");
-      return data
     }
   }
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //         console.log(data);
-  //         // Handle response data
-  //     })
-  //     .catch((error) => {
-  //         console.error("Error:", error);
-  //         // Handle errors
-  //     });
     } catch {
       alert("로그인 해주세요!")
     }

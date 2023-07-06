@@ -33,7 +33,17 @@ async function handleLogin() {
     password: document.getElementById("floatingPassword").value,
   };
 
-  // fetch post 통신이 완료될때까지 기다리고, api에서 토큰을 반환합니다.
+  const userEmail = loginData["email"]
+  const userPassword = loginData["password"]
+  if (userEmail === "" && userPassword === "") {
+    alert("email과 password를 입력해주세요.")
+  }
+  else if (userEmail === "") {
+      alert("email을 입력해주세요.")
+  } else if (userPassword === "") {
+      alert("password를 입력해주세요.")
+  } else {
+      // fetch post 통신이 완료될때까지 기다리고, api에서 토큰을 반환합니다.
   const response = await fetch(`${backend_base_url}/users/login/`, {
     headers: {
       Accept: "application/json",
@@ -72,6 +82,7 @@ async function handleLogin() {
     window.location.replace(`${frontend_base_url}/template/index.html`);
   } else {
     alert("등록된 회원이 아닙니다.");
+  }
   }
 }
 
