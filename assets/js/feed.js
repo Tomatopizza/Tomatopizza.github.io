@@ -246,7 +246,7 @@ async function ranking() {
     ranking = `
     
     <div class="row">
-      <div class="col-sm-2 " style="display:block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFD700" class="bi bi-award-fill" viewBox="0 0 16 16">
@@ -257,7 +257,7 @@ async function ranking() {
           </div>
         </div>
       </div>
-      <div class="col-sm-2" style="display: block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#C0C0C0" class="bi bi-award-fill" viewBox="0 0 16 16">
@@ -268,7 +268,7 @@ async function ranking() {
           </div>
         </div>
       </div>
-      <div class="col-sm-2" style="display: block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#B87333" class="bi bi-award-fill" viewBox="0 0 16 16">
