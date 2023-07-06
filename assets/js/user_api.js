@@ -13,7 +13,7 @@ async function handleRegister() {
   if (userPassword1 === userPassword2) {
     const response = await fetch(`${backend_base_url}/users/register/`, {
       headers: {
-        Accept: "application/json",
+        "Accept": "application/json",
         "Content-Type": "application/json",
       },
       method: "POST",
