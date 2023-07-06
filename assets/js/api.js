@@ -45,13 +45,13 @@ async function commentPut(commentId) {
   const a = document.getElementsByClassName("comment_edit_complete");
   for (let i = 0; i < a.length; i++) {
     a[i].addEventListener("click", () => saveNewComment(a[i].dataset.id));
-  } // 이해필요
+  }
 
   const beforeComment = document.getElementById(`comment_content${commentId}`);
   const editComment = document.getElementById(`comment_edit_${commentId}`);
   const editInput = document.getElementById(`comment_edit_input${commentId}`);
   editInput.value = beforeComment.innerText; // 이전 댓글 내용 그대로 표시
-  editComment.style.display = "block";
+  editComment.style.display = "grid";
 }
 
 // 수정된 댓글 저장

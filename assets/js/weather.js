@@ -1,6 +1,3 @@
-// const backend_base_url = "http://127.0.0.1:8000"
-// const frontend_base_url = "http://127.0.0.1:5500"
-
 function setCookie(cookie_name, value, minutes) {
 	const exdate = new Date();
 	exdate.setMinutes(exdate.getMinutes() + minutes);
@@ -108,37 +105,6 @@ function card(template, weather) {
 	}
 }
 
-// async function excercise() {
-// 	const response = await fetch(`${backend_base_url}/articles/my000/`, {
-// 		headers: {
-// 			Authorization: "Bearer " + localStorage.getItem("access"),
-// 		},
-// 		method: "GET",
-// 	});
-
-// 	if (response.status == 200) {
-// 		const response_json = await response.json();
-// 		console.log(response_json);
-
-// 		if (response_json.length > 0) {
-// 			const checkCount1 = response_json[0].check_status_count;
-// 			console.log(checkCount1);
-
-// 			let checkArticle = document.getElementById("check-article");
-
-// 			let animation_content = `
-// 							<lottie-player src="https://assets1.lottiefiles.com/packages/lf20_q1c2x59v.json"
-// 							background="transparent"
-// 							style="width: 50px; height: 50px; margin:auto;"
-// 							speed="5"
-// 							loop
-// 							autoplay></lottie-player>`;
-// 			document.getElementById("animation").innerHTML = animation_content;
-// 			console.log(animation_content);
-// 		}
-// 	}
-// }
-
 async function cardRunningCount(value) {
 	const response = await fetch(`${backend_base_url}/articles/my000/`, {
 		headers: {
@@ -182,7 +148,6 @@ async function cardRunningCount(value) {
 			card_running = card_running.concat(`</div></div>     
 		</div>`);
 		}
-		console.log("running", card_running);
 		document.getElementById("running").innerHTML = card_running;
 	}
 }
@@ -268,7 +233,6 @@ window.onload = async function loadMainPage() {
 	temperature_list = getCookie("temperature").split(",");
 	recommendation_list = getCookie("recommendation").split(",");
 	icon_list = getCookie("icon").split(",");
-	console.log(icon_list);
 
 	var template = []; //html 카드 자동생성 템플릿
 	var result = "";
@@ -278,17 +242,6 @@ window.onload = async function loadMainPage() {
 	}
 
 	document.getElementById("param1").innerHTML = result; //html로 template 전달
-	// } else {
-	// 	// 쿠키가 제대로 저장되지 않음.
-
-	// 	var template = [];
-	// 	var result = "";
-	// 	cardFail(template);
-	// 	for (var i = 0; i < 1; i++) {
-	// 		result = result.concat(" ", template[i]);
-	// 	}
-	// 	document.getElementById("param1").innerHTML = result;
-	// }
 
 	cardRunningCount(getCookie("success_or_fail"));
 };

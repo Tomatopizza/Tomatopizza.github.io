@@ -124,9 +124,6 @@ async function loadArticles(articleId) {
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
 
-  console.log(currentUser);
-  console.log(articleUserPk);
-
   const articleEdit = document.getElementById("article_edit");
 
   const articlePut = document.querySelector("#put");
@@ -135,7 +132,6 @@ async function loadArticles(articleId) {
   // 작성자에게만 기능 노출
 
   if (currentUser == articleUserPk) {
-    console.log(currentUser);
     articleEdit.style.display = "grid";
     articleEdit.style.alignItems = "center";
     articleEdit.style.justifyContent = "center";
@@ -151,7 +147,6 @@ async function loadArticles(articleId) {
     articleDelete.style.gridRow = "1/2";
     articleDelete.innerText = "삭제";
   } else {
-    console.log(currentUser);
     articleEdit.style.display = "none";
   }
 }
@@ -197,6 +192,7 @@ async function loadComments(articleId) {
         </div>
       </div>`;
     });
+
   }
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
@@ -266,18 +262,20 @@ async function loadComments(articleId) {
         </div>`;
     }
     // 댓글 수정창
+
     const commentEditForm = document.createElement("div");
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`);
     commentEditForm.setAttribute("class", "comment_edit_form");
     commentEditForm.style.display = "none";
 
+    
     const commentEditInput = document.createElement("textarea");
     commentEditInput.setAttribute("id", `comment_edit_input${commentId}`);
     commentEditInput.setAttribute("type", "text");
     commentEditForm.appendChild(commentEditInput);
-
-    commentEditInput.style.width = "600px";
-    commentEditInput.style.height = "100px";
+    
+    commentEditForm.style.alignItems="center";
+    commentEditInput.style.width = "550px";
     commentEditInput.style.fontSize = "16px";
     commentEditInput.style.resize = "none";
 
@@ -287,6 +285,8 @@ async function loadComments(articleId) {
     commentEditComplete.setAttribute("id", `comment_edit_complete${commentId}`);
     commentEditComplete.setAttribute("data-id", `${commentId}`); // commentId를 넘기기 위함.
     commentEditComplete.innerText = "수정완료";
+
+    
     commentEditComplete.setAttribute(
       "class",
       "btn btn-dark comment_edit_complete"
@@ -310,6 +310,8 @@ async function submitComment() {
   const response = await postComment(articleId, newComment);
   commentElement.value = "";
 
+  const textLengthCheck = document.getElementById("textLengthCheck")
+  textLengthCheck.innerText = "(0 / 100)"
   loadComments(articleId);
 }
 
@@ -398,8 +400,6 @@ async function commentLike(commentId) {
       }
     );
     const response_json = await response.json();
-    console.log(response_json);
-    console.log(response.status);
 
     if (response.status === 200) {
       if (likeButton.innerText === "🧡") {
@@ -416,3 +416,4 @@ async function commentLike(commentId) {
     alert("로그인 해주세요!");
   }
 }
+

@@ -39,7 +39,6 @@ async function getProfile(users_id) {
 
 $(document).ready(async function () {
   const profile = await getProfile(users_id);
-  console.log(profile);
   myLoadArticle();
 
   const user = $("#username");
@@ -84,10 +83,8 @@ async function myLoadArticle() {
   });
   if (response.status == 200) {
     const response_json = await response.json();
-    console.log(response_json);
 
     articles = response_json;
-    console.log(articles);
 
     const article_mylist = $("#article_mylist");
     if (displayCount >= articles.length) {
@@ -122,7 +119,7 @@ async function myLoadArticle() {
       article_mylist.append(newRow);
     });
   } else {
-    console.log("다시 시도해주세요!");
+    alert("다시 시도해주세요!");
   }
 }
 

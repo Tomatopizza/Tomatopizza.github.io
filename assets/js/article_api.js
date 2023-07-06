@@ -1,5 +1,3 @@
-console.log("article.api js");
-
 // 졸라맨 애니메이션
 function card_fail(template) {
   // 카드 실패 했을 때 띄울 거
@@ -29,17 +27,12 @@ async function loadArticle() {
 
   if (response.status == 200) {
     const response_json = await response.json();
-    console.log(response_json);
 
     if (response_json.length > 0) {
       const checkCount1 = response_json[0].check_status_count;
-      console.log(checkCount1);
 
       // 나머지 코드를 여기에 작성합니다.
-    } else {
-      console.log("data없음");
     }
-
     return response_json;
   } else {
     alert("로그인을 해주세요!");
@@ -154,7 +147,6 @@ async function buildCalendar() {
 
       if (response.status == 200) {
         const responseJson = await response.json();
-        console.log(responseJson);
         const articleList = document.getElementById("article-list");
         articleList.innerHTML = "";
         // data의 results에 json 형식으로 article 데이터s를 가져옴 그냥 article.id로 하니까 안가져와져서 여차저차 찾아냄
@@ -167,8 +159,6 @@ async function buildCalendar() {
           const articleId = data.id;
           const inSubcategory = data.in_subcategory || {};
           const outSubcategory = data.out_subcategory || {};
-
-          console.log(inSubcategory, outSubcategory);
 
           const categoryName =
             category === 1 ? "실내운동" : category === 2 ? "실외운동" : "기타";
@@ -219,7 +209,7 @@ async function buildCalendar() {
         document.querySelector(".modal_w").style.display = "block";
       } else if (response.status == 404) {
         // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
-        alert("로그인을 해주세요!");
+        alert("로그인을 해주세요.");
       } else {
         // 기타 오류 처리를 수행합니다.
         alert("API 호출에 실패하였습니다.");
