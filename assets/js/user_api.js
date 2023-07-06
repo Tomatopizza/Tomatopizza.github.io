@@ -52,6 +52,7 @@ async function handleLogin() {
     password: document.getElementById("floatingPassword").value,
   };
 
+
   const userEmail = loginData["email"]
   const userPassword = loginData["password"]
   if (userEmail === "" && userPassword === "") {
@@ -65,7 +66,7 @@ async function handleLogin() {
       // fetch post 통신이 완료될때까지 기다리고, api에서 토큰을 반환합니다.
   const response = await fetch(`${backend_base_url}/users/login/`, {
     headers: {
-      Accept: "application/json",
+      "Accept": "application/json",
       "Content-Type": "application/json",
     },
     method: "POST",
