@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>오운완 | 로그인</title>
+    <title>오운완 | 비밀번호 재설정</title>
     <!-- CSS only -->
     <link rel="stylesheet" href="/assets/css/login.css" />
     <!-- Bootstrap CSS only -->
@@ -15,7 +15,7 @@
     <!-- JS only -->
     <!-- 기존 assets/js/api.js와 다른 api를 사용 중 -->
     <script src="../assets/js/urls.js"></script>
-    <script src="/assets/js/user_api.js"></script>
+    <script src="/assets/js/reset_pw.js"></script>
   </head>
 
   <body>
@@ -32,33 +32,37 @@
               /></a>
             </div>
             <div class="form-content">
-              <header>로그인</header>
+              <header>비밀번호 재설정</header>
               <form>
                 <div class="field input-field">
                   <input
-                    type="text"
-                    id="floatingInput"
-                    placeholder="Username"
-                    class="input_id"
-                  />
-                </div>
-                <div class="field input-field">
-                  <input
                     type="password"
-                    id="floatingPassword"
-                    placeholder="Password"
-                    class="input_password"
+                    id="set_Password1"
+                    placeholder="새로운 Password를 입력해주세요"
+                    class="input_password1"
+                    oninput="checkPasswordsMatch()"
                   />
                   <i class="bx bx-hide eye-icon"></i>
                 </div>
-                <div class="form-link">
-                  <a href="./reset_pw.html" class="forgot-pass"
-                    >비밀번호 찾기</a
-                  >
+                <div class="field input-field2">
+                  <input
+                    type="password"
+                    id="set_Password2"
+                    placeholder="한번 더 입력해주세요"
+                    class="input_password2"
+                    oninput="checkPasswordsMatch()"
+                  />
+                  <i class="bx bx-hide eye-icon"></i>
+                </div>
+                <div id="info" style="color: black">
+                  비밀번호는 특수문자 포함하여 최소 8자리 이상입니다.
+                </div>
+                <div id="warning2" style="display: none; color: red">
+                  비밀번호가 일치하지 않습니다
                 </div>
                 <div class="field button-field">
-                  <a type="button" class="login-btn" onclick="handleLogin()"
-                    >로그인</a
+                  <a type="button" class="login-btn" onclick="Set_Password()"
+                    >비밀번호 재설정</a
                   >
                 </div>
               </form>
