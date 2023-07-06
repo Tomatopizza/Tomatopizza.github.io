@@ -1,0 +1,16 @@
+.email_verify{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.email-verify-body{
+    width: 600px;
+    height: 400px;
+    align-items: center;
+    justify-content: center;
+    display: grid;
+    border: 1px solid black;
+    border-radius: 20px;
+}
+
+
