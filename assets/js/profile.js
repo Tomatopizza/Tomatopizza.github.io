@@ -166,3 +166,41 @@ function setThumbnail(event) {
 function changePW(users_id) {
   window.location.href = `/template/profile_pw_update.html`;
 }
+
+// Deactivate User Account
+async function deactivateUserAccount() {
+  try {
+  const payload = localStorage.getItem("payload");
+  const payload_parse = JSON.parse(payload);
+  const users_id = payload_parse.user_id;
+  console.log(users_id)
+  const confirmDelete = confirm("회원 탈퇴 하시겠습니까?")
+  if (confirmDelete) {
+    const RealConfirmDelete = confirm("정말 탈퇴 하시겠습니까?")
+    if (RealConfirmDelete) {
+      const response = await fetch(`${backend_base_url}/users/profile/${users_id}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access"),
+        },
+          method: "DELETE"
+      });
+      const data = await response.json()
+      console.log(data)
+      alert("회원 탈퇴 되었습니다.")
+      location.replace("./user_login.html");
+      return data
+    }
+  }
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //         console.log(data);
+  //         // Handle response data
+  //     })
+  //     .catch((error) => {
+  //         console.error("Error:", error);
+  //         // Handle errors
+  //     });
+    } catch {
+      alert("로그인 해주세요!")
+    }
+}
