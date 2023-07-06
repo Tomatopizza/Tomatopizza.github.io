@@ -314,6 +314,9 @@ async function submitComment() {
   const response = await postComment(articleId, newComment);
   commentElement.value = "";
 
+  const textLengthCheck = document.getElementById("textLengthCheck")
+  textLengthCheck.innerText = "(0 / 100)"
+
   loadComments(articleId);
 }
 
