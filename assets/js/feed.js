@@ -29,7 +29,7 @@ const renderArticles = (articles) => {
     } else {
       articleImage.setAttribute(
         "src",
-        "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg"
+        "http://127.0.0.1:5500/assets/images/exercise.jpg"
       );
     }
 

@@ -72,7 +72,7 @@ async function saveNewComment(commentId) {
       `${backend_base_url}/articles/comment/${articleId}/${commentId}/`,
       {
         headers: {
-          Authorization: `Bearer ${token}`,
+          "Authorization": `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         method: "PUT",
