@@ -12,7 +12,7 @@
     font-family: 'IBMPlexSansKR-Regular', sans-serif;
 }
 
-.modal_body {
+.update_modal_body {
     min-height: 100vh;
     display: flex;
     align-items: center;

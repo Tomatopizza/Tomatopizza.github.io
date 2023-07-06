@@ -52,6 +52,7 @@ async function handleLogin() {
     password: document.getElementById("floatingPassword").value,
   };
 
+
   const userEmail = loginData["email"]
   const userPassword = loginData["password"]
   if (userEmail === "" && userPassword === "") {
