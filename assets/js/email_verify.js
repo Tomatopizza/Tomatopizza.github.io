@@ -1,4 +1,8 @@
 window.onload = async function handleAuthEmail() {
+	localStorage.removeItem("access");
+	localStorage.removeItem("refresh");
+	localStorage.removeItem("payload");
+
 	console.log(new URLSearchParams(location.search).get("token"))
 
 	email_verify_token = new URLSearchParams(location.search).get("token")
