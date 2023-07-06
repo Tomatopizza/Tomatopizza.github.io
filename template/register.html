@@ -20,7 +20,8 @@
       <section class="container forms">
         <div class="form signup">
           <div class="login-logo">
-            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고" width="100"></a>
+            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고"
+                width="100"></a>
           </div>
           <div class="form-content">
             <header>회원가입</header>
@@ -33,7 +34,17 @@
               </div>
 
               <div class="field input-field">
-                <input type="password" id="floatingPassword" placeholder="Password" class="input_password">
+                <input type="password" id="floatingPassword" placeholder="Password" class="input_password"
+                  oninput="checkPassword()">
+              </div>
+
+              <div class="field input-field">
+                <input type="password" id="floatingPassword2" placeholder="Password 확인" class="input_password"
+                  oninput="checkPassword()">
+              </div>
+
+              <div id="passwordWarning" style="display: none; color: red">
+                비밀번호가 일치하지 않습니다
               </div>
 
               <div class="form-login">
