@@ -115,8 +115,50 @@ const loadArticles = async (page = 1) => {
   console.log(articles);
   renderArticles(articles);
 
-  const currentPageElement = document.getElementById("currentPage");
-  currentPageElement.textContent = `${page}/${totalPages}`;
+  const onePageElement = document.getElementById("onepage");
+  const prePageElement = document.getElementById("prepage");
+  const currentPageElement = document.getElementById("currentpage");
+  const nextPageElement = document.getElementById("nextpage");
+  const totalPageElement = document.getElementById("totalpage");
+
+  currentPageElement.textContent = `${page}`;
+
+  if (page >= 4) {
+    onePageElement.style.display = "block";
+    onePageElement.textContent = `1 ..`;
+    onePageElement.addEventListener("click", () => {
+      pageNumber = 1; // 여기서 첫 페이지로 값을 변경
+      loadArticles(pageNumber);
+    });
+  } else if (page == 3) {
+    onePageElement.style.display = "block";
+    onePageElement.textContent = `1`;
+    onePageElement.addEventListener("click", () => {
+      pageNumber = 1; // 여기서 첫 페이지로 값을 변경
+      loadArticles(pageNumber);
+    });
+  } else {
+    onePageElement.style.display = "none";
+  }
+  if (page > 1) {
+    prePageElement.style.display = "block";
+    prePageElement.textContent = `${page - 1}`;
+  } else {
+    prePageElement.style.display = "none";
+  }
+  if (page >= totalPages - 1) {
+    nextPageElement.style.display = "none";
+  } else {
+    nextPageElement.style.display = "block";
+    nextPageElement.textContent = `${page + 1}`;
+  }
+
+  if (page == totalPages) {
+    totalPageElement.style.display = "none";
+  } else {
+    totalPageElement.style.display = "block";
+    totalPageElement.textContent = `마지막페이지:${totalPages}`;
+  }
 
   if (page > totalPages) {
     alert("페이지가 존재하지 않습니다!");
@@ -127,18 +169,42 @@ const loadArticles = async (page = 1) => {
     location.reload();
   }
   if (totalPages == 0) {
-    alert("홈화면으로 이동합니다!");
+    alert("홈화면으로 이동합니다.");
     location.href = `${frontend_base_url}/template/index.html`;
   }
 };
 
+let totalPages;
 let pageNumber = 1;
 
 const movePage = (direction) => {
   pageNumber += direction;
   loadArticles(pageNumber);
 };
-const init = () => {
+
+const init = async () => {
+  totalPages = Math.ceil((await getAllArticles()).length / 5);
+  console.log(totalPages);
+  pageNumber = 1;
+  const articles = await getArticles(pageNumber);
+  console.log(articles);
+  renderArticles(articles);
+
+  // document.getElementById("onepage")
+  // .addEventListener("click", () =>)
+
+  document
+    .getElementById("prepage")
+    .addEventListener("click", () => movePage(-1));
+
+  document
+    .getElementById("nextpage")
+    .addEventListener("click", () => movePage(1));
+
+  document
+    .getElementById("totalpage")
+    .addEventListener("click", () => movePage(totalPages - pageNumber));
+
   document
     .getElementById("nextButton")
     .addEventListener("click", () => movePage(1));
@@ -147,37 +213,37 @@ const init = () => {
     .getElementById("prevButton")
     .addEventListener("click", () => movePage(-1));
 
-  loadArticles(); // 이곳에서만 호출하면 됩니다.
+  loadArticles();
 };
 
 document.addEventListener("DOMContentLoaded", init);
 
 async function ranking() {
-	const response = await fetch(`${backend_base_url}/articles/ranking/`, {
-		headers: {
-			Authorization: "Bearer " + localStorage.getItem("access"),
-		},
-		method: "GET",
-	});
-	if (response.status == 200) {
-		const response_json = await response.json();
-		let ranking = "";
-		let ranking_1 = "";
-		let ranking_2 = "";
-		let ranking_3 = "";
-		if (response_json[0] != null) {
-			ranking_1 = response_json[0][0];
-		}
+  const response = await fetch(`${backend_base_url}/articles/ranking/`, {
+    headers: {
+      Authorization: "Bearer " + localStorage.getItem("access"),
+    },
+    method: "GET",
+  });
+  if (response.status == 200) {
+    const response_json = await response.json();
+    let ranking = "";
+    let ranking_1 = "";
+    let ranking_2 = "";
+    let ranking_3 = "";
+    if (response_json[0] != null) {
+      ranking_1 = response_json[0][0];
+    }
 
-		if (response_json[1] != null) {
-			ranking_2 = response_json[1][0];
-		}
+    if (response_json[1] != null) {
+      ranking_2 = response_json[1][0];
+    }
 
-		if (response_json[2] != null) {
-			ranking_3 = response_json[2][0];
-		}
+    if (response_json[2] != null) {
+      ranking_3 = response_json[2][0];
+    }
 
-		ranking = `
+    ranking = `
     
     <div class="row">
       <div class="col-sm-2 " style="display:block">
@@ -216,7 +282,7 @@ async function ranking() {
     </div>
 		`;
 
-		document.getElementById("ranking").innerHTML = ranking;
-	}
+    document.getElementById("ranking").innerHTML = ranking;
+  }
 }
 ranking();
