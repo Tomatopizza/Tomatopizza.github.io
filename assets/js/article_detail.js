@@ -76,7 +76,7 @@ async function loadArticles(articleId) {
   } else {
     newImage.setAttribute(
       "src",
-      "http://127.0.0.1:5500/assets/images/exercise.jpg"
+      `${frontend_base_url}/assets/images/exercise.jpg`
     );
   }
   articleImage.appendChild(newImage);

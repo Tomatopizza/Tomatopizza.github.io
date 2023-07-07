@@ -28,9 +28,9 @@ const renderArticles = (articles) => {
       articleImage.setAttribute("src", `${backend_base_url}${article.image}`);
     } else {
       articleImage.setAttribute(
-        "src",
-        "http://127.0.0.1:5500/assets/images/exercise.jpg"
-      );
+			"src",
+			`${frontend_base_url}/assets/images/exercise.jpg`
+		);
     }
 
     imageSize.appendChild(articleImage);

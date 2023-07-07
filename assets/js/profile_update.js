@@ -37,9 +37,9 @@ window.onload = async function () {
       typeof data.photo === "undefined"
     ) {
       beforeAvatar.setAttribute(
-        "src",
-        "http://127.0.0.1:5500/assets/images/ooo.png"
-      );
+			"src",
+			`${frontend_base_url}/assets/images/ooo.png`
+		);
     } else {
       beforeAvatar.setAttribute("src", `${backend_base_url}/${data.photo}`);
     }
