@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -18,21 +17,31 @@
   <!-- Boxicons -->
   <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
 </head>
+  <body>
+    <main>
+      <div class="main-container">
+        <section class="container forms">
+          <div class="form-reset-pw">
+            <div class="login-logo">
+              <a href="/template/index.html">
+                <img src="/assets/images/ooo-removebg-preview.png" alt="상단로고" width="100"/>
+              </a>
+            </div>
+            <div class="form-content">
+              <header>비밀번호 초기화</header>
+              <form>
+                <div class="reset-pw input-field">
+                  <input type="text" id="reset_pw" placeholder="가입시 사용한 email을 입력해주세요." class="input_id"/>
+                </div>
 
-<body>
-  <main>
-    <div class="main-container">
-      <section class="container forms">
-        <div class="form login">
-          <div class="login-logo">
-            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고"
-                width="100" /></a>
-          </div>
-          <div class="form-content">
-            <header>비밀번호 초기화</header>
-            <form>
-              <div class="field input-field">
-                <input type="text" id="reset_pw" placeholder="가입시 사용한 email을 입력해주세요." class="input_id" />
+                <div class="field button-field">
+                  <button type="button" class="login-btn" onclick="handleResetPassword()">인증 이메일 보내기</button>
+                </div>
+              </form>
+              <div class="form-link">
+                <span>오늘 운동 안하실건가요?
+                  <a href="./register.html" class="link signup-link">회원가입</a>
+                </span>
               </div>
               <div class="field button-field">
                 <a type="button" class="login-btn" onclick="handleResetPassword()">인증 이메일 보내기</a>
