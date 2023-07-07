@@ -1,22 +1,4 @@
 /**
- * 카드 실패 했을 때 띄울 내용
- */
-
-function card_fail(template) {
-  template[0] = `
-      <div class="col">
-        <div class="card h-100" >
-            <img class="myimg" src="/assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
-            <div class="card-body">
-              <div class="fontContainer">
-                <strong>"오늘도 화이팅!"</strong><br>
-              </div>
-            </div>
-        </div>     
-      </div>
-    `;
-}
-/**
  * index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기
  */
 async function loadArticle() {
@@ -34,8 +16,8 @@ async function loadArticle() {
       const checkCount1 = response_json[0].check_status_count;
 
     } else {
-    }
 
+    }
     return response_json;
   } else {
     alert("로그인을 해주세요!");
@@ -209,8 +191,8 @@ async function buildCalendar() {
         document.querySelector(".black_bg").style.display = "block";
         document.querySelector(".modal_w").style.display = "block";
       } else if (response.status == 404) {
-
-        alert("로그인을 해주세요!");
+        // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
+        alert("로그인을 해주세요.");
       } else {
 
         alert("API 호출에 실패하였습니다.");

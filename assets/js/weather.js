@@ -25,13 +25,13 @@ function getCookie(cookie_name) {
 
 async function getPosition() {
 	/* 위치정보수집동의 함수 */
-	
+
 	return new Promise((resolve, reject) => {
 		navigator.geolocation.getCurrentPosition(resolve, reject);
 	});
 }
 
-async function success_fail(position) {
+async function successFail(position) {
 	/* 위치정보 수집동의 이후 try 내부에는 동의 catch에는 거부시 */
 	try {
 		let position = await getPosition();
@@ -155,63 +155,79 @@ async function cardRunningCount(value) {
 	}
 }
 
+async function settingCookieForSite() {
+	/* 날씨등의 쿠키 저장하는 함수 */
+	var position = await successFail(position);
+	var latitude;
+	var longitude;
+	if (position[0] != -1) {
+		latitude = position[0];
+		longitude = position[1];
+		setCookie("success_or_fail", 1, 5);
+	} else {
+		latitude = 37.541;
+		longitude = 126.986;
+		setCookie("success_or_fail", -1, 5);
+	}
+
+	const response = await fetch(`${backend_base_url}/articles/weather/`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json",
+		},
+		body: JSON.stringify({
+			lat: latitude,
+			lon: longitude,
+		}),
+	});
+
+	var response_json = await response.json();
+	var time_measure = [];
+	var weather = {};
+	weather["rain"] = [];
+	weather["time_measure"] = [];
+	weather["icon"] = [];
+	weather["recommendation"] = [];
+	weather["temperature"] = [];
+	weather["rain_amount"] = [];
+
+	for (var i = 0; i < 6; i++) {
+		time_measure[i] = Object.keys(response_json[0][i]);
+		weather["recommendation"][i] = response_json[1][i];
+
+		weather["rain"][i] = forecast(response_json[0][i][time_measure[i]]);
+		weather["icon"][i] = weatherIcon(response_json[0][i][time_measure[i]]);
+		weather["rain_amount"][i] = response_json[3][i];
+		weather["temperature"][i] = response_json[2][i];
+	}
+	setCookie("time", time_measure, 5);
+	setCookie("rain", weather["rain"], 5);
+	setCookie("rain_amount", weather["rain_amount"], 5);
+	setCookie("temperature", weather["temperature"], 5);
+	setCookie("recommendation", weather["recommendation"], 5);
+	setCookie("icon", weather["icon"], 5);
+	return weather;
+}
+
+function sleep(delay) {
+	return new Promise((resolve) => setTimeout(resolve, delay));
+}
+
 window.onload = async function loadMainPage() {
-	/* success_or_fail: 쿠키 저장 성공 실패 가늠하는 쿠키
-	var weather 날씨 정보를 담는 딕셔너리 */
+	/* var weather 날씨 정보를 담는 딕셔너리 */
 	buildCalendar();
-	if (getCookie("success_or_fail") == null) {
-		var position = await success_fail(position); 
-		var latitude;
-		var longitude;
-		if (position[0] != -1) {
-			latitude = position[0];
-			longitude = position[1];
-			setCookie("success_or_fail", 1, 5); 
-		} else {
-			latitude = 37.541;
-			longitude = 126.986;
-			setCookie("success_or_fail", -1, 5);
+	var weather = {};
+	let retry_count = 10;
+	while (getCookie("time") == null) {
+		try {
+			weather = await settingCookieForSite();
+		} catch {
+			sleep(1000);
 		}
-
-		const response = await fetch(`${backend_base_url}/articles/weather/`, {
-
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify({
-				lat: latitude,
-				lon: longitude,
-			}),
-		});
-
-		var response_json = await response.json();
-		var time_measure = [];
-		var weather = {};
-		weather["rain"] = [];
-		weather["time_measure"] = [];
-		weather["icon"] = [];
-		weather["recommendation"] = [];
-		weather["temperature"] = [];
-		weather["rain_amount"] = [];
-
-		for (var i = 0; i < 6; i++) {
-			time_measure[i] = Object.keys(response_json[0][i]);
-			weather["recommendation"][i] = response_json[1][i];
-
-			weather["rain"][i] = forecast(response_json[0][i][time_measure[i]]);
-			weather["icon"][i] = weatherIcon(
-				response_json[0][i][time_measure[i]]
-			);
-			weather["rain_amount"][i] = response_json[3][i];
-			weather["temperature"][i] = response_json[2][i];
+		retry_count -= 10;
+		if (retry_count == 0) {
+			break;
 		}
-		setCookie("time", time_measure, 5);
-		setCookie("rain", weather["rain"], 5);
-		setCookie("rain_amount", weather["rain_amount"], 5);
-		setCookie("temperature", weather["temperature"], 5);
-		setCookie("recommendation", weather["recommendation"], 5);
-		setCookie("icon", weather["icon"], 5);
 	}
 
 	time_list = getCookie("time").split(",");
@@ -228,7 +244,7 @@ window.onload = async function loadMainPage() {
 		result = result.concat(" ", template[i]);
 	}
 
-	document.getElementById("param1").innerHTML = result;
+	document.getElementById("param1").innerHTML = result; //html로 template 전달
 
 	cardRunningCount(getCookie("success_or_fail"));
 };

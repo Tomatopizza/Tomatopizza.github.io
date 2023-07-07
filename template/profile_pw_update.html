@@ -2,83 +2,59 @@
 
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
+    <!-- CSS -->
+    <link rel="stylesheet" href="../assets/css/pw_update.css" />
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../assets/js/urls.js"></script>
+    <script src="../assets/js/nav.js"></script>
+    <script src="../assets/js/pw_update.js"></script>
+    
+    <!-- Bootstrap -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
+      crossorigin="anonymous"/>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+      crossorigin="anonymous"></script>
+    
+    <!-- 파비콘 -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/images/favicon_io/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/images/favicon_io/favicon-16x16.png">
+    <link rel="android-chrome-192x192" sizes="192x192" href="/assets/images/favicon_io/android-chrome-192x192.png">
+    <link rel="android-chrome-512x512" sizes="512x512" href="/assets/images/favicon_io/android-chrome-512x512.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
+  </head>
+
+
+  <body>
+    <!-- 상단 네비게이션바 -->
+    <div id="navbar-container"></div>
+    <!-- 상단 네비게이션 끝-->
+
+    <div class="main-container">
+      <div class="pw-update">
+        <h2>비밀번호 변경</h2>
+
+        <div class="input-container">
+          <spanp class="text-muted" id="change_pw_name1">변경하실 비밀번호를 입력해주세요</spanp>
+          <input type="password" id="change_pw1" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
+          <br/>
+          <spanp class="text-muted" id="change_pw_name2">한번더 입력해주세요</spanp>
+          <input type="password" id="change_pw_2" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
+          <div id="warning" style="display: none; color: red"> 비밀번호가 일치하지 않습니다</div>
+        </div>
   
-  <title>오운완 | 비밀번호 변경</title>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="../assets/css/profile_update.css" />
-
-  <!-- JS -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="../assets/js/urls.js"></script>
-  <script src="../assets/js/nav.js"></script>
-  <script src="../assets/js/pw_update.js"></script>
-
-  <!-- Bootstrap -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-    crossorigin="anonymous"></script>
-</head>
-<style>
-  .main-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
-  h2 {
-    margin-bottom: 10%;
-  }
-
-  .input-container {
-    margin-top: 50px;
-    margin-bottom: 50px;
-  }
-
-  .button-container {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-  }
-</style>
-
-<body>
-  <!-- 상단 네비게이션바 -->
-  <div id="navbar-container"></div>
-  <!-- 상단 네비게이션 끝-->
-  <div class="main-container">
-    <h2>비밀번호 변경</h2>
-
-    <div class="input-container">
-      <spanp class="text-muted" id="change_pw_name1">변경하실 비밀번호를 입력해주세요</spanp>
-      <input type="password" id="change_pw1" placeholder="Password" class="input_password"
-        oninput="checkPasswordsMatch()" />
-      <br />
-      <spanp class="text-muted" id="change_pw_name2">한번더 입력해주세요</spanp>
-      <input type="password" id="change_pw_2" placeholder="Password" class="input_password"
-        oninput="checkPasswordsMatch()" />
-      <div id="warning" style="display: none; color: red">
-        비밀번호가 일치하지 않습니다
+        <div class="button-container">
+          <button type="button" class="btn btn-dark" id="save-article" onclick="fixProfile()"> 비밀번호 변경</button>
+          <button type="button" class="btn btn-dark" id="save-article" onclick="pwNoUpdate()">취소하기</button>
+        </div>
       </div>
-    </div>
+      </div>
 
-    <div class="button-container">
-      <button type="button" class="btn btn-dark" id="save-article" onclick="fixProfile()">
-        비밀번호 변경
-      </button>
-      <button type="button" class="btn btn-dark" id="save-article" onclick="pwNoUpdate()">
-        취소하기
-      </button>
-    </div>
-  </div>
-  <!-- 하단 푸터 시작-->
-  <div id="footer-container"></div>
-  <!-- 하단 푸터 끝-->
-</body>
-
+  </body>
 </html>
