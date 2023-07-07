@@ -8,12 +8,10 @@ body {
   border-radius: 50% !important;
 }
 
-.text-muted {
-  color: #aeb0b4 !important;
+.profile-body{
+  margin: 3% 10%;
 }
-.text-muted {
-  font-weight: 300;
-}
+
 .form-control {
   display: block;
   width: 100%;
@@ -58,4 +56,21 @@ body {
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
+}
+
+.profile-text-muted{
+  width:500px;
+  word-wrap: break-word;
+}
+
+.profile_btn_box{
+  display: grid;
+  justify-content: end;
+  grid-template-columns: repeat(5, 140px);
+  place-items: center;
+  margin-right: 10%;
+}
+
+.profile_delete_btn{
+  grid-column: 5/6;
 }

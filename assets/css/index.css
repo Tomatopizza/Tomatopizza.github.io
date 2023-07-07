@@ -11,9 +11,6 @@
 
 body {
     background-color: rgb(170, 172, 172);
-    /* height: 100vh; */
-    /* justify-content: center;
-    align-items: center; */
 }
 
 .cal {
@@ -22,7 +19,7 @@ body {
     display: flex;
     height: 640px;
     width: 70%;
-    margin: 0px;
+    margin: 20px;
     padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 40px 30px -20px rgba(0, 0, 0, 0.3);

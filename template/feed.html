@@ -1,60 +1,86 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>오운완 | 피드페이지</title>
-		<script src="../assets/js/urls.js"></script>
-		<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-		<script src="../assets/js/nav.js"></script>
-		<script src="../assets/js/api.js"></script>
-		<script src="../assets/js/feed.js"></script>
-		<script src="../assets/js/article_api.js"></script>
-		<script src="../assets/js/footer.js"></script>
-		<link rel="stylesheet" href="/assets/css/feed.css" />
 
-		<link
-			href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-			rel="stylesheet"
-			integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM"
-			crossorigin="anonymous"
-		/>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-		<script
-			src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
-			integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-			crossorigin="anonymous"
-		></script>
-	</head>
+  <title>오운완 | 피드페이지</title>
 
-	<body>
-		<!-- 상단 네비게이션바 -->
-		<div id="navbar-container"></div>
-		<!-- 상단 네비게이션 끝-->
+  <!-- JS -->
+  <script src="../assets/js/urls.js"></script>
+  <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+  <script src="../assets/js/nav.js"></script>
+  <script src="../assets/js/api.js"></script>
+  <script src="../assets/js/feed.js"></script>
+  <script src="../assets/js/article_api.js"></script>
+  <script src="../assets/js/footer.js"></script>
 
-		<div class="main">
-			<!-- 랭킹 추가 -->
-			<div class="container" style="margin: 0 30%">
-				<div id="ranking"></div>
-			</div>
-			<!-- 랭킹 끝 -->
-			<div class="container">
-				<div class="article_list" id="article_list"></div>
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/feed.css" />
 
-				<div class="button_box">
-					<button type="button" id="prevButton" class="btn btn_org;">
-						&laquo;
-					</button>
-					<span id="currentPage"></span>
-					<button type="button" id="nextButton" class="btn btn_org;">
-						&raquo;
-					</button>
-				</div>
-			</div>
-		</div>
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
+    crossorigin="anonymous"></script>
 
-		<!-- 푸터 추가 -->
-		<div id="footer-container"></div>
-		<!-- 푸터 끝 -->
-	</body>
+  <style>
+    .active-page {
+      border: 0;
+      outline: 0;
+      background-color: transparent;
+      color: red;
+      font-size: large;
+    }
+
+    #onepage,
+    #prepage,
+    #currentpage,
+    #nextpage,
+    #totalpage {
+      margin-left: 5px;
+      margin-right: 5px;
+      margin-top: 7px;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 상단 네비게이션바 -->
+  <div id="navbar-container"></div>
+  <!-- 상단 네비게이션 끝-->
+
+  <div class="main">
+    <!-- 랭킹 추가 -->
+    <div class="ranking-container">
+      <div id="ranking"></div>
+    </div>
+    <!-- 랭킹 끝 -->
+    <div class="container">
+      <div class="article_list" id="article_list"></div>
+
+      <div class="button_box">
+        <button type="button" id="prevButton" class="btn btn_org;">
+          &laquo;
+        </button>
+        <button id="onepage" type="button" class="btn btn_org;"></button>
+        <button id="prepage" type="button" class="btn btn_org;"></button>
+        <button id="currentpage" type="button" class="active-page"></button>
+        <button id="nextpage" type="button" class="btn btn_org;"></button>
+        <button id="totalpage" type="button" class="btn btn_org;"></button>
+        <button type="button" id="nextButton" class="btn btn_org;">
+          &raquo;
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 푸터 추가 -->
+  <div id="footer-container"></div>
+  <!-- 푸터 끝 -->
+</body>
+
 </html>

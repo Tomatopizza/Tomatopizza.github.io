@@ -5,13 +5,18 @@
   <meta charset="UTF-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>오운완 | 회원등록</title>
-  <!-- CSS only -->
+
+  <!-- CSS  -->
   <link rel="stylesheet" href="/assets/css/signup.css">
-  <!-- Bootstrap CSS only -->
-  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
+
+  <!-- JS -->
   <script src="../assets/js/urls.js"></script>
   <script src="/assets/js/user_api.js"></script>
+
+  <!-- Boxicon -->
+  <link href='https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -20,7 +25,8 @@
       <section class="container forms">
         <div class="form signup">
           <div class="login-logo">
-            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고" width="100"></a>
+            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고"
+                width="100"></a>
           </div>
           <div class="form-content">
             <header>회원가입</header>
@@ -33,7 +39,17 @@
               </div>
 
               <div class="field input-field">
-                <input type="password" id="floatingPassword" placeholder="Password" class="input_password">
+                <input type="password" id="floatingPassword" placeholder="Password" class="input_password"
+                  oninput="checkPassword()">
+              </div>
+
+              <div class="field input-field">
+                <input type="password" id="floatingPassword2" placeholder="Password 확인" class="input_password"
+                  oninput="checkPassword()">
+              </div>
+
+              <div id="passwordWarning" style="display: none; color: red">
+                비밀번호가 일치하지 않습니다
               </div>
 
               <div class="form-login">

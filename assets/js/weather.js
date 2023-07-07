@@ -1,4 +1,5 @@
 function setCookie(cookie_name, value, minutes) {
+	/* 쿠키 저장 함수 */
 	const exdate = new Date();
 	exdate.setMinutes(exdate.getMinutes() + minutes);
 	const cookie_value =
@@ -8,6 +9,7 @@ function setCookie(cookie_name, value, minutes) {
 }
 
 function getCookie(cookie_name) {
+	/* 쿠키 불러오는 함수 */
 	var x, y;
 	var val = document.cookie.split(";");
 
@@ -22,15 +24,15 @@ function getCookie(cookie_name) {
 }
 
 async function getPosition() {
-	// 현재 위치 뽑아내고 위치 정보 수집 동의 띄우는 함수
-	// Simple wrapper
+	/* 위치정보수집동의 함수 */
+	
 	return new Promise((resolve, reject) => {
 		navigator.geolocation.getCurrentPosition(resolve, reject);
 	});
 }
 
 async function success_fail(position) {
-	// getPostion함수에서 넘어오게 될 함수
+	/* 위치정보 수집동의 이후 try 내부에는 동의 catch에는 거부시 */
 	try {
 		let position = await getPosition();
 		const latitude = position.coords.latitude;
@@ -46,7 +48,7 @@ async function success_fail(position) {
 }
 
 function forecast(value) {
-	// 날씨 반환하는 함수
+	/* 백엔드에서 숫자로 날아온 날씨 값을 문자열로 변경. */
 	let forecast_dict = {
 		0: "맑음",
 		1: "비",
@@ -62,7 +64,7 @@ function forecast(value) {
 }
 
 function weatherIcon(value) {
-	// 아이콘 경로 저장하는 함수
+	/* 백엔드에서 불러온 날씨 값을 아이콘 파일명에 맞게 수정 */
 	let icon_dict = {
 		0: "0_bright",
 		1: "1_rain",
@@ -77,7 +79,7 @@ function weatherIcon(value) {
 }
 
 function card(template, weather) {
-	// 카드 자동생성 함수
+	/* 위젯으로 나올 카드를 출력. */
 	for (var i = 0; i < 6; i++) {
 		template[i] = `
               <div class="col">
@@ -106,6 +108,7 @@ function card(template, weather) {
 }
 
 async function cardRunningCount(value) {
+	/* 운동 횟수 띄우는 위젯 함수 */
 	const response = await fetch(`${backend_base_url}/articles/my000/`, {
 		headers: {
 			Authorization: "Bearer " + localStorage.getItem("access"),
@@ -152,33 +155,18 @@ async function cardRunningCount(value) {
 	}
 }
 
-function cardFail(template) {
-	// 카드 실패 했을 때 띄울 거
-
-	template[0] = `
-      <div class="col">
-        <div class="card h-100" >
-            <img class="myimg" src="/assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
-            <div class="card-body">
-              <div class="fontContainer">
-                <strong>"오늘도 화이팅!"</strong><br>
-              </div>
-            </div>
-        </div>     
-      </div>
-    `;
-}
-
 window.onload = async function loadMainPage() {
+	/* success_or_fail: 쿠키 저장 성공 실패 가늠하는 쿠키
+	var weather 날씨 정보를 담는 딕셔너리 */
 	buildCalendar();
 	if (getCookie("success_or_fail") == null) {
-		var position = await success_fail(position); // -1일 경우 위치정보 수집 거부.
+		var position = await success_fail(position); 
 		var latitude;
 		var longitude;
 		if (position[0] != -1) {
 			latitude = position[0];
 			longitude = position[1];
-			setCookie("success_or_fail", 1, 5); // 쿠키 제대로 저장됐으면 1 아니면 -1
+			setCookie("success_or_fail", 1, 5); 
 		} else {
 			latitude = 37.541;
 			longitude = 126.986;
@@ -186,7 +174,6 @@ window.onload = async function loadMainPage() {
 		}
 
 		const response = await fetch(`${backend_base_url}/articles/weather/`, {
-			// 백엔드로 위치 정보 전달
 
 			method: "POST",
 			headers: {
@@ -198,8 +185,8 @@ window.onload = async function loadMainPage() {
 			}),
 		});
 
-		var response_json = await response.json(); // 백엔드에서 날씨 정보 받음.
-		var time_measure = []; // 측정 시간
+		var response_json = await response.json();
+		var time_measure = [];
 		var weather = {};
 		weather["rain"] = [];
 		weather["time_measure"] = [];
@@ -210,16 +197,16 @@ window.onload = async function loadMainPage() {
 
 		for (var i = 0; i < 6; i++) {
 			time_measure[i] = Object.keys(response_json[0][i]);
-			weather["recommendation"][i] = response_json[1][i]; // 운동추천
+			weather["recommendation"][i] = response_json[1][i];
 
-			weather["rain"][i] = forecast(response_json[0][i][time_measure[i]]); // 날씨
+			weather["rain"][i] = forecast(response_json[0][i][time_measure[i]]);
 			weather["icon"][i] = weatherIcon(
 				response_json[0][i][time_measure[i]]
-			); // 아이콘 사진 경로 저장
-			weather["rain_amount"][i] = response_json[3][i]; // 강수량
-			weather["temperature"][i] = response_json[2][i]; // 기온
+			);
+			weather["rain_amount"][i] = response_json[3][i];
+			weather["temperature"][i] = response_json[2][i];
 		}
-		setCookie("time", time_measure, 5); // 쿠키 저장
+		setCookie("time", time_measure, 5);
 		setCookie("rain", weather["rain"], 5);
 		setCookie("rain_amount", weather["rain_amount"], 5);
 		setCookie("temperature", weather["temperature"], 5);
@@ -227,16 +214,16 @@ window.onload = async function loadMainPage() {
 		setCookie("icon", weather["icon"], 5);
 	}
 
-	time_list = getCookie("time").split(","); // 쿠키 불러와서 배열로 만듦. getCookie로 하면 ,가 기본적으로 들어와짐.
+	time_list = getCookie("time").split(",");
 	rain_list = getCookie("rain").split(",");
 	rain_amount_list = getCookie("rain_amount").split(",");
 	temperature_list = getCookie("temperature").split(",");
 	recommendation_list = getCookie("recommendation").split(",");
 	icon_list = getCookie("icon").split(",");
 
-	var template = []; //html 카드 자동생성 템플릿
+	var template = [];
 	var result = "";
-	card(template, weather); //html 카드 자동생성 템플릿
+	card(template, weather);
 	for (var i = 0; i < 6; i++) {
 		result = result.concat(" ", template[i]);
 	}

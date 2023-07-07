@@ -19,7 +19,6 @@ window.onload = async function () {
     const beforeUsername = document.getElementById("username");
     const beforeAboutMe = document.getElementById("aboutme");
 
-    //
     const avatarBox = document.getElementById("imgthumbnail2");
     const beforeImg = document.createElement("img");
     beforeImg.setAttribute("id", "beforeImg");
@@ -53,7 +52,9 @@ window.onload = async function () {
     location.replace("./user_login.html");
   }
 };
-//프로필 수정하기
+/**
+  * 프로필 수정하기
+  */
 async function putProfile(user_id) {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload);
@@ -98,11 +99,13 @@ async function putProfile(user_id) {
     } else if (response.status == 400) {
       alert("이메일 양식에 맞게 작성해주세요.");
     } else {
-      console.error("요청 실패:", response);
+      alert("요청 실패:");
     }}
 }
 
-// 이미지 업로드 미리보기
+/**
+  * 이미지 업로드 미리보기
+  */
 function setThumbnail(event) {
   let reader = new FileReader();
 
