@@ -91,7 +91,6 @@
       </div>
     </div>
   </div>
-
   <div class="comment_box">
     <!-- 댓글 저장 공간-->
     <div class="container_savebox" id="article_comment">
@@ -100,8 +99,10 @@
     <!-- 댓글 작성 -->
     <div class="container_comment">
       <div class="comment_input_box">
+
         <input type="text" class="form-control" id="new_comment" placeholder="댓글은 100자까지 작성하실 수 있습니다."
           aria-label="comment">
+
         <span id="textLengthCheck" style="justify-content: center; align-items: center; display: flex;">(0 / 100)</span>
       </div>
       <div class="comment_btn">
@@ -119,6 +120,7 @@
 </html>
 <script>
   $("#new_comment").keyup(function (e) {
+
     var content = $(this).val();
     $("#textLengthCheck").text("(" + content.length + " / 최대 100자)"); //실시간 글자수 카운팅
     if (content.length > 100) {

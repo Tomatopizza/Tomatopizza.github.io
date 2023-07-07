@@ -114,6 +114,8 @@ const loadArticles = async (page = 1) => {
 
   const articles = await getArticles(page);
 
+  renderArticles(articles);
+
   const onePageElement = document.getElementById("onepage");
   const prePageElement = document.getElementById("prepage");
   const currentPageElement = document.getElementById("currentpage");

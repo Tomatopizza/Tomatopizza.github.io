@@ -205,6 +205,7 @@ async function loadComments(articleId) {
         </div>
       </div>`;
     });
+
   }
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;

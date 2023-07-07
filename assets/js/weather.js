@@ -228,7 +228,7 @@ window.onload = async function loadMainPage() {
 		result = result.concat(" ", template[i]);
 	}
 
-	document.getElementById("param1").innerHTML = result;
+	document.getElementById("param1").innerHTML = result; //html로 template 전달
 
 	cardRunningCount(getCookie("success_or_fail"));
 };

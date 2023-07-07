@@ -34,8 +34,8 @@ async function loadArticle() {
       const checkCount1 = response_json[0].check_status_count;
 
     } else {
-    }
 
+    }
     return response_json;
   } else {
     alert("로그인을 해주세요!");
@@ -209,8 +209,8 @@ async function buildCalendar() {
         document.querySelector(".black_bg").style.display = "block";
         document.querySelector(".modal_w").style.display = "block";
       } else if (response.status == 404) {
-
-        alert("로그인을 해주세요!");
+        // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
+        alert("로그인을 해주세요.");
       } else {
 
         alert("API 호출에 실패하였습니다.");

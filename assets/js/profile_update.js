@@ -30,6 +30,7 @@ window.onload = async function () {
     beforeAvatar.style.maxHeight = "200px";
     beforeAvatar.style.marginLeft = "150px";
     beforeAvatar.style.borderRadius = "50%";
+
     if (
       data.photo == "" ||
       data.photo == null ||
