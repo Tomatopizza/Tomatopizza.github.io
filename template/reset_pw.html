@@ -1,73 +1,53 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>오운완 | 비밀번호 초기화</title>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="/assets/css/login.css" />
-    <!-- Bootstrap CSS only -->
-    <link
-      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <!-- JS only -->
-    <!-- 기존 assets/js/api.js와 다른 api를 사용 중 -->
-    <script src="../assets/js/urls.js"></script>
-    <script src="/assets/js/reset_pw.js"></script>
-  </head>
 
-  <body>
-    <main>
-      <div class="main-container">
-        <section class="container forms">
-          <div class="form login">
-            <div class="login-logo">
-              <a href="/template/index.html"
-                ><img
-                  src="/assets/images/ooo-removebg-preview.png"
-                  alt="상단로고"
-                  width="100"
-              /></a>
-            </div>
-            <div class="form-content">
-              <header>비밀번호 초기화</header>
-              <form>
-                <div class="field input-field">
-                  <input
-                    type="text"
-                    id="reset_pw"
-                    placeholder="가입시 사용한 email을 입력해주세요."
-                    class="input_id"
-                  />
-                </div>
-                <!-- <div class="field input-field">
-                <input type="password" id="floatingPassword" placeholder="Password" class="input_password">
-                <i class='bx bx-hide eye-icon'></i>
-              </div> -->
-                <div class="field button-field">
-                  <a
-                    type="button"
-                    class="login-btn"
-                    onclick="handleResetPassword()"
-                    >인증 이메일 보내기</a
-                  >
-                </div>
-              </form>
-              <div class="form-link">
-                <span
-                  >Don't have an account?
-                  <a href="./register.html" class="link signup-link"
-                    >회원가입</a
-                  ></span
-                >
-              </div>
-              <p class="team">&copy; 오운완 TEAM PROJECT</p>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>오운완 | 비밀번호 초기화</title>
+
+  <!-- CSS only -->
+  <link rel="stylesheet" href="/assets/css/login.css" />
+
+  <!-- JS  -->
+  <script src="../assets/js/urls.js"></script>
+  <script src="/assets/js/reset_pw.js"></script>
+
+  <!-- Boxicons -->
+  <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <div class="main-container">
+      <section class="container forms">
+        <div class="form login">
+          <div class="login-logo">
+            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고"
+                width="100" /></a>
           </div>
-        </section>
-      </div>
-    </main>
-  </body>
+          <div class="form-content">
+            <header>비밀번호 초기화</header>
+            <form>
+              <div class="field input-field">
+                <input type="text" id="reset_pw" placeholder="가입시 사용한 email을 입력해주세요." class="input_id" />
+              </div>
+              <div class="field button-field">
+                <a type="button" class="login-btn" onclick="handleResetPassword()">인증 이메일 보내기</a>
+              </div>
+            </form>
+            <div class="form-link">
+              <span>Don't have an account?
+                <a href="./register.html" class="link signup-link">회원가입</a></span>
+            </div>
+            <p class="team">&copy; 오운완 TEAM PROJECT</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+
 </html>

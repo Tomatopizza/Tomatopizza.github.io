@@ -13,9 +13,10 @@ window.onload = async function () {
 
 const urlParams = new URLSearchParams(window.location.search);
 articleId = urlParams.get("article_id");
-// console.log(articleId)
 
-// 게시글 정보 가져오기
+/**
+  * 게시글 정보 가져오기
+  */ 
 async function getArticleInfo(articleId) {
   const token = localStorage.getItem("access");
   const response = await fetch(
@@ -29,16 +30,22 @@ async function getArticleInfo(articleId) {
   );
   if (response.status === 200) {
     const articleInfo = await response.json();
-    // 바인딩 및 출력 함수 호출
+  /**
+  * 바인딩 및 출력 함수 호출
+  */ 
     bindData(articleInfo);
   } else {
-    console.error("게시글 정보를 가져오는데 실패했습니다.");
+    alert("게시글 정보를 가져오는데 실패했습니다.");
   }
 }
 
-// 데이터 바인딩 및 출력
+/**
+  * 데이터 바인딩 및 출력
+  */ 
 function bindData(articleInfo) {
-  // 각 요소에 데이터를 바인딩하고 출력하는 로직을 구현합니다.
+  /**
+  * 각 요소에 데이터를 바인딩하고 출력하는 로직을 구현합니다.
+  */ 
   document.querySelector("#category").value = articleInfo.category;
   document.querySelector("#in_category").value = articleInfo.in_subcategory;
   document.querySelector("#out_category").value = articleInfo.out_subcategory;
@@ -49,7 +56,6 @@ function bindData(articleInfo) {
   document.querySelector("#is_private1").checked = articleInfo.is_private;
   // 이미지 미리보기
   const imgThumbnail = document.querySelector("#imgthumbnail2");
-  console.log(imgThumbnail);
   if (articleInfo.image) {
     let img = document.createElement("img");
     img.setAttribute("src", `${backend_base_url}${articleInfo.image}`);
@@ -62,7 +68,9 @@ function bindData(articleInfo) {
 }
 getArticleInfo(articleId);
 
-// 카테고리 필드 전환
+/**
+  * 카테고리 필드 전환
+  */
 const toggleCategoryFields = (category) => {
   const inCategoryFields = document.querySelectorAll(".in_category");
   const outCategoryFields = document.querySelectorAll(".out_category");
@@ -83,12 +91,16 @@ const toggleCategoryFields = (category) => {
   }
 };
 
-// 게시글 수정하지 않을 때(게시글 상세 페이지로 이동)
+/**
+  * 게시글 수정하지 않을 때(게시글 상세 페이지로 이동)
+  */
 function articleNoUpdate() {
   window.location.href = `${frontend_base_url}/template/article_detail.html?article_id=${articleId}`;
 }
 
-// 게시글 수정
+/**
+  * 게시글 수정
+  */
 async function articleUpdate() {
   const category = document.querySelector("#category").value;
   const inCategoryField = document.getElementById("in_category");
@@ -139,13 +151,14 @@ async function articleUpdate() {
   } else if (content == "" || exerciseTime1 == "") {
     alert("빈칸을 입력해 주세요.");
   } else {
-    console.error("요청 실패:", response);
+    alert("요청 실패:");
     for (const selectDay of formData.values()) {
-      console.log(selectDay);
     }
   }
 }
-// 이미지 업로드 미리보기
+/**
+  * 이미지 업로드 미리보기
+  */ 
 function setThumbnail(event) {
   let reader = new FileReader();
   reader.onload = function (event) {

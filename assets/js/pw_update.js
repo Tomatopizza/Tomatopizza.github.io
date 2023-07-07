@@ -6,14 +6,14 @@ window.onload = async function () {
   }
 };
 
-//비밀번호 변경
+/**
+  * 비밀번호 변경
+  */
 async function fixProfile(user_id) {
   const payload = localStorage.getItem("payload");
   const payload_parse = JSON.parse(payload);
   user_id = payload_parse.user_id;
   const token = localStorage.getItem("access");
-  console.log(user_id);
-
 
   const password1 = document.getElementById("change_pw1").value;
   const password2 = document.getElementById("change_pw_2").value;
