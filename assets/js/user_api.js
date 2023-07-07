@@ -1,10 +1,11 @@
 async function handleRegister() {
   const registerData = {
-    // 등록에 필요한 정보입니다
+  /**
+  * 등록에 필요한 정보입니다
+  */
     username: document.getElementById("floatingInput").value,
     password: document.getElementById("floatingPassword").value,
     email: document.getElementById("floatingInputEmail").value,
-    // fullname: document.getElementById("floatingInputFullname").value,
   };
 
   const userPassword1 = document.getElementById("floatingPassword").value
@@ -46,9 +47,8 @@ function checkPassword() {
 }
 
 async function handleLogin() {
-  console.log("로그인 신호");
   const loginData = {
-    email: document.getElementById("floatingInput").value, // 이 부분이 email로 변화
+    email: document.getElementById("floatingInput").value, // email
     password: document.getElementById("floatingPassword").value,
   };
 
@@ -63,7 +63,7 @@ async function handleLogin() {
   } else if (userPassword === "") {
       alert("password를 입력해주세요.")
   } else {
-      // fetch post 통신이 완료될때까지 기다리고, api에서 토큰을 반환합니다.
+      // fetch(post) and api token check
   const response = await fetch(`${backend_base_url}/users/login/`, {
     headers: {
       "Accept": "application/json",
@@ -76,11 +76,7 @@ async function handleLogin() {
   response_json = await response.json();
 
   if (response.status == 200) {
-    // access,refresh 토큰 저장
-    // response_json으로 불러오면 { 'email' : ~~, 'password' : ~~, 'toekn' : {'rfresh': ~~ , 'access' : ~~}} 이런식으로 불러와짐.
-    // 그래서 일단 token만 불러온다음에 필요없는 부분을 제거한 뒤 access와 refresh에 넣어줌. 바로 딕셔너리로는 인식시키는 법을 몰라서 택함.
     var token = response_json.tokens;
-    console.log(token.access);
     var refresh = token.refresh;
     var access = token.access;
     localStorage.setItem("access", access);
@@ -96,8 +92,6 @@ async function handleLogin() {
         })
         .join("")
     );
-
-    // payload 저장
     localStorage.setItem("payload", jsonPayload);
     window.location.replace(`${frontend_base_url}/template/index.html`);
   } else {

@@ -2,9 +2,9 @@
 
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <title>오운완 | 프로필</title>
+<head>
+    <meta charset="UTF-8">
+    <title>오운완 | 프로필 수정</title>
 
         <!-- CSS -->
         <link rel="stylesheet" href="../assets/css/profile_update.css">
@@ -31,51 +31,53 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     </head>
 
-    <body>
-        <!-- 상단 네비게이션바 -->
-        <div id="navbar-container"></div>
-        <!-- 상단 네비게이션 끝-->
+<body>
+    <!-- 상단 네비게이션바 -->
+    <div id="navbar-container"></div>
+    <!-- 상단 네비게이션 끝-->
 
-        <div class="profile_update_box">
-            <div class="profile_update_main">
-                <div class="profile_update_img_box">
-                    <div class="avatar-img" id="imgthumbnail2"></div>
-                    <form class="profile_update_fileselect" id="imgForm">
-                        <input type="file" value="none" id="photo" onchange="setThumbnail(event);">
-                    </form>
-                </div>
+    <div class="profile_update_box">
+        <div class="profile_update_main">
+            <div class="profile_update_img_box">
+                <div class="avatar-img" id="imgthumbnail2"></div>
+                <form class="profile_update_fileselect" id="imgForm">
+                    <input type="file" value="none" id="photo" onchange="setThumbnail(event);">
+                </form>
+            </div>
 
-                <div class="profile_update_info">
-                    <div class="profile_update_username">
-                        <div class="profile_update_username_input">
-                            <h4 class="profile_update_sub_username" id="username_name">Username</h4>
-                            <textarea rows="1" class="form-control" type="text" id="username"
-                                autocomplete="username" placeholder="유저이름"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="profile_update_email">
-                        <span id="email_name">Email</span>
-                        <textarea rows="1"class="form-control" type="text" id="email" autocomplete="email"
-                            placeholder="이메일을 입력해주세요!"></textarea>
-                    </div>
-
-                    <div class="profile_update_aboutme">
-                        <spanp class="text-muted" id="aboutme_name">aboutme</spanp>
-                        <textarea rows="3" cols="30" class="form-control" type="text" id="aboutme" placeholder=" 내소개를 입력해주세요"></textarea>
+            <div class="profile_update_info">
+                <div class="profile_update_username">
+                    <div class="profile_update_username_input">
+                        <h4 class="profile_update_sub_username" id="username_name">Username</h4>
+                        <textarea rows="1" class="form-control" type="text" id="username" autocomplete="username"
+                            placeholder="유저이름"></textarea>
                     </div>
                 </div>
 
+                <div class="profile_update_email">
+                    <span id="email_name">Email</span>
+                    <textarea rows="1" class="form-control" type="text" id="email" autocomplete="email"
+                        placeholder="이메일을 입력해주세요!"></textarea>
+                </div>
 
-                <div class="profile_update_btn_box">
-                    <button class="btn btn-outline-dark me-md-4" type="button" onclick=" putProfile()">프로필 수정완료</button>
-                    <button class="btn btn-outline-dark me-md-4" type="button" onclick=" profileNoUpdate()">수정 취소하기</button>
+                <div class="profile_update_aboutme">
+                    <spanp class="text-muted" id="aboutme_name">aboutme</spanp>
+                    <textarea rows="3" cols="30" class="form-control" type="text" id="aboutme"
+                        placeholder=" 내소개를 입력해주세요"></textarea>
                 </div>
             </div>
-        </div>
 
-        <!-- 하단 푸터 시작-->
-        <div id="footer-container"></div>
-        <!-- 하단 푸터 끝-->
-    </body>
+
+            <div class="profile_update_btn_box">
+                <button class="btn btn-outline-dark me-md-4" type="button" onclick=" putProfile()">프로필 수정완료</button>
+                <button class="btn btn-outline-dark me-md-4" type="button" onclick=" profileNoUpdate()">수정 취소하기</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 하단 푸터 시작-->
+    <div id="footer-container"></div>
+    <!-- 하단 푸터 끝-->
+</body>
+
 </html>

@@ -1,4 +1,6 @@
-// 댓글
+/**
+ * 댓글 불러오기
+ */
 async function getComments(articleId) {
   const response = await fetch(
     `${backend_base_url}/articles/comment/${articleId}/`
@@ -11,6 +13,9 @@ async function getComments(articleId) {
     alert(response.status);
   }
 }
+/**
+ * 댓글 작성
+ */
 
 async function postComment(articleId, newComment) {
   let token = localStorage.getItem("access");
@@ -40,12 +45,14 @@ async function postComment(articleId, newComment) {
   }
 }
 
-// 댓글 수정
+/**
+ * 댓글 수정
+ */
 async function commentPut(commentId) {
   const a = document.getElementsByClassName("comment_edit_complete");
   for (let i = 0; i < a.length; i++) {
     a[i].addEventListener("click", () => saveNewComment(a[i].dataset.id));
-  } // 이해필요
+  }
 
   const beforeComment = document.getElementById(`comment_content${commentId}`);
   const editComment = document.getElementById(`comment_edit_${commentId}`);
@@ -53,12 +60,13 @@ async function commentPut(commentId) {
   editInput.value = beforeComment.innerText; // 이전 댓글 내용 그대로 표시
   editComment.style.display = "grid";
 }
-
-// 수정된 댓글 저장
+/**
+ * 수정된 댓글 저장
+ */
 async function saveNewComment(commentId) {
   const newEditComment = document.getElementById(
     `comment_edit_input${commentId}`
-  ).value; // 수정된 댓글을 받는 인풋창
+  ).value;
   const newComment = document.getElementById(`comment_content${commentId}`);
 
   let token = localStorage.getItem("access");
@@ -88,7 +96,9 @@ async function saveNewComment(commentId) {
 
 }
 
-// 댓글 삭제
+/**
+ * 댓글 삭제
+ */
 async function commentDelete(commentId) {
   let token = localStorage.getItem("access");
 
@@ -113,7 +123,9 @@ async function commentDelete(commentId) {
   }
 }
 
-// 피드페이지
+/**
+ * 피드페이지
+ */
 
 async function getArticles(page) {
   const response = await fetch(`${backend_base_url}/articles/?page=${page}`);
@@ -126,12 +138,14 @@ async function getArticles(page) {
   }
 }
 
-// 상세페이지
+/**
+ * 상세페이지
+ */
 
 async function getArticle(articleId) {
   const response = await fetch(
     `${backend_base_url}/articles/${articleId}/detail`
-  ); // 각 게시글 상세보기
+  );
 
   if (response.status == 200) {
     response_json = await response.json();

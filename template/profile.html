@@ -5,7 +5,6 @@
     <head>
         <meta charset="UTF-8">
         <title>오운완 | 프로필</title>
-
         <!-- CSS -->    
         <link rel="stylesheet" href="../assets/css/profile.css">
 
@@ -31,70 +30,62 @@
         <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/favicon_io/apple-touch-icon.png">
     </head>
 
-    <body>
+<body>
 
 
-        <!-- 상단 네비게이션바 -->
-        <div id="navbar-container"></div>
-        <!-- 상단 네비게이션 끝-->
+    <!-- 상단 네비게이션바 -->
+    <div id="navbar-container"></div>
+    <!-- 상단 네비게이션 끝-->
 
-        <div class="profile-body">
-            <div class="row align-items-center">
-                <div class="col-md-4 text-center mb-5">
-                    <div class="avatar avatar-xl">
-                        <img src="#" alt="..." class="avatar-img rounded-circle" id="photo" />
+    <div class="profile-body">
+        <div class="row align-items-center">
+            <div class="col-md-4 text-center mb-5">
+                <div class="avatar avatar-xl">
+                    <img src="#" alt="..." class="avatar-img rounded-circle" id="photo" />
+                </div>
+            </div>
+            <div class="col">
+                <div class="row align-items-center">
+                    <div class="col-md-6" style="margin-left: 100px; margin-bottom: 7px;">
+                        <h4 class="mb-1" id="username">Username</h4>
+                        <p class="small mb-3"><span class="badge badge-dark"></span></p>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row align-items-center">
-                        <div class="col-md-6" style="margin-left: 100px; margin-bottom: 7px;">
-                            <h4 class="mb-1" id="username">Username</h4>
-                            <p class="small mb-3"><span class="badge badge-dark"></span></p>
-                        </div>
-                    </div>
-                    <div class="row mb-4">
-                        <span id="email" style="margin-left: 100px;margin-bottom: 20px;">Email</span>
-                        <div class="col-md-7">
-                            <p class="profile-text-muted" style="margin-left: 100px;" id="aboutme">aboutme</p>
-                        </div>
+                <div class="row mb-4">
+                    <span id="email" style="margin-left: 100px;margin-bottom: 20px;">Email</span>
+                    <div class="col-md-7">
+                        <p class="profile-text-muted" style="margin-left: 100px;" id="aboutme">aboutme</p>
                     </div>
                 </div>
-                <!-- <form id="imgForm">
-                        <input type="file" value="none" id="photo" onchange="setThumbnail(event);">
-                    </form>
-                </div>
-                <div class="image-view" id="imgthumbnail2"></div> -->
-                <div class="col align-items-center" >
-                    <div class="profile_btn_box">
-                        <div class="profile_put_btn">
-                            <button class="btn btn-outline-dark" type="button" onclick="loadPutProfile()">프로필 수정</button>
-                        </div>
-                        <div class="profile_changepw_btn">
-                            <button class="btn btn-outline-dark" type="button" onclick="changePW()">비밀번호 변경</button>
-                        </div>
-                        <div class="profile_delete_btn">
-                            <button class="btn btn-outline-danger" type="button" onclick="deactivateUserAccount()">회원탈퇴</button>
-                        </div>
+            </div>
+            <div class="col align-items-center">
+                <div class="profile_btn_box">
+                    <div class="profile_put_btn">
+                        <button class="btn btn-outline-dark" type="button" onclick="loadPutProfile()">프로필 수정</button>
+                    </div>
+                    <div class="profile_changepw_btn">
+                        <button class="btn btn-outline-dark" type="button" onclick="changePW()">비밀번호 변경</button>
+                    </div>
+                    <div class="profile_delete_btn">
+                        <button class="btn btn-outline-danger" type="button"
+                            onclick="deactivateUserAccount()">회원탈퇴</button>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <hr class="my-4" />
-        <div class="mylist_name"><strong>나의 운동 기록</strong></div>
-        <div class="form-group">
-            <ul class="list-group" id="article_mylist" class="mylist"></ul>
-        </div>
-        <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
-            <button id="loadMore" type="button" class="btn btn-dark more">더 보기</button>
-        </div>
-        <!-- <div class=" permission">
-                            <button id="withdrawal-btn" class="btn btn-danger" onclick="UserDelete()">탈퇴하기</button>
-                        </div> -->
+    <hr class="my-4" />
+    <div class="mylist_name"><strong>나의 운동 기록</strong></div>
+    <div class="form-group">
+        <ul class="list-group" id="article_mylist" class="mylist"></ul>
+    </div>
+    <div style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+        <button id="loadMore" type="button" class="btn btn-dark more">더 보기</button>
+    </div>
+    <!-- 하단 푸터 시작-->
+    <div id="footer-container"></div>
+    <!-- 하단 푸터 끝-->
+</body>
 
-
-        <!-- 하단 푸터 시작-->
-        <div id="footer-container"></div>
-        <!-- 하단 푸터 끝-->
-    </body>
 </html>

@@ -3,10 +3,15 @@
 
 <head>
   <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>오운완 | 게시글 상세페이지</title>
 
-  <!-- JS  -->
+  <!-- CSS -->
+  <link rel="stylesheet" href="../assets/css/article_detail.css">
+
+  <!-- JS -->
   <script src="../assets/js/urls.js"></script>
   <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
   <script src="../assets/js/nav.js"></script>
@@ -14,11 +19,8 @@
   <script src="../assets/js/api.js"></script>
   <script src="../assets/js/article_detail.js"></script>
   <script src="../assets/js/article_api.js"></script>
-    
-  <!-- CSS  -->
-  <link rel="stylesheet" href="../assets/css/article_detail.css">
 
-  <!-- Bootstrap  -->
+  <!-- Boostrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous" />
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
@@ -96,7 +98,6 @@
       </div>
     </div>
   </div>
-
   <div class="comment_box">
     <!-- 댓글 저장 공간-->
     <div class="container_savebox" id="article_comment">
@@ -105,8 +106,10 @@
     <!-- 댓글 작성 -->
     <div class="container_comment">
       <div class="comment_input_box">
+
         <input type="text" class="form-control" id="new_comment" placeholder="댓글은 100자까지 작성하실 수 있습니다."
           aria-label="comment">
+
         <span id="textLengthCheck" style="justify-content: center; align-items: center; display: flex;">(0 / 100)</span>
       </div>
       <div class="comment_btn">
@@ -124,7 +127,7 @@
 </html>
 <script>
   $("#new_comment").keyup(function (e) {
-    //console.log("키업!");
+
     var content = $(this).val();
     $("#textLengthCheck").text("(" + content.length + " / 최대 100자)"); //실시간 글자수 카운팅
     if (content.length > 100) {

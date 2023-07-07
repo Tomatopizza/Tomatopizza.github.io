@@ -21,7 +21,6 @@
     <!-- 상단 네비게이션바 -->
     <nav class="navbar navbar-expand-lg navbar-light" style="background-color: rgb(255, 255, 255);">
         <div class="container px-4 px-lg-5">
-            <!-- {% if user.is_authenticated %} -->
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                 data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
@@ -36,17 +35,11 @@
                 </ul>
 
                 <a href="/template/index.html" class="me-auto navbar-brand"><img
-                        src="../assets/images/ooo-removebg-preview.png" alt="상단로고" width="100"><strong>오운완프로젝트</strong></a>
+                        src="../assets/images/ooo-removebg-preview.png" alt="상단로고"
+                        width="100"><strong>오운완프로젝트</strong></a>
                 <form class="form-inline my-2 my-lg-0">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <!-- <a class="nav-link btn me-2 btn_org" href="./login.html"> 로그인 <span
-                                    class="sr-only"></span></a>
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link btn me-2 btn_gr" href="./signup.html"> 회원가입 <span
-                                    class="sr-only"></span></a> -->
-
                         </li>
                     </ul>
                     <ul id="navbar-right" class="navbar-nav mr-auto">
@@ -112,36 +105,37 @@
                     </div>
                     <p> </p>
                     <div class="input-group mb-3">
-                    <label class="input-group-text" for="exercise_time">운동시간(분)</label>
-                    <input id="exercise_time"  class="form-control"aria-label="Username" aria-describedby="basic-addon1" type="text" placeholder="운동시간을 숫자로만 적어주세요">
-                </div>
+                        <label class="input-group-text" for="exercise_time">운동시간(분)</label>
+                        <input id="exercise_time" class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1" type="text" placeholder="운동시간을 숫자로만 적어주세요">
+                    </div>
                     <div class="input">
                         <form id="imgForm">
                             <div class="mb-3">
-                                <label for="content" class="input-group-text1" >메모</label>
-                            <textarea id="content" style="overflow: hidden;" class="form-control" maxlength="15" rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
-                        </div>
-                        </div>
-                            <div class="form-check">
-                            <label><input type="checkbox" value="01" id="check_status" class="form-check-input">완료하셨다면 체크박스!</label></div>
-                            <div class="form-check form-switch">
-                            <label><input type="checkbox" value="02" class="form-check-input" id="is_private">나만 보기</label></div>
-                            <p>체크를 하지 않을 경우 자동으로 피드에 공유됩니다.</p>
-                            <div class="input-group mb-3">
-                                <form id="imgForm">
-                                    <input type="file" value="none" id="image" onchange="setThumbnail(event);">
+                                <label for="content" class="input-group-text1">메모</label>
+                                <textarea id="content" style="overflow: hidden;" class="form-control" maxlength="15"
+                                    rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
                             </div>
-                            <div style="width: 150px; height: 100px;" id="imgthumbnail"></div>
                     </div>
-                    <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                    <button type="button" class="btn btn-dark" id="save-article" onclick="save_article()">등록</button></div>
+                    <div class="form-check">
+                        <label><input type="checkbox" value="01" id="check_status" class="form-check-input">완료하셨다면
+                            체크박스!</label>
+                    </div>
+                    <div class="form-check form-switch">
+                        <label><input type="checkbox" value="02" class="form-check-input" id="is_private">나만 보기</label>
+                    </div>
+                    <p>체크를 하지 않을 경우 자동으로 피드에 공유됩니다.</p>
+                    <div class="input-group mb-3">
+                        <form id="imgForm">
+                            <input type="file" value="none" id="image" onchange="setThumbnail(event);">
+                    </div>
+                    <div style="width: 150px; height: 100px;" id="imgthumbnail"></div>
+                </div>
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button type="button" class="btn btn-dark" id="save-article" onclick="save_article()">등록</button>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-
-
+    </div>
 </body>
