@@ -1,22 +1,4 @@
 /**
- * 카드 실패 했을 때 띄울 내용
- */
-
-function card_fail(template) {
-  template[0] = `
-      <div class="col">
-        <div class="card h-100" >
-            <img class="myimg" src="/assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
-            <div class="card-body">
-              <div class="fontContainer">
-                <strong>"오늘도 화이팅!"</strong><br>
-              </div>
-            </div>
-        </div>     
-      </div>
-    `;
-}
-/**
  * index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기
  */
 async function loadArticle() {
