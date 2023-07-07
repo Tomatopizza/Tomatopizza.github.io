@@ -35,7 +35,17 @@
     grid-template-columns: repeat(5, 100px);
     grid-template-rows: repeat(2, 50px);
 }
-  
+
+.profile_update_fileselect input{
+    grid-column: 2/6;
+    grid-row: 1/2;
+}
+.profile_update_fileselect .warningMessage{
+    margin-top: 15px;
+    grid-column: 2/6;
+    grid-row: 2/3;
+
+}
 
 .profile_update_info{
     grid-column: 6/9;
