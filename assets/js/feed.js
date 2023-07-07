@@ -113,6 +113,7 @@ const loadArticles = async (page = 1) => {
   const totalPages = Math.ceil((await getAllArticles()).length / 5);
 
   const articles = await getArticles(page);
+  renderArticles(articles);
 
   const onePageElement = document.getElementById("onepage");
   const prePageElement = document.getElementById("prepage");
