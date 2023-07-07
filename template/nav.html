@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    
+
     <title>오운완 | 네비게이션</title>
 
     <!-- CSS -->
@@ -17,6 +17,60 @@
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
         crossorigin="anonymous"></script>
 </head>
+<style>
+    .black_bg {
+        display: none;
+        position: absolute;
+        content: "";
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        top: 0;
+        left: 0;
+        z-index: 1;
+    }
+
+    .modal_wrap {
+        display: none;
+        width: 500px;
+        min-height: 500px;
+        max-height: 900px;
+        position: absolute;
+        justify-content: center;
+        top: 50%;
+        left: 50%;
+        margin: -360px 0 0 -250px;
+        background: #fff;
+        border: 1px solid #000;
+        z-index: 2;
+        border-radius: 8px;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+        font-family: sans-serif;
+    }
+
+    .nav-modal {
+        width: 100%;
+    }
+
+
+    .modal_close {
+        width: 26px;
+        height: 26px;
+        position: absolute;
+        top: -30px;
+        right: 0;
+        border-radius: 50%;
+    }
+
+    .modal_close>a {
+        display: block;
+        width: 100%;
+        height: 100%;
+        background: url(https://img.icons8.com/metro/26/000000/close-window.png);
+        text-indent: -9999px;
+    }
+</style>
 
 <body>
     <!-- 상단 네비게이션바 -->

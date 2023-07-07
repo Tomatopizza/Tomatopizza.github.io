@@ -10,7 +10,7 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="/assets/css/article_update.css">
-    
+
     <!-- JS -->
     <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
     <script src="../assets/js/urls.js"></script>
@@ -22,7 +22,7 @@
         integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
-        crossorigin="anonymous"></script>    
+        crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -68,20 +68,24 @@
                     <p> </p>
                     <div class="input-group mb-3">
                         <label class="input-group-text" for="exercise_time1">운동시간(분)</label>
-                        <input id="exercise_time1"  class="form-control"aria-label="Username" aria-describedby="basic-addon1" type="text" placeholder="운동시간을 숫자로만 적어주세요">
+                        <input id="exercise_time1" class="form-control" aria-label="Username"
+                            aria-describedby="basic-addon1" type="text" placeholder="운동시간을 숫자로만 적어주세요">
                     </div>
                     <div class="input">
                         <form id="imgForm">
                             <div class="mb-3">
                                 <label for="content2" class="input-group-text1">메모</label>
-                                <textarea id="content2"  class="form-control" maxlength="15" rows="2" placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
+                                <textarea id="content2" class="form-control" maxlength="15" rows="2"
+                                    placeholder="피드의 타이틀이 됩니다! 운동 메모를 기록해주세요"></textarea>
                             </div>
 
                             <div class="form-check">
-                                <label><input type="checkbox" value="01" id="check_status1" class="form-check-input">완료하셨다면 체크박스!</label>
+                                <label><input type="checkbox" value="01" id="check_status1"
+                                        class="form-check-input">완료하셨다면 체크박스!</label>
                             </div>
                             <div class="form-check form-switch">
-                                <label><input type="checkbox" value="02" class="form-check-input" id="is_private1">나만 보기</label>
+                                <label><input type="checkbox" value="02" class="form-check-input" id="is_private1">나만
+                                    보기</label>
                             </div>
                             <p>체크를 하지 않을 경우 자동으로 피드에 공유됩니다.</p>
                             <div class="input-group mb-3">
@@ -93,8 +97,10 @@
                         </form>
                     </div>
                     <div class="d-flex gap-2 justify-content-md-end">
-                        <button type="button" class="btn btn-dark"  id="save-article" onclick="articleUpdate()">수정완료</button>   
-                        <button type="button" class="btn btn-dark" id="save-article" onclick="articleNoUpdate()">취소하기</button>
+                        <button type="button" class="btn btn-dark" id="save-article"
+                            onclick="articleUpdate()">수정완료</button>
+                        <button type="button" class="btn btn-dark" id="save-article"
+                            onclick="articleNoUpdate()">취소하기</button>
                     </div>
                 </div>
             </div>

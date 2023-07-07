@@ -322,6 +322,10 @@ async function save_article() {
   formData.append("is_private", is_private);
   formData.append("exercise_time", exercise_time);
 
+  if (category === "" || select_day === "" || exercise_time === "") {
+    alert("카테고리, 날짜, 운동시간은 필수 입니다!");
+    return;
+  }
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
     method: "POST",
     headers: {
@@ -333,10 +337,9 @@ async function save_article() {
   if (response.status == 201) {
     alert("글 작성 완료");
     window.location.reload();
-  } else if (category === "" || select_day === "" || exercise_time === "") {
-    alert("카테고리, 날짜, 운동시간은 필수 입니다!");
+  } else {
+    alert("잠시후 다시 시도해주세요!");
   }
-
   const saveButton = document.getElementById("save-article");
 }
 
