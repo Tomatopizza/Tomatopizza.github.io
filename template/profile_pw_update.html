@@ -36,22 +36,28 @@
     <div id="navbar-container"></div>
     <!-- 상단 네비게이션 끝-->
 
-    <div class="main-container">
-      <div class="pw-update">
-        <h2>비밀번호 변경</h2>
-
-        <div class="input-container">
-          <span class="text-muted" id="change_pw_name1">변경하실 비밀번호를 입력해주세요</span>
-          <input type="password" id="change_pw1" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
-          <br/>
-          <span class="text-muted" id="change_pw_name2">한번더 입력해주세요</span>
-          <input type="password" id="change_pw_2" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
-          <div id="warning" style="display: none; color: red"> 비밀번호가 일치하지 않습니다</div>
-        </div>
-  
-        <div class="button-container">
-          <button type="button" class="btn btn-dark" id="save-article" onclick="fixProfile()"> 비밀번호 변경</button>
-          <button type="button" class="btn btn-dark" id="save-article" onclick="pwNoUpdate()">취소하기</button>
+      <div class="input-container">
+        <span class="text-muted" id="change_pw_name1"
+          >변경하실 비밀번호를 입력해주세요</span
+        >
+        <input
+          type="password"
+          id="change_pw1"
+          placeholder="Password"
+          class="input_password"
+          oninput="checkPasswordsMatch()"
+        />
+        <br />
+        <span class="text-muted" id="change_pw_name2">한번더 입력해주세요</span>
+        <input
+          type="password"
+          id="change_pw_2"
+          placeholder="Password"
+          class="input_password"
+          oninput="checkPasswordsMatch()"
+        />
+        <div id="warning" style="display: none; color: red">
+          비밀번호가 일치하지 않습니다
         </div>
       </div>
       </div>

@@ -17,7 +17,8 @@ $(document).ready(function () {
     const payload = localStorage.getItem("payload");
     const parsedPayload = JSON.parse(payload);
     const users_id = parsedPayload.user_id;
-    const token_exp = parsedPayload.exp;
+    const user_exp = parsedPayload.exp;
+    token_exp = parsedPayload.exp;
     const currentTime = Math.floor(Date.now() / 1000);
 
     try {
@@ -31,7 +32,6 @@ $(document).ready(function () {
         .slice(0, 10);
 
       const intro = document.getElementById("intro");
-
       if (token_exp > currentTime) {
         if (intro) {
           intro.innerText = `${profile.username}님 안녕하세요`;
@@ -43,7 +43,7 @@ $(document).ready(function () {
         handleLogout();
       }
     } catch (error) {
-      console.error("Failed to fetch profile:", error);
+      alert("이용자를 찾을 수 없습니다. 관리자에게 문의하세요", error);
     }
     let navbarRight = document.getElementById("navbar-right");
     let newLi = document.createElement("li");
