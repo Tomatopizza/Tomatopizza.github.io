@@ -265,7 +265,7 @@ async function loadComments(articleId) {
           </div>
         </div>`;
         const profileImg = document.getElementById("profileImg")
-        if (profileImg.src === "http://127.0.0.1:8000/null") {
+        if (profileImg.src === `https://${frontend_base_url}:8000/null`) {
           profileImg.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
         }
     } else {
