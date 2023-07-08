@@ -212,6 +212,14 @@ async function loadComments(articleId) {
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = "";
 
+    const responseImg = await fetch(`${backend_base_url}/users/profile/${currentUser}`, {
+      headers: {
+        Authorization: "Bearer" + localStorage.getItem("access"),
+      },
+      method: "GET",
+    });
+    const data = await responseImg.json();
+
   /**
   * 댓글 작성하기
   */
@@ -234,7 +242,7 @@ async function loadComments(articleId) {
       commentList.innerHTML += `<div class="comment-wrapper">
           <div class="media">
             <div class="comment-profile-img">
-              <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
+              <img id="profileImg" src="${backend_base_url}/${data.photo}" alt="프로필 이미지" width=50 height=50>
             </div>
             <div class="comment_username">
               <h5 class="mt-0 mb-1">${comment.username}</h5>
@@ -255,13 +263,16 @@ async function loadComments(articleId) {
               </div>
             </div>
           </div>
-
         </div>`;
+        const profileImg = document.getElementById("profileImg")
+        if (profileImg.src === "http://127.0.0.1:8000/null") {
+          profileImg.src = "https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+        }
     } else {
       commentList.innerHTML += `<div class="comment-wrapper">
           <div class="media">
             <div class="comment-profile-img">
-              <img src="${avatar}" alt="프로필 이미지" width=50 height=50>
+              <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="프로필 이미지" width=50 height=50>
             </div>
             <div class="comment_username">
               <h5 class="mt-0 mb-1">${comment.username}</h5>

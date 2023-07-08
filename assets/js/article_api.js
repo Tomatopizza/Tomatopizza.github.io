@@ -1,22 +1,4 @@
 /**
- * 카드 실패 했을 때 띄울 내용
- */
-
-function card_fail(template) {
-  template[0] = `
-      <div class="col">
-        <div class="card h-100" >
-            <img class="myimg" src="/assets/images/weather_icon/emoji-smile-fill.svg" class="card-img-top" style="width: 30%; margin: auto; padding: 2%">
-            <div class="card-body">
-              <div class="fontContainer">
-                <strong>"오늘도 화이팅!"</strong><br>
-              </div>
-            </div>
-        </div>     
-      </div>
-    `;
-}
-/**
  * index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기
  */
 async function loadArticle() {
@@ -32,9 +14,7 @@ async function loadArticle() {
 
     if (response_json.length > 0) {
       const checkCount1 = response_json[0].check_status_count;
-
     } else {
-
     }
     return response_json;
   } else {
@@ -43,19 +23,17 @@ async function loadArticle() {
   }
 }
 
-
-
-let nowMonth = new Date(); 
-let today = new Date(); 
-today.setHours(0, 0, 0, 0); 
+let nowMonth = new Date();
+let today = new Date();
+today.setHours(0, 0, 0, 0);
 
 // 달력 생성
 async function buildCalendar() {
-  let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1); 
-  let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0); 
+  let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1);
+  let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0);
 
   let tbody_Calendar = document.querySelector(".Calendar > tbody");
-  document.getElementById("calYear").innerText = nowMonth.getFullYear(); 
+  document.getElementById("calYear").innerText = nowMonth.getFullYear();
   document.getElementById("calMonth").innerText = leftPad(
     nowMonth.getMonth() + 1
   ); // 월 숫자 갱신
@@ -84,20 +62,15 @@ async function buildCalendar() {
     nowDay <= lastDate;
     nowDay.setDate(nowDay.getDate() + 1)
   ) {
-
-
-    let nowColumn = nowRow.insertCell(); 
+    let nowColumn = nowRow.insertCell();
 
     let newDIV = document.createElement("p");
     newDIV.innerHTML = leftPad(nowDay.getDate());
     nowColumn.appendChild(newDIV);
 
-   
     const nowDayStr = `${nowDay.getFullYear()}-${leftPad(
       nowDay.getMonth() + 1
     )}-${leftPad(nowDay.getDate())}`;
-
-
 
     if (nowDayStr in selectedArticles) {
       if (selectedArticles[nowDayStr].check_status == true) {
@@ -133,13 +106,12 @@ async function buildCalendar() {
       choiceDate(newDIV, selected_date_str);
     });
 
-
     async function choiceDate(newDIV, selected_date_str) {
       const response = await fetch(
         `${backend_base_url}/articles/my000/?date=${selected_date_str}`,
         {
           headers: {
-            "Authorization": "Bearer " + localStorage.getItem("access"),
+            Authorization: "Bearer " + localStorage.getItem("access"),
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -212,7 +184,6 @@ async function buildCalendar() {
         // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
         alert("로그인을 해주세요.");
       } else {
-
         alert("API 호출에 실패하였습니다.");
       }
     }
@@ -228,14 +199,13 @@ async function buildCalendar() {
 
 //여기까지 Calendar
 
-
 function prevCalendar() {
   nowMonth = new Date(
     nowMonth.getFullYear(),
     nowMonth.getMonth() - 1,
     nowMonth.getDate()
-  ); 
-  buildCalendar(); 
+  );
+  buildCalendar();
 }
 
 function nextCalendar() {
@@ -243,10 +213,9 @@ function nextCalendar() {
     nowMonth.getFullYear(),
     nowMonth.getMonth() + 1,
     nowMonth.getDate()
-  ); 
-  buildCalendar(); 
+  );
+  buildCalendar();
 }
-
 
 function leftPad(value) {
   if (value < 10) {
@@ -322,6 +291,10 @@ async function save_article() {
   formData.append("is_private", is_private);
   formData.append("exercise_time", exercise_time);
 
+  if (category === "" || select_day === "" || exercise_time === "") {
+    alert("카테고리, 날짜, 운동시간은 필수 입니다!");
+    return;
+  }
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
     method: "POST",
     headers: {
@@ -333,10 +306,9 @@ async function save_article() {
   if (response.status == 201) {
     alert("글 작성 완료");
     window.location.reload();
-  } else if (category === "" || select_day === "" || exercise_time === "") {
-    alert("카테고리, 날짜, 운동시간은 필수 입니다!");
+  } else {
+    alert("시간은 숫자로만 입력했는지 확인해주세요");
   }
-
   const saveButton = document.getElementById("save-article");
 }
 
@@ -349,12 +321,10 @@ function setThumbnail(event) {
     img.setAttribute("src", event.target.result);
 
     // 썸네일 크기 조절
-    img.style.width = "200px"; 
-    img.style.height = "150px"; 
+    img.style.width = "200px";
+    img.style.height = "150px";
 
- 
     let imgThumbnail = document.querySelector("#imgthumbnail");
-
 
     while (imgThumbnail.firstChild) {
       imgThumbnail.removeChild(imgThumbnail.firstChild);
