@@ -1,8 +1,11 @@
-
 async function handleResetPassword() {
   /* 비밀번호 찾기 */
   const email = document.getElementById("reset_pw").value;
-
+  if (email === "") {
+    alert("이메일을 입력해주세요!");
+    return;
+  }
+  alert("이메일을 발송중입니다");
   const response = await fetch(
     `${backend_base_url}/users/request-reset-email/`,
     {
