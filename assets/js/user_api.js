@@ -93,7 +93,7 @@ async function handleLogin() {
         .join("")
     );
     localStorage.setItem("payload", jsonPayload);
-    window.location.replace(`${frontend_base_url}/template/index.html`);
+    window.location.replace(`${frontend_base_url}/template/feed.html`);
   } else {
     alert("등록된 회원이 아닙니다.");
   }
