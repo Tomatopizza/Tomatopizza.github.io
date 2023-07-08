@@ -224,7 +224,7 @@ window.onload = async function loadMainPage() {
 		} catch {
 			sleep(1000);
 		}
-		retry_count -= 10;
+		retry_count -= 1;
 		if (retry_count == 0) {
 			break;
 		}
