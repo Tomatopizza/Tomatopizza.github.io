@@ -7,29 +7,29 @@ const renderArticles = (articles) => {
   article_list.innerHTML = "";
 
   articles.forEach((article) => {
-    const newCol = document.createElement("div"); // div 생성
-    newCol.setAttribute("class", "col"); // class 부여
+    const newCol = document.createElement("div");
+    newCol.setAttribute("class", "col"); 
     newCol.setAttribute("onclick", `articleDetail(${article.id})`);
-    article_list.appendChild(newCol); // article_list에 newCol 넣기
+    article_list.appendChild(newCol); 
 
     const newCard = document.createElement("div");
     newCard.setAttribute("class", "card");
-    newCard.setAttribute("id", article.id); // id로 식별
-    newCol.appendChild(newCard); // newCol에 newCard 넣기
+    newCard.setAttribute("id", article.id); 
+    newCol.appendChild(newCard); 
 
     const imageSize = document.createElement("div");
-    imageSize.setAttribute("class", "img-size"); // img 사이즈
+    imageSize.setAttribute("class", "img-size");
     newCard.appendChild(imageSize);
 
     const articleImage = document.createElement("img");
-    articleImage.setAttribute("class", "card-img"); // img
+    articleImage.setAttribute("class", "card-img"); 
 
     if (article.image) {
       articleImage.setAttribute("src", `${backend_base_url}${article.image}`);
     } else {
       articleImage.setAttribute(
         "src",
-        "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg"
+        "http://127.0.0.1:5500/assets/images/exercise.jpg"
       );
     }
 
@@ -51,36 +51,36 @@ const renderArticles = (articles) => {
     articleWriter.innerText = article.user;
     newCardTitleBox.appendChild(articleWriter);
 
-    const newText = document.createElement("div"); //좋아요, 댓글, 작성시간 div
+    const newText = document.createElement("div"); 
     newText.setAttribute("class", "collector");
     newCardBody.appendChild(newText);
 
     const likeCount = document.createElement("li");
     likeCount.setAttribute("class", "like_count");
-    likeCount.innerText = `${article.like_count}`; // 좋아요 수 추가
+    likeCount.innerText = `${article.like_count}`; 
     newText.appendChild(likeCount);
 
     const commentCount = document.createElement("li");
     commentCount.setAttribute("class", "comment_count");
-    commentCount.innerText = `${article.comment_count || 0}`; // 댓글 수 추가
+    commentCount.innerText = `${article.comment_count || 0}`; 
     newText.appendChild(commentCount);
 
     const createdAt = document.createElement("li");
     createdAt.setAttribute("class", "created_at");
-    const currentTime = new Date(); // 현재 시간
-    const createdTime = new Date(article.created_at); // 작성 시간
-    const timeDiff = Math.floor((currentTime - createdTime) / (1000 * 60)); // 분 단위로 시간 차이 계산
+    const currentTime = new Date(); 
+    const createdTime = new Date(article.created_at); 
+    const timeDiff = Math.floor((currentTime - createdTime) / (1000 * 60)); 
 
     let displayTime;
     if (timeDiff < 60) {
-      displayTime = `${timeDiff} 분 전`; // 60분 이내면 분 단위로 표시
+      displayTime = `${timeDiff} 분 전`; 
     } else if (timeDiff < 1440) {
-      displayTime = `${Math.floor(timeDiff / 60)} 시간 전`; // 24시간 이내면 시간 단위로 표시
+      displayTime = `${Math.floor(timeDiff / 60)} 시간 전`; 
     } else {
-      displayTime = `${Math.floor(timeDiff / 1440)} 일 전`; // 그 이상은 일 단위로 표시
+      displayTime = `${Math.floor(timeDiff / 1440)} 일 전`; 
     }
 
-    createdAt.innerText = `${displayTime}`; // 작성일 추가
+    createdAt.innerText = `${displayTime}`; 
     newText.appendChild(createdAt);
   });
 };
@@ -106,13 +106,14 @@ async function ArticlesPages() {
   return totalPages;
 }
 
-// //페이지네이션
+/**
+  * 페이지네이션
+  */ 
 const loadArticles = async (page = 1) => {
   const totalPages = Math.ceil((await getAllArticles()).length / 5);
-  console.log(totalPages);
 
   const articles = await getArticles(page);
-  console.log(articles);
+
   renderArticles(articles);
 
   const onePageElement = document.getElementById("onepage");
@@ -127,14 +128,14 @@ const loadArticles = async (page = 1) => {
     onePageElement.style.display = "block";
     onePageElement.textContent = `1 ..`;
     onePageElement.addEventListener("click", () => {
-      pageNumber = 1; // 여기서 첫 페이지로 값을 변경
+      pageNumber = 1; 
       loadArticles(pageNumber);
     });
   } else if (page == 3) {
     onePageElement.style.display = "block";
     onePageElement.textContent = `1`;
     onePageElement.addEventListener("click", () => {
-      pageNumber = 1; // 여기서 첫 페이지로 값을 변경
+      pageNumber = 1; 
       loadArticles(pageNumber);
     });
   } else {
@@ -184,14 +185,9 @@ const movePage = (direction) => {
 
 const init = async () => {
   totalPages = Math.ceil((await getAllArticles()).length / 5);
-  console.log(totalPages);
   pageNumber = 1;
   const articles = await getArticles(pageNumber);
-  console.log(articles);
   renderArticles(articles);
-
-  // document.getElementById("onepage")
-  // .addEventListener("click", () =>)
 
   document
     .getElementById("prepage")
@@ -219,6 +215,7 @@ const init = async () => {
 document.addEventListener("DOMContentLoaded", init);
 
 async function ranking() {
+  /* 랭킹 1~3위까지를 피드에 출력 */
   const response = await fetch(`${backend_base_url}/articles/ranking/`, {
     headers: {
       Authorization: "Bearer " + localStorage.getItem("access"),
@@ -246,7 +243,7 @@ async function ranking() {
     ranking = `
     
     <div class="row">
-      <div class="col-sm-2 " style="display:block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#FFD700" class="bi bi-award-fill" viewBox="0 0 16 16">
@@ -257,7 +254,7 @@ async function ranking() {
           </div>
         </div>
       </div>
-      <div class="col-sm-2" style="display: block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#C0C0C0" class="bi bi-award-fill" viewBox="0 0 16 16">
@@ -268,7 +265,7 @@ async function ranking() {
           </div>
         </div>
       </div>
-      <div class="col-sm-2" style="display: block">
+      <div class="col">
         <div class="card">
           <div class="card-body">
             <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#B87333" class="bi bi-award-fill" viewBox="0 0 16 16">

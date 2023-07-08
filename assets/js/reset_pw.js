@@ -1,6 +1,6 @@
-console.log("안녕");
-//비밀번호 찾기
+
 async function handleResetPassword() {
+  /* 비밀번호 찾기 */
   const email = document.getElementById("reset_pw").value;
 
   const response = await fetch(
@@ -27,8 +27,9 @@ async function handleResetPassword() {
     alert(response_json["email"]);
   }
 }
-//비밀번호 재설정
+
 async function Set_Password() {
+  /* 비밀번호 재설정 */
   const password = document.getElementById("set_Password1").value;
   const repassword = document.getElementById("set_Password2").value;
 

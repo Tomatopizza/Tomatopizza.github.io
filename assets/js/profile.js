@@ -22,7 +22,9 @@ const payload = localStorage.getItem("payload");
 const payload_parse = JSON.parse(payload);
 const users_id = payload_parse.user_id;
 
-//프로필불러오기
+/**
+  * 프로필불러오기
+  */
 async function getProfile(users_id) {
   const response = await fetch(
     `${backend_base_url}/users/profile/${users_id}`,
@@ -39,7 +41,6 @@ async function getProfile(users_id) {
 
 $(document).ready(async function () {
   const profile = await getProfile(users_id);
-  console.log(profile);
   myLoadArticle();
 
   const user = $("#username");
@@ -66,7 +67,9 @@ $(document).ready(async function () {
 let displayCount = 5;
 let articles = [];
 
-//프로필 더보기
+/**
+  * 프로필 더보기
+  */
 $(function () {
   $("#loadMore").click(function () {
     displayCount += 5;
@@ -74,7 +77,9 @@ $(function () {
   });
 });
 
-// 운동내역 불러오기
+/**
+  * 운동내역 불러오기
+  */
 async function myLoadArticle() {
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
     headers: {
@@ -84,10 +89,8 @@ async function myLoadArticle() {
   });
   if (response.status == 200) {
     const response_json = await response.json();
-    console.log(response_json);
 
     articles = response_json;
-    console.log(articles);
 
     const article_mylist = $("#article_mylist");
     if (displayCount >= articles.length) {
@@ -122,7 +125,7 @@ async function myLoadArticle() {
       article_mylist.append(newRow);
     });
   } else {
-    console.log("다시 시도해주세요!");
+    alert("다시 시도해주세요!");
   }
 }
 
@@ -134,7 +137,9 @@ function loadPutProfile(users_id) {
   window.location.href = `/template/profile_update.html`;
 }
 
-// 이미지 업로드 미리보기
+/**
+  * 이미지 업로드 미리보기
+  */
 function setThumbnail(event) {
   let reader = new FileReader();
 
@@ -142,21 +147,29 @@ function setThumbnail(event) {
     let img = document.createElement("img");
     img.setAttribute("src", event.target.result);
 
-    // 썸네일 크기 조절
+    /**
+    * 썸네일 크기 조절
+    */
     img.style.width = "200px"; // 너비 150px로 설정
     img.style.marginLeft = "150px";
     img.style.borderRadius = "50%";
     img.style.borderStyle = "solid";
 
-    // 이미지 미리보기 영역
+    /**
+    * 이미지 미리보기 영역
+    */ 
     let imgThumbnail = document.querySelector("#imgthumbnail2");
 
-    // 기존 이미지가 있으면 제거
+    /**
+    * 기존 이미지가 있으면 제거
+    */
     while (imgThumbnail.firstChild) {
       imgThumbnail.removeChild(imgThumbnail.firstChild);
     }
 
-    // 새 이미지를 미리보기 영역에 추가
+    /**
+    * 새 이미지를 미리보기 영역에 추가
+    */ 
     imgThumbnail.appendChild(img);
   };
 
@@ -165,4 +178,32 @@ function setThumbnail(event) {
 
 function changePW(users_id) {
   window.location.href = `/template/profile_pw_update.html`;
+}
+
+/**
+  * 유저 비활성화(탈퇴)
+  */
+async function deactivateUserAccount() {
+  try {
+  const payload = localStorage.getItem("payload");
+  const payload_parse = JSON.parse(payload);
+  const users_id = payload_parse.user_id;
+  const confirmDelete = confirm("회원 탈퇴 하시겠습니까?")
+  if (confirmDelete) {
+    const RealConfirmDelete = confirm("정말 탈퇴 하시겠습니까?")
+    if (RealConfirmDelete) {
+      const response = await fetch(`${backend_base_url}/users/profile/${users_id}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("access"),
+        },
+          method: "DELETE"
+      });
+      const data = await response.json()
+      alert("회원 탈퇴 되었습니다.")
+      location.replace("./user_login.html");
+    }
+  }
+    } catch {
+      alert("로그인 해주세요!")
+    }
 }

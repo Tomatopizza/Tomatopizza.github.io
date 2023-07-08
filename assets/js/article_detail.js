@@ -10,8 +10,9 @@ window.onload = async function () {
   } catch (error) {}
   await loadComments(articleId);
 };
-
-// 공유 게시글 불러오기
+/**
+ * 공유 게시글 불러오기
+ */
 
 async function loadArticles(articleId) {
   const payload = localStorage.getItem("payload");
@@ -75,12 +76,14 @@ async function loadArticles(articleId) {
   } else {
     newImage.setAttribute(
       "src",
-      "https://health.clevelandclinic.org/wp-content/uploads/sites/3/2022/04/exerciseHowOften-944015592-770x533-1-650x428.jpg"
+      "http://127.0.0.1:5500/assets/images/exercise.jpg"
     );
   }
   articleImage.appendChild(newImage);
 
-  // 게시글 좋아요 상태 불러오기
+  /**
+   * 게시글 좋아요 상태 불러오기
+   */
 
   const token = localStorage.getItem("access");
 
@@ -90,7 +93,6 @@ async function loadArticles(articleId) {
   const likeResponse = await fetch(
     `${backend_base_url}/articles/${articleId}/like_article/`,
     {
-      // 게시글 좋아요 상태와 좋아요 수 가져오기
       method: "GET",
       headers: {
         "content-type": "application/json",
@@ -108,7 +110,6 @@ async function loadArticles(articleId) {
     const likeResponse = await fetch(
       `${backend_base_url}/articles/${articleId}/like_article/`,
       {
-        // 게시글 좋아요 상태와 좋아요 수 가져오기
         method: "GET",
         headers: {
           "content-type": "application/json",
@@ -119,23 +120,24 @@ async function loadArticles(articleId) {
     likeCount.innerText = likeResponse_json.fluctuation;
   }
 
-  // 게시글 수정·삭제 기능
+  /**
+   * 게시글 수정·삭제 기능
+   */
 
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
-
-  console.log(currentUser);
-  console.log(articleUserPk);
 
   const articleEdit = document.getElementById("article_edit");
 
   const articlePut = document.querySelector("#put");
 
   const articleDelete = document.querySelector("#delete");
-  // 작성자에게만 기능 노출
+ 
+  /**
+   * 작성자에게만 기능 노출
+   */
 
   if (currentUser == articleUserPk) {
-    console.log(currentUser);
     articleEdit.style.display = "grid";
     articleEdit.style.alignItems = "center";
     articleEdit.style.justifyContent = "center";
@@ -151,19 +153,22 @@ async function loadArticles(articleId) {
     articleDelete.style.gridRow = "1/2";
     articleDelete.innerText = "삭제";
   } else {
-    console.log(currentUser);
     articleEdit.style.display = "none";
   }
 }
 
-// 댓글
+/**
+ * 댓글 불러오기
+ */
 
 async function loadComments(articleId) {
   const payload = localStorage.getItem("payload");
 
   const response = await getComments(articleId);
 
-  // 댓글 edit기능을 위한 유저 식별
+  /**
+  * 댓글 edit기능을 위한 유저 식별
+  */ 
 
   try {
     const parsedPayload = JSON.parse(payload);
@@ -173,7 +178,10 @@ async function loadComments(articleId) {
     commentList.innerHTML = "";
     response.forEach((comment) => {
       commentId = comment["id"];
-      // 프로필 이미지 가져오기
+      
+  /**
+  * 프로필 이미지 가져오기
+  */
       const User = comment.user;
       const UserAvatar = User.avatar;
 
@@ -197,16 +205,21 @@ async function loadComments(articleId) {
         </div>
       </div>`;
     });
+
   }
   const parsedPayload = JSON.parse(payload);
   const currentUser = parsedPayload.user_id;
   const commentList = document.getElementById("comment_list");
   commentList.innerHTML = "";
 
-  // 댓글 작성하기
+  /**
+  * 댓글 작성하기
+  */
   response.forEach((comment) => {
     commentId = comment["id"];
-    // 프로필 이미지 가져오기
+  /**
+  * 프로필 이미지 가져오기
+  */
     const User = comment.user;
     let avatar = null;
 
@@ -265,7 +278,9 @@ async function loadComments(articleId) {
           </div>
         </div>`;
     }
-    // 댓글 수정창
+    /**
+    * 댓글 수정창
+    */ 
 
     const commentEditForm = document.createElement("div");
     commentEditForm.setAttribute("id", `comment_edit_${commentId}`);
@@ -299,7 +314,9 @@ async function loadComments(articleId) {
 
     commentList.appendChild(commentEditForm);
 
-    // 댓글 좋아요 표시
+  /**
+  * 댓글 좋아요 표시
+  */ 
     const likeButton = document.getElementById(`comment_Like${commentId}`);
     if (comment.likes.includes(currentUser)) {
       likeButton.innerText = "🧡";
@@ -307,7 +324,9 @@ async function loadComments(articleId) {
   });
 }
 
-// 댓글 작성하기 버튼
+/**
+  * 댓글 작성하기 버튼
+  */ 
 async function submitComment() {
   const commentElement = document.getElementById("new_comment");
   const newComment = commentElement.value;
@@ -328,7 +347,9 @@ function articleLoadPut() {
   window.location.href = `${frontend_base_url}/template/article_update2.html?article_id=${articleId}`;
 }
 
-// 게시글 좋아요 버튼
+/**
+* 게시글 좋아요 버튼
+*/ 
 
 async function articleLike() {
   let token = localStorage.getItem("access");
@@ -338,7 +359,9 @@ async function articleLike() {
   const response = await fetch(
     `${backend_base_url}/articles/${articleId}/like_article/`,
     {
-      // 게시글 좋아요/좋아요취소 요청
+    /**
+     * 게시글 좋아요/좋아요취소 요청
+     */ 
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -364,7 +387,9 @@ async function articleLike() {
   }
 }
 
-// 게시글 삭제
+/**
+  * 게시글 삭제
+  */ 
 async function articleDelete() {
   let token = localStorage.getItem("access");
 
@@ -405,8 +430,6 @@ async function commentLike(commentId) {
       }
     );
     const response_json = await response.json();
-    console.log(response_json);
-    console.log(response.status);
 
     if (response.status === 200) {
       if (likeButton.innerText === "🧡") {

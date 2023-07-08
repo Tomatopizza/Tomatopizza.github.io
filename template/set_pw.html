@@ -1,84 +1,66 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>오운완 | 비밀번호 재설정</title>
-    <!-- CSS only -->
-    <link rel="stylesheet" href="/assets/css/login.css" />
-    <!-- Bootstrap CSS only -->
-    <link
-      href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-      rel="stylesheet"
-    />
-    <!-- JS only -->
-    <!-- 기존 assets/js/api.js와 다른 api를 사용 중 -->
-    <script src="../assets/js/urls.js"></script>
-    <script src="/assets/js/reset_pw.js"></script>
-  </head>
 
-  <body>
-    <main>
-      <div class="main-container">
-        <section class="container forms">
-          <div class="form login">
-            <div class="login-logo">
-              <a href="/template/index.html"
-                ><img
-                  src="/assets/images/ooo-removebg-preview.png"
-                  alt="상단로고"
-                  width="100"
-              /></a>
-            </div>
-            <div class="form-content">
-              <header>비밀번호 재설정</header>
-              <form>
-                <div class="field input-field">
-                  <input
-                    type="password"
-                    id="set_Password1"
-                    placeholder="새로운 Password를 입력해주세요"
-                    class="input_password1"
-                    oninput="checkPasswordsMatch()"
-                  />
-                  <i class="bx bx-hide eye-icon"></i>
-                </div>
-                <div class="field input-field2">
-                  <input
-                    type="password"
-                    id="set_Password2"
-                    placeholder="한번 더 입력해주세요"
-                    class="input_password2"
-                    oninput="checkPasswordsMatch()"
-                  />
-                  <i class="bx bx-hide eye-icon"></i>
-                </div>
-                <div id="info" style="color: black">
-                  비밀번호는 특수문자 포함하여 최소 8자리 이상입니다.
-                </div>
-                <div id="warning2" style="display: none; color: red">
-                  비밀번호가 일치하지 않습니다
-                </div>
-                <div class="field button-field">
-                  <a type="button" class="login-btn" onclick="Set_Password()"
-                    >비밀번호 재설정</a
-                  >
-                </div>
-              </form>
-              <div class="form-link">
-                <span
-                  >Don't have an account?
-                  <a href="./register.html" class="link signup-link"
-                    >회원가입</a
-                  ></span
-                >
-              </div>
-              <p class="team">&copy; 오운완 TEAM PROJECT</p>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>오운완 | 비밀번호 재설정</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/login.css" />
+
+  <!-- JS  -->
+  <script src="../assets/js/urls.js"></script>
+  <script src="/assets/js/reset_pw.js"></script>
+
+  <!-- Boxcions -->
+  <link href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css" rel="stylesheet" />
+</head>
+
+<body>
+  <main>
+    <div class="main-container">
+      <section class="container forms">
+        <div class="form login">
+          <div class="login-logo">
+            <a href="/template/index.html"><img src="/assets/images/ooo-removebg-preview.png" alt="상단로고"
+                width="100" /></a>
           </div>
-        </section>
-      </div>
-    </main>
-  </body>
+          <div class="form-content">
+            <header>비밀번호 재설정</header>
+            <form>
+              <div class="field input-field">
+                <input type="password" id="set_Password1" placeholder="새로운 Password를 입력해주세요" class="input_password1"
+                  oninput="checkPasswordsMatch()" />
+                <i class="bx bx-hide eye-icon"></i>
+              </div>
+              <div class="field input-field2">
+                <input type="password" id="set_Password2" placeholder="한번 더 입력해주세요" class="input_password2"
+                  oninput="checkPasswordsMatch()" />
+                <i class="bx bx-hide eye-icon"></i>
+              </div>
+              <div id="info" style="color: black">
+                비밀번호는 특수문자 포함하여 최소 8자리 이상입니다.
+              </div>
+              <div id="warning2" style="display: none; color: red">
+                비밀번호가 일치하지 않습니다
+              </div>
+              <div class="field button-field">
+                <a type="button" class="login-btn" onclick="Set_Password()">비밀번호 재설정</a>
+              </div>
+            </form>
+            <div class="form-link">
+              <span>Don't have an account?
+                <a href="./register.html" class="link signup-link">회원가입</a></span>
+            </div>
+            <p class="team">&copy; 오운완 TEAM PROJECT</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+</body>
+
 </html>

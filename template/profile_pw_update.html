@@ -1,9 +1,6 @@
 <!DOCTYPE html>
 
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <title>오운완 | 비밀번호 변경</title>
 
     <!-- Bootstrap CSS -->
     <link
@@ -17,7 +14,7 @@
       integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz"
       crossorigin="anonymous"
     ></script>
-    <link rel="stylesheet" href="../assets/css/profile_update.css" />
+    <link rel="stylesheet" href="../assets/css/pw_update.css" />
     <!-- javascript -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../assets/js/urls.js"></script>
@@ -25,84 +22,32 @@
     <script src="../assets/js/pw_update.js"></script>
     <!-- <script src="../assets/js/profile.js"></script> -->
   </head>
-  <style>
-    .main-container {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      /* height: 100vh; */
-    }
 
-    h2 {
-      margin-bottom: 10%;
-    }
-
-    .input-container {
-      margin-top: 50px;
-      margin-bottom: 50px;
-    }
-
-    .button-container {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-    }
-  </style>
 
   <body>
     <!-- 상단 네비게이션바 -->
     <div id="navbar-container"></div>
     <!-- 상단 네비게이션 끝-->
-    <div class="main-container">
-      <h2>비밀번호 변경</h2>
 
-      <div class="input-container">
-        <span class="text-muted" id="change_pw_name1"
-          >변경하실 비밀번호를 입력해주세요</span
-        >
-        <input
-          type="password"
-          id="change_pw1"
-          placeholder="Password"
-          class="input_password"
-          oninput="checkPasswordsMatch()"
-        />
-        <br />
-        <span class="text-muted" id="change_pw_name2">한번더 입력해주세요</span>
-        <input
-          type="password"
-          id="change_pw_2"
-          placeholder="Password"
-          class="input_password"
-          oninput="checkPasswordsMatch()"
-        />
-        <div id="warning" style="display: none; color: red">
-          비밀번호가 일치하지 않습니다
+    <div class="main-container">
+      <div class="pw-update">
+        <h2>비밀번호 변경</h2>
+
+        <div class="input-container">
+          <span class="text-muted" id="change_pw_name1">변경하실 비밀번호를 입력해주세요</span>
+          <input type="password" id="change_pw1" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
+          <br/>
+          <span class="text-muted" id="change_pw_name2">한번더 입력해주세요</span>
+          <input type="password" id="change_pw_2" placeholder="Password" class="input_password" oninput="checkPasswordsMatch()" />
+          <div id="warning" style="display: none; color: red"> 비밀번호가 일치하지 않습니다</div>
+        </div>
+  
+        <div class="button-container">
+          <button type="button" class="btn btn-dark" id="save-article" onclick="fixProfile()"> 비밀번호 변경</button>
+          <button type="button" class="btn btn-dark" id="save-article" onclick="pwNoUpdate()">취소하기</button>
         </div>
       </div>
-
-      <div class="button-container">
-        <button
-          type="button"
-          class="btn btn-dark"
-          id="save-article"
-          onclick="fixProfile()"
-        >
-          비밀번호 변경
-        </button>
-        <button
-          type="button"
-          class="btn btn-dark"
-          id="save-article"
-          onclick="pwNoUpdate()"
-        >
-          취소하기
-        </button>
       </div>
-    </div>
-    <!-- 하단 푸터 시작-->
-    <div id="footer-container"></div>
-    <!-- 하단 푸터 끝-->
+
   </body>
 </html>

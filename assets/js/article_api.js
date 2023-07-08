@@ -1,9 +1,8 @@
-console.log("article.api js");
+/**
+ * 카드 실패 했을 때 띄울 내용
+ */
 
-// 졸라맨 애니메이션
 function card_fail(template) {
-  // 카드 실패 했을 때 띄울 거
-
   template[0] = `
       <div class="col">
         <div class="card h-100" >
@@ -17,8 +16,9 @@ function card_fail(template) {
       </div>
     `;
 }
-
-// ========== index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기 ========================
+/**
+ * index.js의 back url 연결: 유저가 작성한 모든 게시글 가져오기
+ */
 async function loadArticle() {
   const response = await fetch(`${backend_base_url}/articles/my000/`, {
     headers: {
@@ -29,17 +29,13 @@ async function loadArticle() {
 
   if (response.status == 200) {
     const response_json = await response.json();
-    console.log(response_json);
 
     if (response_json.length > 0) {
       const checkCount1 = response_json[0].check_status_count;
-      console.log(checkCount1);
 
-      // 나머지 코드를 여기에 작성합니다.
     } else {
-      console.log("data없음");
-    }
 
+    }
     return response_json;
   } else {
     alert("로그인을 해주세요!");
@@ -47,24 +43,24 @@ async function loadArticle() {
   }
 }
 
-// ================================ 여기서부터 달력 js =======================================
 
-let nowMonth = new Date(); // 현재 달을 페이지를 로드한 날의 달로 초기화
-let today = new Date(); // 페이지를 로드한 날짜를 저장
-today.setHours(0, 0, 0, 0); // 비교 편의를 위해 today의 시간을 초기화
 
-// 달력 생성 : 해당 달에 맞춰 테이블을 만들고, 날짜를 채워 넣는다.
+let nowMonth = new Date(); 
+let today = new Date(); 
+today.setHours(0, 0, 0, 0); 
+
+// 달력 생성
 async function buildCalendar() {
-  let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1); // 이번달 1일
-  let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0); // 이번달 마지막날
+  let firstDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth(), 1); 
+  let lastDate = new Date(nowMonth.getFullYear(), nowMonth.getMonth() + 1, 0); 
 
   let tbody_Calendar = document.querySelector(".Calendar > tbody");
-  document.getElementById("calYear").innerText = nowMonth.getFullYear(); // 연도 숫자 갱신
+  document.getElementById("calYear").innerText = nowMonth.getFullYear(); 
   document.getElementById("calMonth").innerText = leftPad(
     nowMonth.getMonth() + 1
   ); // 월 숫자 갱신
 
-  // ======== 달력 가져올때마다 data 동기화 =========
+  // 달력 가져올때마다 data 동기화
   const articles = await loadArticle();
   const selectedArticles = {};
   for (const article of articles) {
@@ -74,15 +70,13 @@ async function buildCalendar() {
   }
 
   while (tbody_Calendar.rows.length > 0) {
-    // 이전 출력결과가 남아있는 경우 초기화
     tbody_Calendar.deleteRow(tbody_Calendar.rows.length - 1);
   }
 
-  let nowRow = tbody_Calendar.insertRow(); // 첫번째 행 추가
+  let nowRow = tbody_Calendar.insertRow();
 
   for (let j = 0; j < firstDate.getDay(); j++) {
-    // 이번달 1일의 요일만큼
-    let nowColumn = nowRow.insertCell(); // 열 추가
+    let nowColumn = nowRow.insertCell();
   }
 
   for (
@@ -90,20 +84,20 @@ async function buildCalendar() {
     nowDay <= lastDate;
     nowDay.setDate(nowDay.getDate() + 1)
   ) {
-    // day는 날짜를 저장하는 변수, 이번달 마지막날까지 증가시키며 반복
 
-    let nowColumn = nowRow.insertCell(); // 새 열을 추가하고
+
+    let nowColumn = nowRow.insertCell(); 
 
     let newDIV = document.createElement("p");
-    newDIV.innerHTML = leftPad(nowDay.getDate()); // 추가한 열에 날짜 입력
+    newDIV.innerHTML = leftPad(nowDay.getDate());
     nowColumn.appendChild(newDIV);
 
-    // ============ 날짜열 생성 ==================
+   
     const nowDayStr = `${nowDay.getFullYear()}-${leftPad(
       nowDay.getMonth() + 1
     )}-${leftPad(nowDay.getDate())}`;
 
-    // ========= 날짜열=backdata의 selected_day 일 경우/ 상태의 따라서 색깔이 다르게 나타냄 ========
+
 
     if (nowDayStr in selectedArticles) {
       if (selectedArticles[nowDayStr].check_status == true) {
@@ -139,13 +133,13 @@ async function buildCalendar() {
       choiceDate(newDIV, selected_date_str);
     });
 
-    // ======================= 날짜선택시 운동내역 보기 =============================
+
     async function choiceDate(newDIV, selected_date_str) {
       const response = await fetch(
         `${backend_base_url}/articles/my000/?date=${selected_date_str}`,
         {
           headers: {
-            Authorization: "Bearer " + localStorage.getItem("access"),
+            "Authorization": "Bearer " + localStorage.getItem("access"),
             "Content-Type": "application/json",
           },
           method: "GET",
@@ -154,10 +148,9 @@ async function buildCalendar() {
 
       if (response.status == 200) {
         const responseJson = await response.json();
-        console.log(responseJson);
         const articleList = document.getElementById("article-list");
         articleList.innerHTML = "";
-        // data의 results에 json 형식으로 article 데이터s를 가져옴 그냥 article.id로 하니까 안가져와져서 여차저차 찾아냄
+
         responseJson.forEach((data) => {
           const articleCard = document.createElement("div");
           articleCard.classList.add("card", "mb-5");
@@ -167,8 +160,6 @@ async function buildCalendar() {
           const articleId = data.id;
           const inSubcategory = data.in_subcategory || {};
           const outSubcategory = data.out_subcategory || {};
-
-          console.log(inSubcategory, outSubcategory);
 
           const categoryName =
             category === 1 ? "실내운동" : category === 2 ? "실외운동" : "기타";
@@ -219,9 +210,9 @@ async function buildCalendar() {
         document.querySelector(".modal_w").style.display = "block";
       } else if (response.status == 404) {
         // 사용자가 확인할 수 없을 때의 처리를 수행합니다.
-        alert("로그인을 해주세요!");
+        alert("로그인을 해주세요.");
       } else {
-        // 기타 오류 처리를 수행합니다.
+
         alert("API 호출에 실패하였습니다.");
       }
     }
@@ -235,28 +226,28 @@ async function buildCalendar() {
   }
 }
 
-//=============여기까지 buildCalendar() ================
+//여기까지 Calendar
 
-// 이전달 버튼 클릭
+
 function prevCalendar() {
   nowMonth = new Date(
     nowMonth.getFullYear(),
     nowMonth.getMonth() - 1,
     nowMonth.getDate()
-  ); // 현재 달을 1 감소
-  buildCalendar(); // 달력 다시 생성
+  ); 
+  buildCalendar(); 
 }
-// 다음달 버튼 클릭
+
 function nextCalendar() {
   nowMonth = new Date(
     nowMonth.getFullYear(),
     nowMonth.getMonth() + 1,
     nowMonth.getDate()
-  ); // 현재 달을 1 증가
-  buildCalendar(); // 달력 다시 생성
+  ); 
+  buildCalendar(); 
 }
 
-// input값이 한자리 숫자인 경우 앞에 '0' 붙혀주는 함수
+
 function leftPad(value) {
   if (value < 10) {
     value = "0" + value;
@@ -265,7 +256,7 @@ function leftPad(value) {
   return value;
 }
 
-// ========================== 글작성 =============================
+// Post toggle
 
 const toggleCategoryFields = (category) => {
   const inCategoryFields = document.querySelectorAll(".in_category");
@@ -288,7 +279,7 @@ const toggleCategoryFields = (category) => {
   }
 };
 
-// 글작성
+// post save
 async function save_article() {
   const category = document.querySelector("#category").value;
   const inCategoryField = document.getElementById("in_category");
@@ -358,18 +349,17 @@ function setThumbnail(event) {
     img.setAttribute("src", event.target.result);
 
     // 썸네일 크기 조절
-    img.style.width = "200px"; // 너비 150px로 설정
-    img.style.height = "150px"; // 높이 자동 설정
+    img.style.width = "200px"; 
+    img.style.height = "150px"; 
 
-    // 이미지 미리보기 영역
+ 
     let imgThumbnail = document.querySelector("#imgthumbnail");
 
-    // 기존 이미지가 있으면 제거
+
     while (imgThumbnail.firstChild) {
       imgThumbnail.removeChild(imgThumbnail.firstChild);
     }
 
-    // 새 이미지를 미리보기 영역에 추가
     imgThumbnail.appendChild(img);
   };
 
