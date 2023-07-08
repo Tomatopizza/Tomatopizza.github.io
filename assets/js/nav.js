@@ -17,23 +17,34 @@ $(document).ready(function () {
     const payload = localStorage.getItem("payload");
     const parsedPayload = JSON.parse(payload);
     const users_id = parsedPayload.user_id;
+    const user_exp = parsedPayload.exp;
+    token_exp = parsedPayload.exp;
+    const currentTime = Math.floor(Date.now() / 1000);
 
     try {
       const profile = await getProfile(users_id);
 
-      document.querySelector("#select_day").value = new Date().toISOString().slice(0, 10);
-      document.querySelector("#select_day").min = new Date().toISOString().slice(0, 10);
+      document.querySelector("#select_day").value = new Date()
+        .toISOString()
+        .slice(0, 10);
+      document.querySelector("#select_day").min = new Date()
+        .toISOString()
+        .slice(0, 10);
 
       const intro = document.getElementById("intro");
-      if (intro) {
-        intro.innerText = `${profile.username}님 안녕하세요`;
-        intro.setAttribute("style", "color: black;");
-        intro.href = `${frontend_base_url}/template/profile.html`;
+      if (token_exp > currentTime) {
+        if (intro) {
+          intro.innerText = `${profile.username}님 안녕하세요`;
+          intro.setAttribute("style", "color: black;");
+          intro.href = `${frontend_base_url}/template/profile.html`;
+        }
+      } else if (token_exp < currentTime) {
+        // 토큰 값이 초과한 경우, 로그아웃 처리
+        handleLogout();
       }
     } catch (error) {
-      console.error("Failed to fetch profile:", error);
+      alert("이용자를 찾을 수 없습니다. 관리자에게 문의하세요", error);
     }
-
     let navbarRight = document.getElementById("navbar-right");
     let newLi = document.createElement("li");
     newLi.setAttribute("class", "nav-item");
